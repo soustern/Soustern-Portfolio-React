@@ -8,7 +8,7 @@ interface BackgroundProps {
 const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element => {
   return (
     <>
-    <div className={`${BackgroundColor} w-screen h-screen`}>
+    <div className={`${BackgroundColor} w-screen h-screen font-sans`}>
         {children}
     </div>
     </>
