@@ -31,7 +31,7 @@ function NavBar(): JSX.Element  {
                         </ul>
                     </div>
                 </div>
-                <div className="h-[1px] rounded-full bg-[var(--color-bg-tertiary)]"></div>
+                <div className="h-0.5 rounded-full bg-[var(--color-bg-tertiary)]"></div>
             </nav>
         </>
     )

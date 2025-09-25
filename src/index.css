@@ -8,7 +8,7 @@
 :root {
     --color-bg-primary: theme('colors.gray.950'); /* bg-gray-950 */
     --color-bg-secondary: theme('colors.gray.900'); /* bg-gray-900 */
-    --color-bg-tertiary: theme('colors.gray.700'); /* bg-gray-800 */
+    --color-bg-tertiary: theme('colors.gray.800'); /* bg-gray-800 */
 
     --color-accent-primary: theme('colors.blue.500'); /* text-blue-500 */
     --color-accent-secondary: theme('colors.violet.500'); /* text-violet-500 */
