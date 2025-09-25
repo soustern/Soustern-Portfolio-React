@@ -2,11 +2,14 @@ import type { JSX } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
+import TextStandard from "../components/ui/TextStandard";
+import { motion } from "motion/react";
+import TertiaryButton from "../components/ui/TertiaryButton";
 
 function NavBar(): JSX.Element  {
     return (
         <>
-            <nav className="m-auto max-w-5xl text-base font-medium leading-normal">
+            <nav className="flex flex-col gap-3 m-auto max-w-5xl text-base font-medium leading-normal">
                 <div className="flex justify-between items-center">
                     <div>
                         <Logo></Logo>
@@ -32,6 +35,7 @@ function NavBar(): JSX.Element  {
                     </div>
                 </div>
                 <div className="h-0.5 rounded-full bg-[var(--color-bg-tertiary)]"></div>
+                <TertiaryButton text="Language" icon="plus"></TertiaryButton>
             </nav>
         </>
     )
