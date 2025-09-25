@@ -1,1 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+
+.font-sans { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; }
+
+:root {
+    --color-bg-primary: theme('colors.gray.950'); /* bg-gray-950 */
+    --color-bg-secondary: theme('colors.gray.900'); /* bg-gray-900 */
+    --color-bg-tertiary: theme('colors.gray.700'); /* bg-gray-800 */
+
+    --color-accent-primary: theme('colors.blue.500'); /* text-blue-500 */
+    --color-accent-secondary: theme('colors.violet.500'); /* text-violet-500 */
+    --color-accent-tertiary: theme('colors.cyan.500'); /* text-cyan-500 */
+
+    --color-accent-success: theme('colors.emerald.500'); /* text-emerald-500 */
+    --color-accent-warning: theme('colors.amber.500');   /* text-amber-500 */
+    --color-accent-danger: theme('colors.red.500');      /* text-red-500 */ 
+}
