@@ -5,15 +5,42 @@ import Logo from "../components/ui/Logo";
 import {  AnimatePresence, motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
 import BorderButton from "../components/ui/BorderButton";
+import { useLanguage } from '../components/contexts/LanguageContext'
+import languageStrings from "../services/localisation.json"
+
 
 
 function NavBar(): JSX.Element  {
     const [isOpen, setIsOpen] = useState(false);
+    const {language, changeLanguage} = useLanguage();
+
     const ref = useRef<HTMLParagraphElement>(null);
 
     const handleClick = () => {
         setIsOpen(!isOpen);
-        console.log(hoverColor);
+    }
+
+    const strings = {
+        languageButton: () => {
+            if (language === `En`)
+            {
+                return languageStrings.en.navBar.languageButton;
+            }
+            if (language === `Pt-Br`)
+            {
+                return languageStrings["Pt-Br"].navBar.languageButton;
+            }
+        },
+        cta: () => {
+            if (language === `En`)
+            {
+                return languageStrings.en.navBar.cta;
+            }
+            if (language === `Pt-Br`)
+            {
+                return languageStrings["Pt-Br"].navBar.cta;
+            }
+        }
     }
 
     const languageMenu = (): ReactNode => {
@@ -22,8 +49,8 @@ function NavBar(): JSX.Element  {
             ref.current.style.color = "";
             return (
                 <>
-                    <TextStandard text={"Language"} importance={`important`} ref={ref}></TextStandard>
-                    <PrimaryIcon iconType="solid" className="text-sm" icon={"minus"}></PrimaryIcon>
+                    <TextStandard text={`${strings.languageButton()}`} importance={`important`} ref={ref}></TextStandard>
+                    <PrimaryIcon iconType="solid" className="text-sm" icon={"xmark"}></PrimaryIcon>
                 </> 
             )
         }
@@ -32,7 +59,7 @@ function NavBar(): JSX.Element  {
             return(
                 <>
                     <motion.div variants={hoverColor} transition={{duration: 0.1}} className="flex items-baseline gap-1 text-[#6a7282]">
-                        <TextStandard text={"Language"} importance={`blank`} ref={ref}></TextStandard>
+                        <TextStandard text={`${strings.languageButton()}`} importance={`blank`} ref={ref}></TextStandard>
                         <PrimaryIcon iconType="solid" className="text-sm" color="text-inherit" icon={"plus"}></PrimaryIcon>
                     </motion.div>
                 </>
@@ -64,7 +91,7 @@ function NavBar(): JSX.Element  {
                             </a>
                         </motion.li>
                         <li>
-                            <PrimaryButton text={"Work with me"}></PrimaryButton>
+                            <PrimaryButton text={`${strings.cta()}`}></PrimaryButton>
                         </li>
                     </ul>
                 </div>
@@ -77,8 +104,8 @@ function NavBar(): JSX.Element  {
                 {isOpen && 
                 <AnimatePresence>
                     <motion.div className="flex gap-1" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }}>
-                        <BorderButton text="En"></BorderButton>
-                        <BorderButton text="Pt-Br"></BorderButton>
+                        <BorderButton onClick={() => changeLanguage(`En`)} text="En"></BorderButton>
+                        <BorderButton onClick={() => changeLanguage(`Pt-Br`)} text="Pt-Br"></BorderButton>
                     </motion.div>
                 </AnimatePresence>}
             </div>

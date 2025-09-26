@@ -1,0 +1,14 @@
+{
+  "en": {
+    "navBar": {
+        "cta": "Work with me",
+        "languageButton": "Language"
+    }
+  },
+  "Pt-Br": {
+    "navBar": {
+        "cta": "Trabalhe comigo",
+        "languageButton": "Idioma"
+    }
+  }
+}
