@@ -2,17 +2,19 @@ import { useState, type JSX, type ReactNode, useRef } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
-import {  AnimatePresence, motion } from "motion/react";
+import {  motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
-import BorderButton from "../components/ui/BorderButton";
 import { useLanguage } from '../components/contexts/LanguageContext'
 import languageStrings from "../services/localisation.json"
+import LanguageSelector from "../components/ui/LanguageSelector";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 
 
-function NavBar(): JSX.Element  {
+function NavBar(): JSX.Element  {    
     const [isOpen, setIsOpen] = useState(false);
-    const {language, changeLanguage} = useLanguage();
+    const {language, } = useLanguage();
+    const screenWidth = useWindowSize();
 
     const ref = useRef<HTMLParagraphElement>(null);
 
@@ -72,45 +74,46 @@ function NavBar(): JSX.Element  {
         hover: { color: "#f9fafb" }
     };
 
-    return (
-        <nav className="flex flex-col gap-3 m-auto max-w-5xl text-base font-medium leading-normal">
-            <div className="flex justify-between items-center">
-                <div>
-                    <Logo></Logo>
+    if (screenWidth.width <= 680)
+    {
+        return (<></>);   
+    }
+    else
+    {
+        return (
+            <nav className="flex flex-col gap-3 m-auto max-w-5xl text-base font-medium leading-normal transition-all">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <Logo></Logo>
+                    </div>
+                    <div>
+                        <ul className="flex items-center">
+                            <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
+                                <a className="mr-1" href="">
+                                    <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
+                                </a>
+                            </motion.li>
+                            <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
+                                <a className="mr-2" href="">
+                                    <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
+                                </a>
+                            </motion.li>
+                            <li>
+                                <PrimaryButton text={`${strings.cta()}`}></PrimaryButton>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <ul className="flex items-center">
-                        <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
-                            <a className="mr-1" href="">
-                                <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
-                            </a>
-                        </motion.li>
-                        <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
-                            <a className="mr-2" href="">
-                                <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
-                            </a>
-                        </motion.li>
-                        <li>
-                            <PrimaryButton text={`${strings.cta()}`}></PrimaryButton>
-                        </li>
-                    </ul>
+                <div className="h-[1px] rounded-full bg-[var(--color-bg-tertiary)]"></div>
+                <div className="flex gap-2">
+                    <motion.button whileTap={{scale: 0.95}} onClick={handleClick} whileHover="hover" className="w-fit flex gap-1 items-baseline rounded-lg cursor-pointer">
+                        {languageMenu()} 
+                    </motion.button>
+                    {isOpen && <LanguageSelector></LanguageSelector>}
                 </div>
-            </div>
-            <div className="h-[1px] rounded-full bg-[var(--color-bg-tertiary)]"></div>
-            <div className="flex gap-2">
-                <motion.button onClick={handleClick} whileHover="hover" className="w-fit flex gap-1 items-baseline rounded-lg cursor-pointer">
-                    {languageMenu()} 
-                </motion.button>
-                {isOpen && 
-                <AnimatePresence>
-                    <motion.div className="flex gap-1" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }}>
-                        <BorderButton onClick={() => changeLanguage(`En`)} text="En"></BorderButton>
-                        <BorderButton onClick={() => changeLanguage(`Pt-Br`)} text="Pt-Br"></BorderButton>
-                    </motion.div>
-                </AnimatePresence>}
-            </div>
-        </nav>
-    )
+            </nav>
+        )
+    }
 }
 
 export default NavBar;
