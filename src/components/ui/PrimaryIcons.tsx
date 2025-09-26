@@ -1,15 +1,18 @@
 import type { JSX } from "react";
-import { motion } from "motion/react"
+import { motion, type Variants } from "motion/react"
 
 interface PrimaryIconProps {
     icon: string;
+    iconType: string;
     className?: string;
+    variants?: Variants;
+    color?: string;
 }
 
-function PrimaryIcon({ icon, className }: PrimaryIconProps): JSX.Element {
+function PrimaryIcon({ iconType, icon, className, variants, color }: PrimaryIconProps): JSX.Element {
     return (
         <>
-            <motion.i whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}} className={`fa-brands fa-${icon} text-xl text-gray-50 ${className}`}></motion.i>
+            <motion.i variants={variants} className={`fa-${iconType} fa-${icon} ${color ? color : 'text-[#f9fafb]' } ${className}`}></motion.i>
         </>
     );
 }

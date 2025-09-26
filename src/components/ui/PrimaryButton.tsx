@@ -19,10 +19,10 @@ function PrimaryButton({ text }: PrimaryButtonProps): JSX.Element {
 
     return (
         <>
-             <motion.button whileHover="hover" transition={{duration: 0.1,}} className="relative px-3 py-1.5 font-heading font-semibold text-sm tracking-wider flex items-center cursor-pointer">
-                <motion.div variants={leftArrowVariants}  className="absolute left-[0%]  text-[var(--color-accent-primary)] text-lg font-bold opacity-0">&lt;</motion.div>
-                <TextStandard text={`${text}`} importance="important"></TextStandard>
-                <motion.div variants={rightArrowVariants} className="absolute left-[85%] text-[var(--color-accent-primary)] text-lg font-bold opacity-0">/&gt;</motion.div>
+             <motion.button whileHover="hover" whileTap={{scale: 0.9}} transition={{duration: 0.1,}} className="relative px-3 py-1.5 font-heading font-semibold text-sm tracking-wider flex items-center cursor-pointer">
+                <motion.div variants={leftArrowVariants}  className="z-0 absolute left-[0%]  text-[var(--color-accent-primary)] text-lg font-bold opacity-0">&lt;</motion.div>
+                <TextStandard text={`${text}`} className="z-10" importance="important"></TextStandard>
+                <motion.div variants={rightArrowVariants} className="z-0 absolute left-[85%] text-[var(--color-accent-primary)] text-lg font-bold opacity-0">/&gt;</motion.div>
             </motion.button>
         </>
     );
