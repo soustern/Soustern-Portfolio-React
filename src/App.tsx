@@ -10,7 +10,7 @@ function App() {
     <>
       <LanguageProvider>
         <Background BackgroundColor='hero-section-gradient'>
-          <header className='fixed w-full py-20 px-10'>
+          <header className='fixed w-full py-20 px-10 z-100'>
             <NavBar></NavBar>
           </header>
           <main>
