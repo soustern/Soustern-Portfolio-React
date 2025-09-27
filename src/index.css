@@ -4,8 +4,8 @@
 @import "tailwindcss";
 
 .font-sans { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-.font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; }
-/* .font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; } */
+/* .font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; } */
+.font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; }
 
 :root {
     --color-bg-primary: theme('colors.gray.950'); /* bg-gray-950 */
@@ -19,4 +19,24 @@
     --color-accent-success: theme('colors.emerald.500'); /* text-emerald-500 */
     --color-accent-warning: theme('colors.amber.500');   /* text-amber-500 */
     --color-accent-danger: theme('colors.red.500');      /* text-red-500 */ 
+}
+
+.hero-section-gradient {
+    background: 
+    radial-gradient(
+      circle at 25% 25%,
+      color-mix(in srgb, theme('colors.gray.950') 96%, theme('colors.blue.500') 4%) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      color-mix(in srgb, theme('colors.gray.900') 94%, theme('colors.violet.500') 6%) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      theme('colors.gray.950') 0%,
+      theme('colors.gray.900') 50%,
+      theme('colors.gray.800') 100%
+    );
 }

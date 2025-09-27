@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <LanguageProvider>
-        <Background BackgroundColor='bg-[var(--color-bg-primary)]'>
+        <Background BackgroundColor='hero-section-gradient'>
           <header className='fixed w-full py-20 px-10'>
             <NavBar></NavBar>
           </header>
