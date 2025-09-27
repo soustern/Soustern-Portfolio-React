@@ -21,6 +21,7 @@
     --color-accent-danger: theme('colors.red.500');      /* text-red-500 */ 
 }
 
+
 .hero-section-gradient {
   /* Positioning context for the grain overlay */
   position: relative;
