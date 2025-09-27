@@ -3,6 +3,7 @@ import './App.css'
 import NavBar from './layouts/NavBar'
 import Background from './layouts/Background';
 import { LanguageProvider } from './components/contexts/LanguageContext';
+import Hero from './layouts/Hero';
 
 function App() {
   return (
@@ -13,14 +14,7 @@ function App() {
             <NavBar></NavBar>
           </header>
           <main>
-            <section id='hero' className='w-full h-screen flex items-center justify-center py-12 md:py-16 lg:py-24'>
-              <div>
-                <h1 className='text-4xl md:text-6xl lg:text-8xl font-bold'>Rafael Antoniassi</h1>
-                <div>
-                  <video src=""></video>
-                </div>
-              </div>
-            </section>
+            <Hero></Hero>
           </main>
           <footer>
           </footer>
