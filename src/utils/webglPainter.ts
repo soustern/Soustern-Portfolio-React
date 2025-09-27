@@ -57,7 +57,7 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const flowmap = new Flowmap(gl, {
         falloff: 0.25,     // Even smaller falloff for wider spread
         dissipation: 0.95, // Lower dissipation for longer lasting
-        alpha: 1.0,       // Maximum alpha for strongest effect
+        alpha: 1.5,       // Maximum alpha for strongest effect
     });
 
     const geometry = new Geometry(gl, {

@@ -147,9 +147,53 @@ vec4 painterEffect(vec2 inputUv) {
     return vec4(finalColor, 1.0);
 }
 
+vec2 hash( vec2 p ) {
+	p = vec2( dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)) );
+	return -1.0 + 2.0*fract(sin(p)*43758.5453123);
+}
+float noise( in vec2 p ) {
+    const float K1 = 0.366025404; 
+    const float K2 = 0.211324865;
+	vec2 i = floor( p + (p.x+p.y)*K1 );
+	vec2 a = p - i + (i.x+i.y)*K2;
+	vec2 o = (a.x>a.y) ? vec2(1.0,0.0) : vec2(0.0,1.0);
+	vec2 b = a - o + K2;
+	vec2 c = a - 1.0 + 2.0*K2;
+	vec3 h = max( 0.5-vec3(dot(a,a), dot(b,b), dot(c,c)), 0.0 );
+	vec3 n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));
+	return dot( n, vec3(70.0) );
+}
+
+
+vec4 causticReflections(float time) {
+    vec2 uv = vUv;
+    float speed = 0.03;
+    float scale = 3.0;
+    
+    // Animate two layers of noise moving in different directions and speeds
+    float noise1 = noise(uv * scale + vec2(time * speed, time * speed * 0.8));
+    float noise2 = noise(uv * scale * 0.9 + vec2(10.0, -time * speed * 0.7));
+    
+    // Combine them. Taking the absolute value and multiplying creates sharp lines.
+    float combinedNoise = pow(abs(noise1 + noise2), 2.0) * 0.5 + 0.5;
+    
+    // Clamp the result to create distinct bright areas
+    float caustics = smoothstep(0.5, 0.9, combinedNoise);
+
+    return vec4(vec3(caustics), 0.1);
+}
+
+
 void main() {
     vec4 lensResult = lensDistortion(vUv);
     vec4 painterResult = painterEffect(vUv);
     
-    gl_FragColor = mix(lensResult, painterResult, uMixAmount);
+    vec4 mixedColor = mix(lensResult, painterResult, uMixAmount);
+    
+    // Calculate the caustics separately
+    vec4 caustics = causticReflections(uTime);
+    
+    // Add the caustics to the mixed color
+    float causticIntensity = 0.2; // A uniform to control strength
+    gl_FragColor = mixedColor + caustics * causticIntensity;
 }
