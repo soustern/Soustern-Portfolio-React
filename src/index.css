@@ -30,9 +30,9 @@
   /* The subtle background gradient */
   background-color: var(--color-bg-primary); /* Assuming your CSS variables are here or in index.css */
   background-image:
-    radial-gradient(at 27% 37%, hsla(215, 98%, 69%, 0.15) 0px, transparent 50%),
-    radial-gradient(at 97% 21%, hsla(226, 98%, 70%, 0.17) 0px, transparent 50%),
-    radial-gradient(at 82% 99%, hsla(258, 97%, 77%, 0.17) 0px, transparent 50%);
+    radial-gradient(at 27% 37%, hsla(215, 98%, 69%, 0.18) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(226, 98%, 70%, 0.22) 0px, transparent 50%),
+    radial-gradient(at 82% 99%, hsla(258, 97%, 77%, 0.22) 0px, transparent 50%);
 }
 
 /* The grainy overlay pseudo-element */
