@@ -76,12 +76,12 @@ const Hero = (): JSX.Element => {
     }, []);
     
     return (
-        <section id='hero' className='relative w-full flex flex-col h-screen flex items-center justify-center py-12 md:py-16 lg:py-24'>
+        <section id='hero' className='pointer-events-none relative w-full flex flex-col h-screen flex items-center justify-center py-12 md:py-16 lg:py-24'>
             <div className='absolute font-mono items-center justify-center transform rotate-72 -translate-y-8 translate-x-5'>
                 <TextHeadline className="text-center" ref={firstRef}>
                 </TextHeadline>
             </div>
-            <div className='rounded-full overflow-hidden w-100 h-100 flex'>
+            <div className='rounded-full overflow-hidden w-100 h-100 flex pointer-events-auto'>
                 <video autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
             </div>
             <div className='absolute font-mono items-center justify-center transform rotate-55 -translate-y-4 translate-x-5'>
