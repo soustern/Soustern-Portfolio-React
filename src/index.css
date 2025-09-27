@@ -22,21 +22,33 @@
 }
 
 .hero-section-gradient {
-    background: 
-    radial-gradient(
-      circle at 25% 25%,
-      color-mix(in srgb, theme('colors.gray.950') 96%, theme('colors.blue.500') 4%) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 75% 75%,
-      color-mix(in srgb, theme('colors.gray.900') 94%, theme('colors.violet.500') 6%) 0%,
-      transparent 50%
-    ),
-    linear-gradient(
-      135deg,
-      theme('colors.gray.950') 0%,
-      theme('colors.gray.900') 50%,
-      theme('colors.gray.800') 100%
-    );
+  /* Positioning context for the grain overlay */
+  position: relative;
+  overflow: hidden;
+
+  /* The subtle background gradient */
+  background-color: var(--color-bg-primary); /* Assuming your CSS variables are here or in index.css */
+  background-image:
+    radial-gradient(at 27% 37%, hsla(215, 98%, 69%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, hsla(226, 98%, 70%, 0.17) 0px, transparent 50%),
+    radial-gradient(at 82% 99%, hsla(258, 97%, 77%, 0.17) 0px, transparent 50%);
+}
+
+/* The grainy overlay pseudo-element */
+.hero-section-gradient::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Apply the SVG filter */
+  filter: url(#grainy);
+
+  /* Adjust intensity here */
+  opacity: 0.15; 
+  
+  /* Prevents the overlay from blocking mouse interactions with children */
+  pointer-events: none;
 }
