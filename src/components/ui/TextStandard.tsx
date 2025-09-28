@@ -1,14 +1,15 @@
 import { motion, type Variants } from "motion/react";
-import { forwardRef, type JSX } from "react";
+import { forwardRef, type JSX, type ReactNode } from "react";
 
 interface TextStandardProps {
-    text: string;
+    text?: string;
     importance?: `important` | `supporting` | `metadata` | `blank`;
     className?: string;
     variants?: Variants;
+    children?: ReactNode;
 }
 
-const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({text, importance, className, variants}, ref: React.Ref<HTMLParagraphElement>): JSX.Element => {
+const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({text, importance, className, variants, children}, ref: React.Ref<HTMLParagraphElement>): JSX.Element => {
     const getImportanceStyle = () => {
         switch(importance) {
             case `important`:
@@ -25,7 +26,7 @@ const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({text,
     }
     
     return (
-        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed max-w-prose ${className}`} ref={ref}>{text}</motion.p>
+        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed max-w-prose ${className}`} ref={ref}>{text}{children}</motion.p>
     )
 });
 

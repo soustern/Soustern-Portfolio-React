@@ -3,12 +3,18 @@
     "navBar": {
         "cta": "Work with me",
         "languageButton": "Language"
+    },
+    "hero": {
+      "heading": "Future.Ready.Developer"
     }
   },
   "Pt-Br": {
     "navBar": {
         "cta": "Trabalhe comigo",
         "languageButton": "Idioma"
+    },
+    "hero": {
+      "heading": "Desenvolvedor.Futurista"
     }
   }
 }
