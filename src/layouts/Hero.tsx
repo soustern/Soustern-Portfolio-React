@@ -56,22 +56,24 @@ const Hero = (): JSX.Element => {
     return (
         <section id='hero' className='flex flex-col h-screen items-center relative justify-center py-12 md:py-16 lg:py-24'>
             <div ref={heroRef} className="[&>canvas]:z-0 [&>canvas]:pointer-events-none h-full w-full absolute left-1/2 top-1/2 transform -translate-1/2"></div>
-            <div ref={containerRef} className="z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 [&>canvas]:rounded-lg relative container rounded-lg overflow-hidden w-70 h-70 sm:w-70 sm:h-70 md:w-90 md:h-90 lg:w-110 lg:h-110 flex pointer-events-auto mb-8">
+            <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] flex pointer-events-auto mb-8 ">
                 <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
             </div>
             <div className="space-y-6 z-10">
                 <TextHeadline className="font-mono"  text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
             </div>
-            <div ref={trailingStack} className="absolute w-full h-[70%] rounded-full overflow-hidden left-1/2 top-1/2 transform -translate-1/2">
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
-                <TextStandard className="stack-paragraph" importance="metadata"></TextStandard>
+            <div ref={trailingStack} className="font-mono absolute w-full h-[65%] left-1/2 top-1/2 transform -translate-1/2">
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard> 
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>       
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>       
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>       
+                <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>                             
             </div>
         </section>
     )

@@ -1,62 +1,77 @@
-const stack = ["HTML", "CSS", "JavaScript", "TypeScript", "Sass", "Tailwind", "React", "Vue.", "Angular", "Svelte", "Redux", "Webpack", "Jest", "Vite", "Cypress", "REST API", "GraphQL", "React Query", "Git", "Vercel", "npm", "Yarn", "Next", ".NET", "ASP.NET", "Blazor", "C#", "F#", "Entity Framework Core", "Windows Forms", "Xamarin", "Visual Studio", "Visual Studio Code", "Azure", "SQL Server", "IIS", "NuGet", "ML.NET", "Python", "C++", "C", "React Native", "Flutter", "Dart"];
+const stack = ["HTML", "CSS", "JavaScript", "TypeScript", "Sass", "Tailwind", "React", "Vue.", "Angular", "Svelte", "Redux", "Webpack", "Jest", "Vite", "Cypress",  "GraphQL",  "Git", "Vercel", "npm", "Yarn", "Next", ".NET", "Blazor", "C#", "F#", "Azure", "SQL Server", "IIS", "NuGet", "Python", "C++", "C", "React Native", "Flutter", "Dart"];
 
 
 export function createTrailingStack(container: HTMLDivElement)
 {
-    const containerCoordinates = container.getBoundingClientRect();
+    let containerCoordinates = container.getBoundingClientRect();
 
-    container.querySelectorAll(`:scope > *`).forEach(textStandard => setCoordinates(containerCoordinates, textStandard as HTMLElement, container))
+    window.addEventListener(`resize`, () => {
+        containerCoordinates = container.getBoundingClientRect();
+    });
+
+    container.querySelectorAll(`:scope > *`).forEach(textStandard => setCoordinates(containerCoordinates, textStandard as HTMLElement, container));
 }
 
-function setCoordinates(heroCoordinates: DOMRect, stackParagraph: HTMLElement, container: HTMLDivElement)
-{
-
+function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLElement, container: HTMLDivElement) {
     let currentWord: string;
+    let isAnimating = false;
+    
+    const createNewWord = () => {
+        stackParagraph.style.top = `${randomNumberInRange(0, containerCoordinates.height)}px`;
+        stackParagraph.style.left = `${randomNumberInRange(0, containerCoordinates.width)}px`;
+
+        const word = stack[Math.round(randomNumberInRange(0, stack.length - 1))];
+        [...word].forEach((letter, index) => {
+            const stackLetter = document.createElement(`span`);
+            stackLetter.style.opacity = `0`;
+            stackLetter.style.display = `inline-block`;
+            stackLetter.textContent = letter;
+            stackParagraph.appendChild(stackLetter);
+            animateText(stackLetter, index * 200, 'animate-glowUpTypewriter');
+        });
+
+        currentWord = word;
+        isAnimating = false; 
+    };
+    
     const updateText = () => {
-        const staggerTime = 75;
-        let fadeOutDuration = 0;
-
+        if (isAnimating) return;
+        isAnimating = true;
+        
         if (currentWord) {
-            const paragraphs = container.querySelectorAll(`.stack-paragraph`);
-            for (const paragraph of paragraphs) {
-                let wordCheck = ``;
-                const spans = paragraph.querySelectorAll(`span`);
-                spans.forEach(span => {
-                    wordCheck += span.textContent;
-                    if (wordCheck === currentWord) {
-                        [...spans].reverse().forEach((span, index) => {
-                            span.classList.remove('animate-glowUpTypewriter');
-                            animateText(span, index * staggerTime, 'animate-glowDownTypewriter');
-                        })
-                    }
-                })
-                fadeOutDuration = spans.length * staggerTime + randomNumberInRange(1000, 3000);
-            }
-        }
-
-        setTimeout(() => {
-            stackParagraph.innerHTML = ``;
-
-            stackParagraph.style.top = `${randomNumberInRange(0, heroCoordinates.height)}px`;
-            stackParagraph.style.left = `${randomNumberInRange(0, heroCoordinates.width)}px`;
-
-            const word = stack[Math.round(randomNumberInRange(0, stack.length - 1))];
-            [...word].forEach((letter, index) => {
-                const stackLetter = document.createElement(`span`);
-                stackLetter.style.opacity = `0`;
-                stackLetter.style.display = `inline-block`;
-                stackLetter.textContent = letter;
-                stackParagraph.appendChild(stackLetter);
-                animateText(stackLetter, index * staggerTime, 'animate-glowUpTypewriter');
+            const spans = stackParagraph.querySelectorAll(`span`);
+            let completedAnimations = 0;
+            
+            [...spans].reverse().forEach((span, index) => {
+                span.classList.remove('animate-glowUpTypewriter');
+                
+                setTimeout(() => {
+                    span.classList.add('animate-glowDownTypewriter');
+                    
+                    // Listen for each animation to complete
+                    span.addEventListener('animationend', (e) => {
+                        if (e.animationName === 'glowDownTypewriter') {
+                            completedAnimations++;
+                            
+                            // When ALL fade-out animations are done
+                            if (completedAnimations === spans.length) {
+                                stackParagraph.innerHTML = '';
+                                createNewWord();
+                            }
+                        }
+                    }, { once: true });
+                    
+                }, index * 200);
             });
-
-            currentWord = word; 
-        }, fadeOutDuration);
-    }
+        } else {
+            // First run - no previous word to animate out
+            setTimeout(createNewWord, randomNumberInRange(200, 1000));
+        }
+    };
     
     updateText();
-    setInterval(updateText, randomNumberInRange(4000, 10000));
-};
+    setInterval(updateText, randomNumberInRange(5000, 10000));
+}
 
 function animateText(span: HTMLSpanElement, duration: number, animation: string) {
     setTimeout(() => {
