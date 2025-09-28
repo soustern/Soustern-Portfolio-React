@@ -1,30 +1,26 @@
 import { useEffect, useRef, type JSX } from "react";
 import TextHeadline from "../components/ui/TextHeadline";
-import { createWebGLScene as  createWebGLScenePainter } from "../utils/webglPainter";
-import { createWebGLScene as  createWebGLSceneBackgroundPattern } from "../utils/webglBackgroundPattern";
+import { createWebGLScene as createWebGLScenePainter } from "../utils/webglPainter";
+import { createWebGLScene as createWebGLSceneBackgroundPattern } from "../utils/webglBackgroundPattern";
 import languageStrings from "../services/localisation.json"
 import { useLanguage } from "../components/contexts/LanguageContext";
 import TextStandard from "../components/ui/TextStandard";
 import { createTrailingStack } from "../utils/trailingStackBackground";
-
-
 
 const Hero = (): JSX.Element => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const heroRef = useRef<HTMLDivElement>(null);
     const trailingStack = useRef<HTMLDivElement>(null);
-    const {language, } = useLanguage();
+    const { language } = useLanguage();
 
     const strings = {
         heading: () => {
-            if (language === "En" )
-            {
+            if (language === "En") {
                 console.log("here en");
                 return languageStrings.en.hero.heading;
             }
-            if (language === "Pt-Br")
-            {
+            if (language === "Pt-Br") {
                 console.log("here Pt-Br");
                 return languageStrings["Pt-Br"].hero.heading;
             }
@@ -32,12 +28,15 @@ const Hero = (): JSX.Element => {
     }
 
     useEffect(() => {
-        if (trailingStack.current)
-        {
-            createTrailingStack(trailingStack.current);
-        }
+        let trailingStackCleanup: (() => void) | undefined;
 
         const init = async () => {
+            // Initialize trailing stack
+            if (trailingStack.current) {
+                trailingStackCleanup = createTrailingStack(trailingStack.current);
+            }
+
+            // Initialize WebGL scenes
             if (!containerRef.current || !heroRef.current || !videoRef.current) return;
 
             try {
@@ -51,7 +50,14 @@ const Hero = (): JSX.Element => {
         };
 
         init();
-    },);
+
+        // Cleanup function
+        return () => {
+            if (trailingStackCleanup) {
+                trailingStackCleanup();
+            }
+        };
+    }, [language]); // Add language as dependency if you want to reinitialize when language changes
     
     return (
         <section id='hero' className='flex flex-col h-screen items-center relative justify-center py-12 md:py-16 lg:py-24'>
@@ -60,7 +66,7 @@ const Hero = (): JSX.Element => {
                 <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
             </div>
             <div className="space-y-6 z-10">
-                <TextHeadline className="font-mono"  text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
+                <TextHeadline className="font-mono" text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
             </div>
             <div ref={trailingStack} className="font-mono absolute w-full h-[65%] left-1/2 top-1/2 transform -translate-1/2">
                 <TextStandard className="stack-paragraph absolute opacity-48 flex" ></TextStandard>
