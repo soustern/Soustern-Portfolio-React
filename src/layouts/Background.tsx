@@ -2,6 +2,7 @@ import { useEffect, useRef, type JSX, type ReactNode } from "react";
 import { createWebGLScene as createWebGLBackgroundPattern } from "../utils/webglBackgroundPattern";
 import TextStandard from "../components/ui/TextStandard";
 import { createTrailingStack } from "../utils/trailingStackBackground";
+import { useLanguage } from "../components/contexts/LanguageContext";
 
 
 interface BackgroundProps {
@@ -12,6 +13,7 @@ interface BackgroundProps {
 const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element => {
   const trailingStack = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     let trailingStackCleanup: (() => void) | undefined;
@@ -55,7 +57,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
             webglBackgroundCleanup();
         }
     };
-  },)
+  }, [language])
 
   return (
     <>

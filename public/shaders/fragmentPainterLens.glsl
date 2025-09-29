@@ -7,9 +7,9 @@ uniform sampler2D tFlow;
 uniform vec2 uResolution;
 uniform float uTime;
 uniform float uMixAmount;
-uniform float uIridescenceStrength; // 0.0 to 1.0, recommended: 0.4
-uniform float uFresnelPower; // 2.0 to 5.0, recommended: 3.0
-uniform float uDispersionStrength; // 0.0 to 0.02, recommended: 0.008
+uniform float uIridescenceStrength;
+uniform float uFresnelPower;
+uniform float uDispersionStrength;
 
 // Varying
 varying vec2 vUv;
@@ -34,58 +34,97 @@ float noise(in vec2 p) {
     return dot(n, vec3(70.0));
 }
 
-// ===== NEW CUTTING-EDGE EFFECTS =====
+// ===== COLOR CORRECTION =====
 
-// Iridescent/Holographic color shifting (desaturated version)
+vec3 colorCorrection(vec3 color, float saturation, float contrast, float brightness) {
+    // Brightness adjustment
+    color *= brightness;
+    
+    // Contrast adjustment (around midpoint 0.5)
+    color = (color - 0.5) * contrast + 0.5;
+    
+    // Saturation adjustment
+    float luminance = dot(color, vec3(0.299, 0.587, 0.114));
+    color = mix(vec3(luminance), color, saturation);
+    
+    // Clamp to valid range
+    return clamp(color, 0.0, 1.0);
+}
+
+vec3 vibrance(vec3 color, float amount) {
+    float max_color = max(color.r, max(color.g, color.b));
+    float min_color = min(color.r, min(color.g, color.b));
+    float sat = max_color - min_color;
+    
+    float luminance = dot(color, vec3(0.299, 0.587, 0.114));
+    vec3 saturated = mix(vec3(luminance), color, 1.0 + amount);
+    
+    // Vibrance affects less saturated colors more
+    return mix(color, saturated, (1.0 - sat));
+}
+
+// ===== CALCULATE FLOW DISTORTION =====
+
+vec2 calculateFlowDistortion(vec2 uv) {
+    vec3 flow = texture2D(tFlow, uv).rgb;
+    
+    // Sample neighboring flow values for smoother distortion
+    float radius = 0.03;
+    vec2 offset1 = vec2(radius, 0.0);
+    vec2 offset2 = vec2(0.0, radius);
+    vec2 offset3 = vec2(-radius, 0.0);
+    vec2 offset4 = vec2(0.0, -radius);
+    
+    vec3 flowAvg = (
+        texture2D(tFlow, uv + offset1).rgb +
+        texture2D(tFlow, uv + offset2).rgb +
+        texture2D(tFlow, uv + offset3).rgb +
+        texture2D(tFlow, uv + offset4).rgb +
+        flow
+    ) / 5.0;
+    
+    // Mouse-based distortion
+    vec2 mouseDistortion = flowAvg.xy * 0.9;
+    
+    // Languid waves
+    float languidFrequency = 6.0;
+    float languidSpeed = 0.03;
+    float languidStrength = 0.03;
+    vec2 wave1 = vec2(sin(uv.y * languidFrequency + uTime * languidSpeed), cos(uv.x * languidFrequency + uTime * languidSpeed));
+    vec2 wave2 = vec2(sin(uv.x * languidFrequency * 0.7 + uTime * languidSpeed * 0.6), cos(uv.y * languidFrequency * 0.7 + uTime * languidSpeed * 0.6));
+    vec2 languidDistortion = (wave1 + wave2) * languidStrength;
+    
+    return mouseDistortion + languidDistortion;
+}
+
+// ===== EFFECTS =====
+
 vec3 iridescence(vec2 uv, float distortion, float time) {
-    // Calculate angle from center
     float angle = atan(uv.y - 0.5, uv.x - 0.5);
-    
-    // Create shifting hue based on angle, distortion, and time
     float hue = fract(angle / 6.28318 + distortion * 3.0 + time * 0.08);
-    
-    // Add secondary layer for more complexity
     float hue2 = fract(length(uv - 0.5) * 2.0 - time * 0.05);
     hue = mix(hue, hue2, 0.3);
-    
-    // HSV to RGB conversion for rainbow effect
     vec3 rgb = clamp(abs(mod(hue * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
-    
-    // Heavily desaturate for subtle color hints
     rgb = mix(vec3(dot(rgb, vec3(0.299, 0.587, 0.114))), rgb, 0.2);
-    
     return rgb;
 }
 
-// Fresnel rim lighting effect
 float fresnel(vec2 uv, float power) {
-    // Calculate distance from center as a proxy for viewing angle
     vec2 center = vec2(0.5);
     float dist = length(uv - center);
-    
-    // Normalize to 0-1 range
     dist = clamp(dist * 2.0, 0.0, 1.0);
-    
-    // Apply Fresnel formula
     return pow(dist, power);
 }
 
-// Enhanced spectral dispersion with physics-based separation
 vec3 spectralDispersion(sampler2D tex, vec2 uv, vec2 direction, float strength) {
-    // Red light bends least
     float r = texture2D(tex, uv + direction * strength * 1.2).r;
-    // Green in the middle
     float g = texture2D(tex, uv + direction * strength * 0.6).g;
-    // Blue bends most
     float b = texture2D(tex, uv).b;
-    
     return vec3(r, g, b);
 }
 
-// ===== ORIGINAL EFFECTS (ENHANCED) =====
-
-vec4 lensDistortion(vec2 uv) {
-    vec2 fragCoord = vUv * uResolution;
+vec4 lensDistortion(vec2 uv, vec2 baseUv) {
+    vec2 fragCoord = uv * uResolution;
     vec3 result = vec3(1.0);
     
     vec2 sphereCenter = uResolution * 0.5;
@@ -95,10 +134,8 @@ vec4 lensDistortion(vec2 uv) {
     float sphereRadius = minDim * 0.6;
     
     float focusFactor = 1.9;
-    float chromaticAberrationFactor = 0.3;
-    
     float zoom = 1.9;
-    vec2 zoomedUv = sphereCenterUv + (vUv - sphereCenterUv) / zoom;
+    vec2 zoomedUv = sphereCenterUv + (uv - sphereCenterUv) / zoom;
     
     float distanceFromCenter = distance(fragCoord, sphereCenter);
     float normalizedDistance = distanceFromCenter / sphereRadius;
@@ -109,48 +146,17 @@ vec4 lensDistortion(vec2 uv) {
     float distortionAmount = pow(normalizedDistance, focusFactor);
     vec2 baseDistortion = direction * distortionAmount * 2.0 * smoothEdgeFalloff;
     
-    float aberrationOffset = chromaticAberrationFactor * normalizedDistance * smoothEdgeFalloff;
-    
-    // Apply spectral dispersion instead of simple chromatic aberration
     vec2 dispersionDir = direction * smoothEdgeFalloff;
     result = spectralDispersion(tMap, zoomedUv + baseDistortion, dispersionDir, uDispersionStrength);
     
-    vec3 image = texture2D(tMap, vUv).rgb;
+    vec3 image = texture2D(tMap, baseUv).rgb;
     result = mix(image, result, smoothEdgeFalloff);
     
     return vec4(result, smoothEdgeFalloff);
 }
 
-vec4 painterEffect(vec2 inputUv) {
-    vec3 flow = texture2D(tFlow, vUv).rgb;
-    
-    float radius = 0.03;
-    vec2 offset1 = vec2(radius, 0.0);
-    vec2 offset2 = vec2(0.0, radius);
-    vec2 offset3 = vec2(-radius, 0.0);
-    vec2 offset4 = vec2(0.0, -radius);
-    
-    vec3 flowAvg = (
-        texture2D(tFlow, vUv + offset1).rgb +
-        texture2D(tFlow, vUv + offset2).rgb +
-        texture2D(tFlow, vUv + offset3).rgb +
-        texture2D(tFlow, vUv + offset4).rgb +
-        flow
-    ) / 5.0;
-    
-    vec2 mouseDistortion = flowAvg.xy * 0.9;
-    
-    float languidFrequency = 6.0;
-    float languidSpeed = 0.03;
-    float languidStrength = 0.03;
-    vec2 wave1 = vec2(sin(vUv.y * languidFrequency + uTime * languidSpeed), cos(vUv.x * languidFrequency + uTime * languidSpeed));
-    vec2 wave2 = vec2(sin(vUv.x * languidFrequency * 0.7 + uTime * languidSpeed * 0.6), cos(vUv.y * languidFrequency * 0.7 + uTime * languidSpeed * 0.6));
-    vec2 languidDistortion = (wave1 + wave2) * languidStrength;
-    
-    vec2 totalDistortion = mouseDistortion + languidDistortion;
-    vec2 distortedUv = vUv + totalDistortion;
+vec4 painterEffect(vec2 distortedUv, vec2 totalDistortion) {
     float distortionStrength = length(totalDistortion);
-    
     float stretchThreshold = 0.005;
     float stretchIntensity = 0.8;
     
@@ -167,7 +173,6 @@ vec4 painterEffect(vec2 inputUv) {
         vec2 stretchUv2 = distortedUv - stretchDir * stretchAmount * 0.5;
         vec2 stretchUv3 = distortedUv - stretchDir * stretchAmount * 1.5;
         
-        // Apply spectral dispersion to stretched samples
         vec3 color1 = spectralDispersion(tWater, stretchUv1, stretchDir, uDispersionStrength * 0.5);
         vec3 color2 = spectralDispersion(tWater, stretchUv2, stretchDir, uDispersionStrength * 0.3);
         vec3 color3 = texture2D(tWater, stretchUv3).rgb;
@@ -182,8 +187,7 @@ vec4 painterEffect(vec2 inputUv) {
     return vec4(finalColor, distortionStrength);
 }
 
-vec4 causticReflections(float time) {
-    vec2 uv = vUv;
+vec4 causticReflections(vec2 uv, float time) {
     float speed = 0.03;
     float scale = 3.0;
     
@@ -199,31 +203,42 @@ vec4 causticReflections(float time) {
 // ===== MAIN COMPOSITION =====
 
 void main() {
-    // Get base effects
-    vec4 lensResult = lensDistortion(vUv);
-    vec4 painterResult = painterEffect(vUv);
+    // Calculate flow distortion ONCE at the beginning
+    vec2 flowDistortion = calculateFlowDistortion(vUv);
+    vec2 distortedUv = vUv + flowDistortion;
+    float distortionStrength = length(flowDistortion);
+    
+    // Apply distorted UVs to ALL effects
+    vec4 lensResult = lensDistortion(distortedUv, vUv);
+    vec4 painterResult = painterEffect(distortedUv, flowDistortion);
     
     // Mix the two base effects
     vec4 mixedColor = mix(lensResult, painterResult, uMixAmount);
     float distortionMask = mix(lensResult.a, painterResult.a, uMixAmount);
     
-    // Layer 1: Add iridescence based on distortion (heavily reduced)
-    vec3 iriColor = iridescence(vUv, distortionMask, uTime);
-    mixedColor.rgb += iriColor * uIridescenceStrength * distortionMask * 0.15;
+    // Use distorted UVs for iridescence
+    vec3 iriColor = iridescence(distortedUv, distortionMask, uTime);
+    mixedColor.rgb += iriColor * uIridescenceStrength * distortionMask * 0.3;
     
-    // Layer 2: Add caustics with blending (reduced intensity)
-    vec4 caustics = causticReflections(uTime);
-    mixedColor.rgb = mixedColor.rgb * (1.0 - caustics.a) + caustics.rgb * caustics.a * 0.25;
+    // Use distorted UVs for caustics
+    vec4 caustics = causticReflections(distortedUv, uTime);
+    mixedColor.rgb = mixedColor.rgb * (1.0 - caustics.a) + caustics.rgb * caustics.a * 0.55;
     
-    // Layer 3: Apply Fresnel rim lighting (reduced intensity)
-    float fresnelTerm = fresnel(vUv, uFresnelPower);
-    vec3 rimColor = vec3(0.6, 0.7, 0.85); // Softer blue rim
+    // Use distorted UVs for Fresnel
+    float fresnelTerm = fresnel(distortedUv, uFresnelPower);
+    vec3 rimColor = vec3(0.6, 0.7, 0.85);
     mixedColor.rgb += rimColor * fresnelTerm * 0.08 * (1.0 + distortionMask * 0.3);
     
-    // Layer 4: Add subtle iridescent rim on edges (heavily reduced)
-    vec3 rimIridescence = iridescence(vUv, fresnelTerm, uTime * 0.5);
-    mixedColor.rgb += rimIridescence * fresnelTerm * uIridescenceStrength * 0.04;
+    // Use distorted UVs for rim iridescence
+    vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2);
+    mixedColor.rgb += rimIridescence * fresnelTerm * uIridescenceStrength * 0.6;
     
-    // Final color output
+    // ===== COLOR CORRECTION =====
+    // Boost saturation, contrast, and brightness for vibrant colors
+    mixedColor.rgb = colorCorrection(mixedColor.rgb, 1.35, 1.12, 1.05);
+    
+    // Add vibrance for extra pop on less saturated areas
+    mixedColor.rgb = vibrance(mixedColor.rgb, 0.25);
+    
     gl_FragColor = vec4(mixedColor.rgb, 1.0);
 }

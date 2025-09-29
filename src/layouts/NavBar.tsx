@@ -88,12 +88,12 @@ function NavBar(): JSX.Element  {
                     </div>
                     <div>
                         <ul className="flex items-center">
-                            <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
+                            <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
                                 <a className="mr-1" href="">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
                                 </a>
                             </motion.li>
-                            <motion.li whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} transition={{duration: 0.05, type: "spring", bounce: 0.5}}>
+                            <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
                                 <a className="mr-2" href="">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
                                 </a>
