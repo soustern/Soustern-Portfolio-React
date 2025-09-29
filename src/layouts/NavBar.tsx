@@ -2,7 +2,7 @@ import { useState, type JSX, type ReactNode, useRef } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
-import {  motion } from "motion/react";
+import {  AnimatePresence, motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from '../components/contexts/LanguageContext'
 import languageStrings from "../services/localisation.json"
@@ -109,7 +109,7 @@ function NavBar(): JSX.Element  {
                     <motion.button whileTap={{scale: 0.95}} onClick={handleClick} whileHover="hover" className="w-fit flex gap-1 items-baseline rounded-lg cursor-pointer">
                         {languageMenu()} 
                     </motion.button>
-                    {isOpen && <LanguageSelector></LanguageSelector>}
+                    <AnimatePresence>{isOpen && <LanguageSelector></LanguageSelector>}</AnimatePresence>
                 </div>
             </nav>
         )
