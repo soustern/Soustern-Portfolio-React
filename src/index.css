@@ -1,24 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
-.font-sans { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+.font-sans { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
 /* .font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; } */
 .font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; }
 
 :root {
-    --color-bg-primary: theme('colors.black'); /* Pure black base */
-    --color-bg-secondary: theme('colors.gray.950'); /* Cards/panels */
-    --color-bg-tertiary: theme('colors.gray.900'); /* Elevated elements */
+    /* Keep dark backgrounds for contrast */
+    --color-bg-primary: theme('colors.gray.950'); /* bg-gray-950 */
+    --color-bg-secondary: theme('colors.gray.900'); /* bg-gray-900 */
+    --color-bg-tertiary: theme('colors.gray.800'); /* bg-gray-800 */
 
-    --color-accent-primary: theme('colors.blue.400'); /* Bright electric blue */
-    --color-accent-secondary: theme('colors.yellow.400'); /* Vibrant gold/yellow */
-    --color-accent-tertiary: theme('colors.sky.400'); /* Lighter blue accent */
+    /* Lighter, more pastel accents that pop */
+    --color-accent-primary: theme('colors.blue.400'); /* text-blue-400 - brighter, more electric */
+    --color-accent-secondary: theme('colors.violet.400'); /* text-violet-400 - lighter pastel */
+    --color-accent-tertiary: theme('colors.cyan.300'); /* text-cyan-300 - pastel mint */
 
-    --color-accent-success: theme('colors.emerald.400'); /* Success */
-    --color-accent-warning: theme('colors.amber.400'); /* Gold-toned warning */
-    --color-accent-danger: theme('colors.red.500'); /* Clear danger */ 
+    /* Softer, pastel status colors */
+    --color-accent-success: theme('colors.emerald.400'); /* text-emerald-400 - pastel green */
+    --color-accent-warning: theme('colors.amber.300');   /* text-amber-300 - soft golden */
+    --color-accent-danger: theme('colors.rose.400');      /* text-rose-400 - softer pink-red */ 
 }
 
 
@@ -30,9 +34,10 @@
   /* The subtle background gradient */
   background-color: var(--color-bg-primary); /* Assuming your CSS variables are here or in index.css */
   background-image:
-    radial-gradient(at 27% 37%, hsla(215, 98%, 69%, 0.18) 0px, transparent 50%),
-    radial-gradient(at 97% 21%, hsla(226, 98%, 70%, 0.22) 0px, transparent 50%),
-    radial-gradient(at 82% 99%, hsla(258, 97%, 77%, 0.22) 0px, transparent 50%);
+    radial-gradient(at 20% 30%, hsla(211, 90%, 61%, 0.12) 0px, transparent 55%),
+    radial-gradient(at 80% 20%, hsla(258, 85%, 65%, 0.10) 0px, transparent 55%),
+    radial-gradient(at 65% 75%, hsla(189, 85%, 70%, 0.09) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, hsla(211, 90%, 61%, 0.05) 0px, transparent 70%);
 }
 
 /* The grainy overlay pseudo-element */

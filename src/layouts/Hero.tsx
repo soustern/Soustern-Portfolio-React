@@ -17,12 +17,18 @@ const Hero = (): JSX.Element => {
     const strings = {
         heading: () => {
             if (language === "En") {
-                console.log("here en");
                 return languageStrings.en.hero.heading;
             }
             if (language === "Pt-Br") {
-                console.log("here Pt-Br");
                 return languageStrings["Pt-Br"].hero.heading;
+            }
+        },
+        heroTip: () => {
+            if (language === "En") {
+                return languageStrings.en.hero.heroTip;
+            }
+            if (language === "Pt-Br") {
+                return languageStrings["Pt-Br"].hero.heroTip;
             }
         }
     }
@@ -81,8 +87,8 @@ const Hero = (): JSX.Element => {
                 <TextHeadline className="font-mono" text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
                 <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100">   
                     <AnimatePresence>
-                        {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className="absolute -left-26 top-0.5 w-fit">
-                            <TextStandard className="" text="Try hovering" ></TextStandard>
+                        {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className={`absolute ${language === `En` ? `-left-26` : `-left-30`}  top-0.5 w-fit`}>
+                            <TextStandard className="" text={strings.heroTip()} ></TextStandard>
                         </motion.div>}
                     </AnimatePresence>
                     <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-tertiary)]">

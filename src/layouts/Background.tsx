@@ -64,19 +64,14 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
           {children}
       </div>
       <div ref={trailingStack} className="font-mono absolute w-full h-[75%] left-1/2 top-1/2 transform -translate-1/2 overflow-hidden">
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard> 
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>       
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>       
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>       
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard> 
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-58 flex" ></TextStandard>                             
+        <TextStandard className="stack-paragraph absolute opacity-65 flex text-sm drop-shadow-amber-50"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>                  
       </div>
     </>
   );

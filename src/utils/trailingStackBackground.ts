@@ -20,10 +20,14 @@ export function createTrailingStack(container: HTMLDivElement) {
     
     window.addEventListener('resize', handleResize);
     
-    // Set up each text element
-    container.querySelectorAll(':scope > *').forEach(textStandard => {
-        const intervalId = setCoordinates(containerCoordinates, textStandard as HTMLElement, container);
-        if (intervalId) intervals.push(intervalId);
+    // Set up each text element with staggered delays for wave effect
+    const elements = Array.from(container.querySelectorAll(':scope > *'));
+    elements.forEach((textStandard, index) => {
+        // Stagger initial appearance
+        setTimeout(() => {
+            const intervalId = setCoordinates(containerCoordinates, textStandard as HTMLElement, container, index);
+            if (intervalId) intervals.push(intervalId);
+        }, index * 800); // Staggered start
     });
     
     // Create cleanup function
@@ -31,11 +35,9 @@ export function createTrailingStack(container: HTMLDivElement) {
         window.removeEventListener('resize', handleResize);
         intervals.forEach(intervalId => clearInterval(intervalId));
         
-        // Clear any ongoing animations and event listeners
         container.querySelectorAll(':scope > *').forEach(element => {
             const htmlElement = element as HTMLElement;
             htmlElement.innerHTML = '';
-            // Remove any remaining event listeners by cloning the node
             const newElement = htmlElement.cloneNode(false);
             htmlElement.parentNode?.replaceChild(newElement, htmlElement);
         });
@@ -43,25 +45,47 @@ export function createTrailingStack(container: HTMLDivElement) {
         cleanupMap.delete(container);
     };
     
-    // Store cleanup function
     cleanupMap.set(container, cleanup);
-    
     return cleanup;
 }
 
-function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLElement, container: HTMLDivElement): number {
+function setCoordinates(
+    containerCoordinates: DOMRect, 
+    stackParagraph: HTMLElement, 
+    container: HTMLDivElement,
+    elementIndex: number
+): number {
     let currentWord: string;
     let isAnimating = false;
     let currentTimeout: number | undefined;
     
+    // Create zones to avoid clustering
+    const zones = 6;
+    const preferredZone = elementIndex % zones;
+    
+    const getZonedPosition = () => {
+        const zoneWidth = containerCoordinates.width / 3;
+        const zoneHeight = containerCoordinates.height / 2;
+        
+        const col = preferredZone % 3;
+        const row = Math.floor(preferredZone / 3);
+        
+        return {
+            x: col * zoneWidth + randomNumberInRange(0, zoneWidth * 0.8),
+            y: row * zoneHeight + randomNumberInRange(0, zoneHeight * 0.8)
+        };
+    };
+    
     const createNewWord = () => {
-        stackParagraph.style.top = `${randomNumberInRange(0, containerCoordinates.height)}px`;
-        stackParagraph.style.left = `${randomNumberInRange(0, containerCoordinates.width)}px`;
+        const pos = getZonedPosition();
+        stackParagraph.style.top = `${pos.y}px`;
+        stackParagraph.style.left = `${pos.x}px`;
 
         const word = stack[Math.round(randomNumberInRange(0, stack.length - 1))];
-        
-        // Clear any existing content first
         stackParagraph.innerHTML = '';
+        
+        // Variable speed per element for organic feel
+        const baseDelay = 60 + (elementIndex * 20); // Faster typing
         
         [...word].forEach((letter, index) => {
             const stackLetter = document.createElement('span');
@@ -69,7 +93,9 @@ function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLEleme
             stackLetter.style.display = 'inline-block';
             stackLetter.textContent = letter;
             stackParagraph.appendChild(stackLetter);
-            animateText(stackLetter, index * 200, 'animate-glowUpTypewriter');
+            
+            // Smooth cascade effect
+            animateText(stackLetter, index * baseDelay, 'animate-glowUpTypewriter');
         });
 
         currentWord = word;
@@ -80,7 +106,6 @@ function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLEleme
         if (isAnimating) return;
         isAnimating = true;
         
-        // Clear any pending timeout
         if (currentTimeout) {
             clearTimeout(currentTimeout);
         }
@@ -89,37 +114,39 @@ function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLEleme
             const spans = stackParagraph.querySelectorAll('span');
             let completedAnimations = 0;
             
+            // Fade out with delay for smoother transition
             [...spans].reverse().forEach((span, index) => {
                 span.classList.remove('animate-glowUpTypewriter');
                 
                 setTimeout(() => {
                     span.classList.add('animate-glowDownTypewriter');
                     
-                    // Create a new handler for each span to avoid stacking
                     const handleAnimationEnd = (e: AnimationEvent) => {
                         if (e.animationName === 'glowDownTypewriter') {
                             completedAnimations++;
                             span.removeEventListener('animationend', handleAnimationEnd);
                             
-                            // When ALL fade-out animations are done
                             if (completedAnimations === spans.length) {
-                                stackParagraph.innerHTML = '';
-                                createNewWord();
+                                // Brief pause before new word
+                                setTimeout(() => {
+                                    stackParagraph.innerHTML = '';
+                                    createNewWord();
+                                }, 150);
                             }
                         }
                     };
                     
                     span.addEventListener('animationend', handleAnimationEnd);
-                }, index * 200);
+                }, index * 50); // Even faster fade out
             });
         } else {
-            // First run - no previous word to animate out
             currentTimeout = setTimeout(createNewWord, randomNumberInRange(200, 1000));
         }
     };
     
     updateText();
-    const intervalId = setInterval(updateText, randomNumberInRange(5000, 10000));
+    // Quicker cycle time for more dynamic feel
+    const intervalId = setInterval(updateText, randomNumberInRange(5000, 9000));
     
     return intervalId;
 }
@@ -127,8 +154,9 @@ function setCoordinates(containerCoordinates: DOMRect, stackParagraph: HTMLEleme
 function animateText(span: HTMLSpanElement, duration: number, animation: string) {
     setTimeout(() => {
         span.classList.add(animation);
-        span.style.opacity = '.10';
-        span.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8))';
+        // Even more subtle
+        span.style.opacity = '.06';
+        span.style.filter = 'drop-shadow(0 0 8px rgba(255,255,255,0.4))';
     }, duration);
 }
 

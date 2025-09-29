@@ -5,7 +5,8 @@
         "languageButton": "Language"
     },
     "hero": {
-      "heading": "Future.Ready.Developer"
+      "heading": "Future.Ready.Developer",
+      "heroTip": "Try hovering"
     }
   },
   "Pt-Br": {
@@ -14,7 +15,8 @@
         "languageButton": "Idioma"
     },
     "hero": {
-      "heading": "Desenvolvedor.Futurista"
+      "heading": "Desenvolvedor.Futurista",
+      "heroTip": "Passe o mouse"
     }
   }
 }
