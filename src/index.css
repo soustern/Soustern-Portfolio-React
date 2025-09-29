@@ -8,17 +8,17 @@
 .font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; }
 
 :root {
-    --color-bg-primary: theme('colors.gray.950'); /* bg-gray-950 */
-    --color-bg-secondary: theme('colors.gray.900'); /* bg-gray-900 */
-    --color-bg-tertiary: theme('colors.gray.800'); /* bg-gray-800 */
+    --color-bg-primary: theme('colors.black'); /* Pure black base */
+    --color-bg-secondary: theme('colors.gray.950'); /* Cards/panels */
+    --color-bg-tertiary: theme('colors.gray.900'); /* Elevated elements */
 
-    --color-accent-primary: theme('colors.blue.500'); /* text-blue-500 */
-    --color-accent-secondary: theme('colors.violet.500'); /* text-violet-500 */
-    --color-accent-tertiary: theme('colors.cyan.500'); /* text-cyan-500 */
+    --color-accent-primary: theme('colors.blue.400'); /* Bright electric blue */
+    --color-accent-secondary: theme('colors.yellow.400'); /* Vibrant gold/yellow */
+    --color-accent-tertiary: theme('colors.sky.400'); /* Lighter blue accent */
 
-    --color-accent-success: theme('colors.emerald.500'); /* text-emerald-500 */
-    --color-accent-warning: theme('colors.amber.500');   /* text-amber-500 */
-    --color-accent-danger: theme('colors.red.500');      /* text-red-500 */ 
+    --color-accent-success: theme('colors.emerald.400'); /* Success */
+    --color-accent-warning: theme('colors.amber.400'); /* Gold-toned warning */
+    --color-accent-danger: theme('colors.red.500'); /* Clear danger */ 
 }
 
 

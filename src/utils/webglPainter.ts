@@ -110,7 +110,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
                 value: texture,
             },
             tFlow: flowmap.uniform,
-            // NEW: Secondary flow layer for dual distortion
             tFlowSecondary: flowmapSecondary.uniform,
             uResolution: { 
                 value: resolution 
@@ -118,7 +117,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
             uMixAmount: {
                 value: 0.5
             },
-            // NEW: Control uniforms for advanced effects
             uFlowIntensity: {
                 value: 1.0  // Master control for flow strength
             },
@@ -128,9 +126,8 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
             uTrailDecay: {
                 value: 0.98  // How quickly trails fade
             },
-            // NEW: For iridescence effects
             uIridescenceStrength: {
-                value: 0.4
+                value: 0.2
             },
             uFresnelPower: {
                 value: 3.0
@@ -267,7 +264,7 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
         }
         flowmapSecondary.update();
 
-        mouseTrail.forEach((point, index) => {
+        mouseTrail.forEach((point) => {
             point.age += 0.016; // ~60fps
             
             // Apply trail point to flowmap with decay
