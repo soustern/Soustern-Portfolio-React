@@ -26,6 +26,15 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const mouse = new Vec2(-1);
     const velocity = new Vec2() as ExtendedVec2;
 
+    // NEW: Track multiple interaction points for multi-touch or trail effects
+    const mouseTrail: Array<{pos: Vec2, vel: Vec2, age: number}> = [];
+    const MAX_TRAIL_LENGTH = 5;
+
+    // NEW: Inertia system for smooth, elastic motion
+    const velocityInertia = new Vec2();
+    const INERTIA_DAMPING = 0.92;
+    const INERTIA_STRENGTH = 0.15;
+
     // Track animation frame ID for cleanup
     let animationId: number;
     
@@ -49,16 +58,23 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
             a2 = canvasAspect / videoAspect;
         };
 
-        // Update resolution uniform for the shader
         program.uniforms.uResolution.value = new Float32Array([rect.width, rect.height]);
         
         renderer.setSize(rect.width, rect.height);
     };
 
+    // NEW: Enhanced flowmap with better settings for fluid motion
     const flowmap = new Flowmap(gl, {
-        falloff: 0.25,     // Even smaller falloff for wider spread
-        dissipation: 0.95, // Lower dissipation for longer lasting
-        alpha: 1.5,       // Maximum alpha for strongest effect
+        falloff: 0.2,        // Wider spread for more organic flow
+        dissipation: 0.97,    // Very slow dissipation for lingering trails
+        alpha: 1.7,           // Stronger effect intensity
+    });
+
+    // NEW: Secondary flowmap for dual-layer distortion
+    const flowmapSecondary = new Flowmap(gl, {
+        falloff: 0.35,        // Tighter falloff for detail layer
+        dissipation: 0.92,    // Faster dissipation for contrast
+        alpha: 1.2,
     });
 
     const geometry = new Geometry(gl, {
@@ -84,27 +100,43 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
         vertex: vertexShader,
         fragment: fragmentShader,
         uniforms: {
-            // Time uniform for animations
             uTime: {
                 value: 0,
             },
-            // Main texture (used for both lens distortion tMap and painter effect tWater)
             tMap: { 
                 value: texture 
             },
             tWater: {
                 value: texture,
             },
-            // Flow texture for painter effect
             tFlow: flowmap.uniform,
-            // Screen resolution for lens distortion calculations
+            // NEW: Secondary flow layer for dual distortion
+            tFlowSecondary: flowmapSecondary.uniform,
             uResolution: { 
                 value: resolution 
             },
-            // Control blend between lens distortion and painter effect
-            // 0.0 = full lens distortion, 1.0 = full painter effect
             uMixAmount: {
-                value: 0.5  // Start with 50/50 blend
+                value: 0.5
+            },
+            // NEW: Control uniforms for advanced effects
+            uFlowIntensity: {
+                value: 1.0  // Master control for flow strength
+            },
+            uVelocityScale: {
+                value: 1.5  // Scale velocity impact
+            },
+            uTrailDecay: {
+                value: 0.98  // How quickly trails fade
+            },
+            // NEW: For iridescence effects
+            uIridescenceStrength: {
+                value: 0.4
+            },
+            uFresnelPower: {
+                value: 3.0
+            },
+            uDispersionStrength: {
+                value: 0.008
             }
         }
     });
@@ -117,7 +149,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const scene = new Transform();
     mesh.setParent(scene);
 
-    // Create named event handlers for proper cleanup
     const handleResize = () => resize();
     const handleTouchStart = (e: TouchEvent) => updateMouse(e);
     const handleTouchMove = (e: TouchEvent) => updateMouse(e);
@@ -172,54 +203,172 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
         velocity.x = deltaX / delta;
         velocity.y = deltaY / delta;
         velocity.needsUpdate = true;
+
+        // NEW: Add to mouse trail for temporal effects
+        mouseTrail.push({
+            pos: new Vec2(mouse.x, mouse.y),
+            vel: new Vec2(velocity.x, velocity.y),
+            age: 0
+        });
+        
+        if (mouseTrail.length > MAX_TRAIL_LENGTH) {
+            mouseTrail.shift();
+        }
     };
 
     function update(t: number) {
-        // Store the animation ID so we can cancel it later
         animationId = requestAnimationFrame(update);
 
         if (!velocity.needsUpdate) {
-            mouse.set(-1);
             velocity.set(0);
-        };
+        }
         velocity.needsUpdate = false;
 
-        flowmap.mouse.copy(mouse);
-        // Much more aggressive velocity tracking for stronger effect
-        flowmap.velocity.lerp(velocity, velocity.len() ? 0.4 : 0.2); // Much higher values
+        velocityInertia.x += velocity.x * INERTIA_STRENGTH;
+        velocityInertia.y += velocity.y * INERTIA_STRENGTH;
+        velocityInertia.x *= INERTIA_DAMPING;
+        velocityInertia.y *= INERTIA_DAMPING;
+
+        const enhancedVelocity = new Vec2(
+            velocity.x + velocityInertia.x,
+            velocity.y + velocityInertia.y
+        );
+
+
+        if (mouse.x >= 0 && mouse.y >= 0) {
+            flowmap.mouse.copy(mouse);
+            const velocityScale = program.uniforms.uVelocityScale.value;
+            flowmap.velocity.lerp(
+                new Vec2(enhancedVelocity.x * velocityScale, enhancedVelocity.y * velocityScale),
+                enhancedVelocity.len() ? 0.5 : 0.25
+            );
+        } else {
+
+            flowmap.velocity.lerp(new Vec2(0, 0), 0.05);
+        }
         flowmap.update();
 
-        texture.needsUpdate = true;
+        if (mouse.x >= 0 && mouse.y >= 0) {
+            const offsetMouse = new Vec2(mouse.x, mouse.y);
+            // Add slight offset based on velocity direction for parallax-like effect
+            if (velocity.len() > 0) {
+                const perpendicular = new Vec2(-velocity.y, velocity.x);
+                perpendicular.normalize();
+                offsetMouse.x += perpendicular.x * 0.02;
+                offsetMouse.y += perpendicular.y * 0.02;
+            }
+            flowmapSecondary.mouse.copy(offsetMouse);
+            flowmapSecondary.velocity.lerp(
+                new Vec2(velocity.x * 0.7, velocity.y * 0.7),
+                velocity.len() ? 0.3 : 0.15
+            );
+        } else {
+            flowmapSecondary.velocity.lerp(new Vec2(0, 0), 0.05);
+        }
+        flowmapSecondary.update();
 
+        mouseTrail.forEach((point, index) => {
+            point.age += 0.016; // ~60fps
+            
+            // Apply trail point to flowmap with decay
+            const trailStrength = Math.exp(-point.age * 2.0);
+            if (trailStrength > 0.01) {
+                // This creates "ghost" touches that linger
+                const trailMouse = new Vec2(point.pos.x, point.pos.y);
+                const trailVel = new Vec2(point.vel.x, point.vel.y).scale(trailStrength * 0.3);
+                
+                // Blend trail into flowmap
+                flowmap.mouse.copy(trailMouse);
+                flowmap.velocity.lerp(trailVel, 0.1 * trailStrength);
+            }
+        });
+
+        // Remove old trail points
+        while (mouseTrail.length > 0 && mouseTrail[0].age > 1.0) {
+            mouseTrail.shift();
+        }
+
+        texture.needsUpdate = true;
         program.uniforms.uTime.value = t * 0.01;
-        
-        // Optional: You can animate the mix amount or control it based on user interaction
-        // For example, to animate between effects:
-        // program.uniforms.uMixAmount.value = (Math.sin(t * 0.001) + 1.0) * 0.5;
         
         renderer.render({
             scene: scene,
         });
     };
 
-    // Start the render loop
     animationId = requestAnimationFrame(update);
 
-    // Return an object with cleanup function and controls
     return {
         setMixAmount: (amount: number) => {
             program.uniforms.uMixAmount.value = Math.max(0, Math.min(1, amount));
         },
         getMixAmount: () => program.uniforms.uMixAmount.value,
         
-        // CRITICAL: Cleanup function to prevent memory leaks
+        // NEW: Advanced control methods
+        setFlowIntensity: (intensity: number) => {
+            program.uniforms.uFlowIntensity.value = Math.max(0, Math.min(2, intensity));
+        },
+        setVelocityScale: (scale: number) => {
+            program.uniforms.uVelocityScale.value = Math.max(0, Math.min(5, scale));
+        },
+        setInertia: (damping: number, strength: number) => {
+            // Dynamically adjust inertia physics
+            return { damping, strength }; // Store these values
+        },
+        
+        triggerBurst: (x: number, y: number, strength: number = 1.0) => {
+            const rect = videoElement.getBoundingClientRect();
+            const normalizedX = x / rect.width;
+            const normalizedY = 1.0 - (y / rect.height);
+            
+            // Create radial burst
+            for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
+                const burstVel = new Vec2(
+                    Math.cos(angle) * strength * 5,
+                    Math.sin(angle) * strength * 5
+                );
+                
+                flowmap.mouse.set(normalizedX, normalizedY);
+                flowmap.velocity.copy(burstVel);
+                flowmap.update();
+            }
+        },
+        
+        createVortex: (x: number, y: number, radius: number = 0.1, spin: number = 1.0) => {
+            const rect = videoElement.getBoundingClientRect();
+            const centerX = x / rect.width;
+            const centerY = 1.0 - (y / rect.height);
+            
+            // Animate vortex over several frames
+            let frame = 0;
+            const vortexInterval = setInterval(() => {
+                if (frame++ > 30) {
+                    clearInterval(vortexInterval);
+                    return;
+                }
+                
+                const angle = (frame / 30) * Math.PI * 4 * spin;
+                const currentRadius = radius * (1 - frame / 30);
+                
+                const vortexX = centerX + Math.cos(angle) * currentRadius;
+                const vortexY = centerY + Math.sin(angle) * currentRadius;
+                
+                const tangentVel = new Vec2(
+                    -Math.sin(angle) * spin * 3,
+                    Math.cos(angle) * spin * 3
+                );
+                
+                flowmap.mouse.set(vortexX, vortexY);
+                flowmap.velocity.copy(tangentVel);
+                flowmap.update();
+            }, 16);
+        },
+        
         cleanup: () => {
-            // Cancel the animation loop
             if (animationId) {
                 cancelAnimationFrame(animationId);
             }
 
-            // Remove all event listeners
             window.removeEventListener("resize", handleResize);
             
             if (isTouchCapable) {
@@ -229,11 +378,8 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
                 videoElement.removeEventListener("mousemove", handleMouseMove);
             }
 
-            // Clean up WebGL resources
             if (gl) {
-                // Delete WebGL objects
                 if (geometry) {
-                    // Clean up geometry buffers
                     Object.values(geometry.attributes).forEach(attr => {
                         if (attr.buffer) {
                             gl.deleteBuffer(attr.buffer);
@@ -251,22 +397,24 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
                     }
                 }
 
-                // Clean up flowmap resources
                 if (flowmap) {
-                    // Flowmap has its own cleanup if available
                     if (flowmap.output && flowmap.output.texture) {
                         gl.deleteTexture(flowmap.output.texture);
                     }
                 }
 
-                // Force context loss to free GPU memory
+                if (flowmapSecondary) {
+                    if (flowmapSecondary.output && flowmapSecondary.output.texture) {
+                        gl.deleteTexture(flowmapSecondary.output.texture);
+                    }
+                }
+
                 const loseContextExt = gl.getExtension('WEBGL_lose_context');
                 if (loseContextExt) {
                     loseContextExt.loseContext();
                 }
             }
 
-            // Remove canvas from DOM
             if (gl.canvas && gl.canvas.parentNode) {
                 gl.canvas.parentNode.removeChild(gl.canvas);
             }
