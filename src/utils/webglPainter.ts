@@ -5,14 +5,12 @@ export async function loadShader(url: string) {
     return response.text();
 }
 
-export async function createWebGLScene(container: HTMLDivElement, video: HTMLVideoElement)
-{
+export async function createWebGLScene(container: HTMLDivElement, video: HTMLVideoElement) {
     const rect = container.getBoundingClientRect();
     const vertexShader = await loadShader("public/shaders/vertexLens.glsl");
     const fragmentShader = await loadShader("public/shaders/fragmentPainterLens.glsl");
 
     const _size = [2000, 2500];
-
     const videoElement = container;
 
     const renderer = new Renderer({ dpr: 2 });
@@ -28,6 +26,9 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const mouse = new Vec2(-1);
     const velocity = new Vec2() as ExtendedVec2;
 
+    // Track animation frame ID for cleanup
+    let animationId: number;
+    
     function resize() {
         const rect = videoElement.getBoundingClientRect();
         gl.canvas.width = rect.width * 2.0;
@@ -116,18 +117,24 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const scene = new Transform();
     mesh.setParent(scene);
 
-    window.addEventListener("resize", resize, false);
+    // Create named event handlers for proper cleanup
+    const handleResize = () => resize();
+    const handleTouchStart = (e: TouchEvent) => updateMouse(e);
+    const handleTouchMove = (e: TouchEvent) => updateMouse(e);
+    const handleMouseMove = (e: MouseEvent) => updateMouse(e);
+
+    window.addEventListener("resize", handleResize, false);
     resize();
 
     const isTouchCapable = "ontouchstart" in window;
     if (isTouchCapable) {
-        videoElement.addEventListener("touchstart", updateMouse, false);
-        videoElement.addEventListener("touchmove", updateMouse, {
+        videoElement.addEventListener("touchstart", handleTouchStart, false);
+        videoElement.addEventListener("touchmove", handleTouchMove, {
             passive: false,
         });
     }
     else {
-        videoElement.addEventListener("mousemove", updateMouse, false);
+        videoElement.addEventListener("mousemove", handleMouseMove, false);
     };
 
     let lastTime: number;
@@ -168,7 +175,8 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     };
 
     function update(t: number) {
-        requestAnimationFrame(update);
+        // Store the animation ID so we can cancel it later
+        animationId = requestAnimationFrame(update);
 
         if (!velocity.needsUpdate) {
             mouse.set(-1);
@@ -194,13 +202,78 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
         });
     };
 
-    requestAnimationFrame(update);
+    // Start the render loop
+    animationId = requestAnimationFrame(update);
 
-    // Return an object with controls so you can adjust the mix from outside
+    // Return an object with cleanup function and controls
     return {
         setMixAmount: (amount: number) => {
             program.uniforms.uMixAmount.value = Math.max(0, Math.min(1, amount));
         },
-        getMixAmount: () => program.uniforms.uMixAmount.value
+        getMixAmount: () => program.uniforms.uMixAmount.value,
+        
+        // CRITICAL: Cleanup function to prevent memory leaks
+        cleanup: () => {
+            // Cancel the animation loop
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+
+            // Remove all event listeners
+            window.removeEventListener("resize", handleResize);
+            
+            if (isTouchCapable) {
+                videoElement.removeEventListener("touchstart", handleTouchStart);
+                videoElement.removeEventListener("touchmove", handleTouchMove);
+            } else {
+                videoElement.removeEventListener("mousemove", handleMouseMove);
+            }
+
+            // Clean up WebGL resources
+            if (gl) {
+                // Delete WebGL objects
+                if (geometry) {
+                    // Clean up geometry buffers
+                    Object.values(geometry.attributes).forEach(attr => {
+                        if (attr.buffer) {
+                            gl.deleteBuffer(attr.buffer);
+                        }
+                    });
+                }
+
+                if (texture) {
+                    gl.deleteTexture(texture.texture);
+                }
+
+                if (program) {
+                    if (program.program) {
+                        gl.deleteProgram(program.program);
+                    }
+                }
+
+                // Clean up flowmap resources
+                if (flowmap) {
+                    // Flowmap has its own cleanup if available
+                    if (flowmap.output && flowmap.output.texture) {
+                        gl.deleteTexture(flowmap.output.texture);
+                    }
+                }
+
+                // Force context loss to free GPU memory
+                const loseContextExt = gl.getExtension('WEBGL_lose_context');
+                if (loseContextExt) {
+                    loseContextExt.loseContext();
+                }
+            }
+
+            // Remove canvas from DOM
+            if (gl.canvas && gl.canvas.parentNode) {
+                gl.canvas.parentNode.removeChild(gl.canvas);
+            }
+            
+            if (canvas && canvas.parentNode) {
+                canvas.parentNode.removeChild(canvas);
+            }
+        }
     };
 }
