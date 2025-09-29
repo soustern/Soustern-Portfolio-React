@@ -14,7 +14,7 @@ function App() {
           <header className='fixed w-full py-20 px-10 z-100'>
             <NavBar></NavBar>
           </header>
-          <main>
+          <main className='relative'>
             <Hero></Hero>
             <SideBar></SideBar>
           </main>

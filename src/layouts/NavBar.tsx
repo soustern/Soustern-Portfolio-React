@@ -81,7 +81,7 @@ function NavBar(): JSX.Element  {
     else
     {
         return (
-            <nav className="z-100 flex flex-col gap-2 m-auto max-w-5xl text-base font-medium leading-normal transition-all">
+            <nav className="z-100 flex flex-col gap-2 m-auto max-w-5xl text-base leading-normal transition-all">
                 <div className="flex justify-between items-center">
                     <div>
                         <Logo></Logo>
