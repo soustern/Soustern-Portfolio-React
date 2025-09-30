@@ -35,6 +35,14 @@ const Hero = (): JSX.Element => {
             if (language === "Pt-Br") {
                 return languageStrings["Pt-Br"].hero.heroTip;
             }
+        },
+        subHeading: () => {
+            if (language === "En") {
+                return languageStrings.en.hero.subHeading;
+            }
+            if (language === "Pt-Br") {
+                return languageStrings["Pt-Br"].hero.subHeading;
+            }
         }
     }
 
@@ -84,9 +92,9 @@ const Hero = (): JSX.Element => {
     }, [language]); // Re-run when language changes
     
     useGSAP(() => {
-        gsap.fromTo(scrollToExploreLeft.current, {x: -180, ease: "power2.in", opacity: 1}, {x: 180, opacity: 1, duration: 2, ease: "power2.out", delay: 1, repeat: -1, repeatDelay: 4});
+        gsap.fromTo(scrollToExploreLeft.current, {x: -180, ease: "power3.in", opacity: 1}, {x: 180, opacity: 1, duration: 1.7,  delay: 1, repeat: -1, repeatDelay: 4});
 
-        gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power2.in", opacity: 1}, {x: -180, opacity: 1, duration: 2, ease: "power2.out", delay: 1, repeat: -1, repeatDelay: 4});
+        gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power3.in", opacity: 1}, {x: -180, opacity: 1, duration: 1.7,  delay: 1, repeat: -1, repeatDelay: 4});
     })
 
     return (
@@ -100,7 +108,7 @@ const Hero = (): JSX.Element => {
                     <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                         <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                     </div>
-                    <TextStandard text="Scroll to explore" className="" importance="supporting"></TextStandard>
+                    <TextStandard text={strings.subHeading()} className="" importance="supporting"></TextStandard>
                     <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                         <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                     </div>

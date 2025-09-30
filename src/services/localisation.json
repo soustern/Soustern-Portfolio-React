@@ -6,7 +6,15 @@
     },
     "hero": {
       "heading": "Future.Ready.Developer",
-      "heroTip": "Try hovering"
+      "heroTip": "Try hovering",
+      "subHeading": "Scroll to explore"
+    },
+    "sideBar": {
+      "Hero": "Hero",
+      "Projects": "Projects",
+      "About": "About",
+      "Education": "Education",
+      "workWithMe": "Work with me"
     }
   },
   "Pt-Br": {
@@ -16,7 +24,15 @@
     },
     "hero": {
       "heading": "Desenvolvedor.Futurista",
-      "heroTip": "Passe o mouse"
+      "heroTip": "Passe o mouse",
+      "subHeading": "Role para explorar"
+    },
+    "sideBar": {
+      "Hero": "Início",
+      "Projects": "Projetos",
+      "About": "Sobre",
+      "Education": "Formação",
+      "workWithMe": "Trabalhe comigo"
     }
   }
 }
