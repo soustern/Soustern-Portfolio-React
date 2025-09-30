@@ -84,9 +84,9 @@ const Hero = (): JSX.Element => {
     }, [language]); // Re-run when language changes
     
     useGSAP(() => {
-        gsap.fromTo(scrollToExploreLeft.current, {x: -180, opacity: 1}, {x: 180, opacity: 1, duration: 2.5, ease: "power3.out", delay: 1, repeat: -1, repeatDelay: 4});
+        gsap.fromTo(scrollToExploreLeft.current, {x: -180, ease: "power2.in", opacity: 1}, {x: 180, opacity: 1, duration: 2, ease: "power2.out", delay: 1, repeat: -1, repeatDelay: 4});
 
-        gsap.fromTo(scrollToExploreRight.current, {x: 180, opacity: 1}, {x: -180, opacity: 1, duration: 2.5, ease: "power3.out", delay: 1, repeat: -1, repeatDelay: 4});
+        gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power2.in", opacity: 1}, {x: -180, opacity: 1, duration: 2, ease: "power2.out", delay: 1, repeat: -1, repeatDelay: 4});
     })
 
     return (
@@ -98,11 +98,11 @@ const Hero = (): JSX.Element => {
                 <TextHeadline className="font-mono" text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
                 <div className="flex items-center w-full gap-2">
                     <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
-                        <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(100px_circle,#f9fafb,transparent_40%)]"></div>
+                        <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                     </div>
                     <TextStandard text="Scroll to explore" className="" importance="supporting"></TextStandard>
                     <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
-                        <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(100px_circle,#f9fafb,transparent_40%)]"></div>
+                        <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                     </div>
                 </div>
                 <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100">   
@@ -111,7 +111,7 @@ const Hero = (): JSX.Element => {
                             <TextStandard className="" text={strings.heroTip()} ></TextStandard>
                         </motion.div>}
                     </AnimatePresence>
-                    <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-tertiary)]">
+                    <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-tertiary)] transform scale-[0.8]">
                         <PrimaryIcon className={isHovered ? "" : "animate-pulse"} icon={isHovered ? "arrow-right" : "exclamation"} iconType={"solid"}></PrimaryIcon>
                     </div>
                 </div>
