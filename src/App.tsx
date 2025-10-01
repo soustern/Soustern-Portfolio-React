@@ -1,10 +1,10 @@
-// import { useState } from 'react'
 import './App.css'
 import NavBar from './layouts/NavBar'
 import Background from './layouts/Background';
 import { LanguageProvider } from './components/contexts/LanguageContext';
 import Hero from './layouts/Hero';
 import SideBar from './layouts/SideBar';
+import Projects from './layouts/Projects';
 
 function App() {
   return (
@@ -14,8 +14,9 @@ function App() {
           <header className='fixed w-full py-20 px-10 z-100'>
             <NavBar></NavBar>
           </header>
-          <main className='relative'>
+          <main className='relative h-screen w-screen'>
             <Hero></Hero>
+            <Projects></Projects>
             <SideBar></SideBar>
           </main>
           <footer>

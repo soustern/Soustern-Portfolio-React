@@ -25,6 +25,10 @@
     --color-accent-danger: theme('colors.rose.400');      /* text-rose-400 - softer pink-red */ 
 }
 
+body {
+  overflow: hidden;
+}
+
 
 .hero-section-gradient {
   /* Positioning context for the grain overlay */
