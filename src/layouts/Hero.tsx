@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type JSX } from "react";
+import { forwardRef, useEffect, useRef, useState, type ForwardedRef, } from "react";
 import TextHeadline from "../components/ui/TextHeadline";
 import { createWebGLScene as createWebGLScenePainter } from "../utils/webglPainter";
 import languageStrings from "../services/localisation.json"
@@ -9,8 +9,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-
-const Hero = (): JSX.Element => {
+const Hero = forwardRef<HTMLElement>((props, ref: ForwardedRef<HTMLElement>) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const { language } = useLanguage();
@@ -19,7 +18,6 @@ const Hero = (): JSX.Element => {
     const scrollToExploreLeft = useRef<HTMLDivElement>(null);
     const scrollToExploreRight = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const test = useRef<HTMLElement>(null);
 
     const strings = {
         heading: () => {
@@ -49,16 +47,6 @@ const Hero = (): JSX.Element => {
     }
 
     useEffect(() => {
-        if (buttonRef.current)
-        {
-            buttonRef.current.addEventListener(`click`, () => {
-                if (test.current instanceof HTMLElement) {
-                    test.current.style.display = "none";
-                }
-            });
-        }
-
-
         // Store all cleanup functions
         let webglPainterCleanup: (() => void) | undefined;
         
@@ -110,7 +98,7 @@ const Hero = (): JSX.Element => {
     })
 
     return (
-        <section ref={test} id='hero' className='z-5 flex flex-col items-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 justify-center '>
+        <section ref={ref} id='hero' className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full'>
             <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 ">
                 <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
             </div>
@@ -136,9 +124,8 @@ const Hero = (): JSX.Element => {
                     </div>
                 </div>
             </div>
-            <button ref={buttonRef} className="cursor-pointer">Click</button>
         </section>
     )
-}
+});
 
 export default Hero;

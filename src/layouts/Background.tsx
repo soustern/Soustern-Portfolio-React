@@ -61,11 +61,11 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
 
   return (
     <>
-      <div className={`${BackgroundColor} h-screen w-screen`}>
+      <div className={`${BackgroundColor} min-h-screen w-screen`}>
           <div ref={heroRef} className="[&>canvas]:z-0 [&>canvas]:pointer-events-none h-full w-full absolute left-1/2 top-1/2 transform -translate-1/2"></div>
           {children}
       </div>
-      <div ref={trailingStack} className="z-0 font-mono absolute w-full h-[75%] left-1/2 top-1/2 transform -translate-1/2 overflow-hidden">
+      <div ref={trailingStack} className="z-0 font-mono fixed w-full h-[75%] left-1/2 top-1/2 transform -translate-1/2">
         <TextStandard className="stack-paragraph absolute opacity-65 flex text-sm drop-shadow-amber-50"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
