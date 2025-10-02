@@ -40,8 +40,8 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     
     function resize() {
         const rect = videoElement.getBoundingClientRect();
-        gl.canvas.width = rect.width * 2.0;
-        gl.canvas.height = rect.height * 2.0;
+        gl.canvas.width = rect.width * 11.0;
+        gl.canvas.height = rect.height * 11.0;
         gl.canvas.style.width = `${rect.width}px`;
         gl.canvas.style.height = `${rect.height}px`;
 

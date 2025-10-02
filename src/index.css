@@ -26,6 +26,10 @@
 }
 
 
+canvas {
+  width: 600px;
+  height: 600px;
+}
 
 .hero-section-gradient {
   /* Positioning context for the grain overlay */

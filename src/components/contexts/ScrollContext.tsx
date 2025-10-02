@@ -15,7 +15,7 @@ export function ScrollProvider({children}: {children: ReactNode}) {
     const handleWheel = useCallback((e: WheelEvent) => {
         e.preventDefault();
         setScrollProgress(prev => {
-            const delta = e.deltaY > 0 ? 0.02 : -0.02;
+            const delta = e.deltaY > 0 ? 0.15 : -0.15;
             const newProgress = Math.max(0, Math.min(1, prev + delta));
 
             if (newProgress === 1)

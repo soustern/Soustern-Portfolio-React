@@ -39,7 +39,7 @@ function App() {
       </header>
       
       <main className='fixed inset-0 overflow-hidden z-5'>
-        <Hero ref={hero} />
+        <Hero />
         <Projects ref={projects} />
         <SideBar />
       </main>
