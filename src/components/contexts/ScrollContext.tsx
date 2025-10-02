@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 
 type ScrollContextType = {
     scrollProgress: number,
@@ -13,27 +13,25 @@ export function ScrollProvider({children}: {children: ReactNode}) {
     const [pageNumber, setPageNumber] = useState(0);
 
     const handleWheel = useCallback((e: WheelEvent) => {
-        console.log(scrollProgress, pageNumber);
-        
         e.preventDefault();
-        const delta = e.deltaY > 0 ? 0.05 : -0.05;
         setScrollProgress(prev => {
+            const delta = e.deltaY > 0 ? 0.02 : -0.02;
             const newProgress = Math.max(0, Math.min(1, prev + delta));
 
-            if (newProgress >= 1 && prev < 1)
+            if (newProgress === 1)
             {
                 setPageNumber(p => p + 1);
-                return 0.05;
+                return 0;
             }
-            if (newProgress === 0 && prev > 0.05 && delta < 0)
+            if (newProgress === 0 && pageNumber != 0)
             {
-                setPageNumber(p => Math.max(0, p - 1));
+                setPageNumber(p => p - 1);
                 return 0.95;
             }
 
             return newProgress;
         });
-    }, []);
+    }, [pageNumber]);
 
     return (
         <ScrollContext.Provider value={{scrollProgress, handleWheel, pageNumber}}>

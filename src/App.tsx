@@ -16,8 +16,9 @@ function App() {
 
   useEffect(() => {
     window.addEventListener(`wheel`, handleWheel, {passive: false});
+    console.log(scrollProgress, pageNumber);
     return () => window.removeEventListener(`wheel`, handleWheel);
-  }, [handleWheel]);
+  }, [handleWheel, scrollProgress, pageNumber]);
 
   // useGSAP(() => {
   //   if (!hero.current || !projects.current) return;
