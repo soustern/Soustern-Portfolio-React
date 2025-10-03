@@ -127,7 +127,9 @@ const Hero = () => {
             ref={sectionRef} 
             id='hero' 
             className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full'>
-                <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 ">
+
+                 TODO : Make this responsive. Smaller by default, bigger in really big screens (like 2k);
+                <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
                     <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
                 </div>
                 <div className="space-y-4 z-10 relative">

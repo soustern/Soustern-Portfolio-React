@@ -10,8 +10,6 @@ import { useGSAP } from '@gsap/react';
 import { useScroll } from './components/contexts/ScrollContext';
 
 function App() {
-  const hero = useRef<HTMLElement>(null);
-  const projects = useRef<HTMLElement>(null);
   const {scrollProgress, handleWheel, pageNumber} = useScroll();
 
   useEffect(() => {
@@ -40,7 +38,7 @@ function App() {
       
       <main className='fixed inset-0 overflow-hidden z-5'>
         <Hero />
-        <Projects ref={projects} />
+        <Projects />
         <SideBar />
       </main>
 

@@ -71,6 +71,8 @@ const SideBar = (): JSX.Element => {
     // })
 
     return (
+
+        // TODO: Make this responsive
         <aside className="z-100 py-10 px-20 fixed right-0 top-1/2 transform -translate-y-1/2">
             <nav aria-label="Main navigation">
                 <ul className="flex flex-col">
