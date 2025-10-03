@@ -149,7 +149,7 @@ const Hero = () => {
                                 <TextStandard className="" text={strings.heroTip()} ></TextStandard>
                             </motion.div>}
                         </AnimatePresence>
-                        <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-tertiary)] transform scale-[0.8]">
+                        <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-secondary)] transform scale-[0.8]">
                             <PrimaryIcon className={isHovered ? "" : "animate-pulse"} icon={isHovered ? "arrow-right" : "exclamation"} iconType={"solid"}></PrimaryIcon>
                         </div>
                     </div>

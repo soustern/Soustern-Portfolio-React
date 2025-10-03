@@ -73,7 +73,12 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
         <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>                  
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>    
+        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>              
       </div>
     </>
   );
