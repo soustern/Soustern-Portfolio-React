@@ -115,6 +115,9 @@ const Hero = () => {
         gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power3.in", opacity: 1}, {x: -180, opacity: 1, duration: 1.7,  delay: 1, repeat: -1, repeatDelay: 4});
     }, [shouldRender]);
 
+    // TODO: Make WebGl thing be more responsive and smaller in most cases
+    // TODO: Make WebGl canvas resize correctly when returning to this section
+
     return (
         <AnimatePresence>
             {shouldRender && 
@@ -128,7 +131,6 @@ const Hero = () => {
             id='hero' 
             className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full'>
 
-                 TODO : Make this responsive. Smaller by default, bigger in really big screens (like 2k);
                 <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
                     <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src="src\assets\videos\hero.mp4"></video>
                 </div>

@@ -31,7 +31,7 @@ const Projects = () => {
             image: "src/assets/images/dnd.png",
             type: "Project",
             Year: "2024",
-            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, ",
+            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, Vercel, ",
         },
         {
             id: 3,
@@ -43,7 +43,7 @@ const Projects = () => {
             image: "https://via.placeholder.com/600x400",
             type: "Project",
             Year: "2023",
-            stack: " Brand Design, UX, UI, Figma, Adobe Suite, ",
+            stack: "C, Linux, CLI, ",
         },
         {
             id: 4,
@@ -55,7 +55,7 @@ const Projects = () => {
             image: "src/assets/images/todo.png",
             type: "Project",
             Year: "2025",
-            stack: " React, TypeScript, CSS, HTML, API Integration, ",
+            stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
         },
         {
             id: 5,
@@ -98,16 +98,20 @@ const Projects = () => {
         };
     }, [scrollProgress, pageNumber]);
 
+    // TODO: Make responsive version
+    // TODO: Make transition animations
+    // TODO: Make hover animations
+    // TODO: Make pages
+
     return (
         <AnimatePresence>
             {shouldRender && 
             <section 
                 ref={sectionRef} 
                 id='Projects' 
-                className='fixed inset-0 z-5 flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12'
+                className='fixed inset-0 z-5 flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12 pr-20'
             >
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full max-w-6xl overflow-y-auto max-h-full py-4">
-                    
+                <div className="grid flex-1 grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 w-full max-w-[1000px] overflow-y-auto max-h-full py-4">
                     {projects.slice(0, 2).map(project => (
                         <article 
                             key={project.id} 
@@ -120,9 +124,7 @@ const Projects = () => {
                                     className="w-full h-auto aspect-[10/3] object-cover rounded-lg grayscale brightness-110 mix-blend-luminosity"
                                 />
                             </div>
-                            
                             <div className="p-4 lg:p-6 space-y-1">
-                                
                                 <div className="flex items-baseline gap-3">
                                     <div className="flex items-center gap-2">
                                         <div className="flex-shrink-0">
@@ -140,7 +142,7 @@ const Projects = () => {
                                     <TextStandard text={project.Year} importance="supporting"></TextStandard>
                                 </div>
                                 <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-8 relative">
+                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1 relative">
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>
@@ -154,7 +156,6 @@ const Projects = () => {
                             </div>
                         </article>
                     ))}
-                    
                     {projects.slice(2).map(project => (
                         <article 
                             key={project.id} 
@@ -185,7 +186,7 @@ const Projects = () => {
                                     <TextStandard text={project.Year} importance="supporting"></TextStandard>
                                 </div>
                                 <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-8">
+                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1">
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>
                                         <TextStandard importance="metadata">{project.stack}</TextStandard>

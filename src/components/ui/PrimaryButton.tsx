@@ -17,6 +17,8 @@ function PrimaryButton({ text }: PrimaryButtonProps): JSX.Element {
         hover: { left: "92%", opacity: "100%" }     
     };
 
+    // TODO: Discover where to use this cool button
+
     return (
         <>
              <motion.button whileHover="hover" whileTap={{scale: 0.9}} transition={{duration: 0.07,}} className="relative px-3 py-1.5 font-heading font-semibold text-sm tracking-wider flex items-center cursor-pointer">

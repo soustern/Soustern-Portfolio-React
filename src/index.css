@@ -119,6 +119,7 @@ clip-path: path(
   );
 }
 
+/* TODO: Make this media query align with changes on the component */
 @media (max-width: 1024px) {
   .modern-arch {
     clip-path: path(

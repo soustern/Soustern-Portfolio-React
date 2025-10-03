@@ -74,7 +74,9 @@ function NavBar(): JSX.Element  {
         hover: { color: "#f9fafb" }
     };
 
-    if (screenWidth.width <= 680)
+    // TODO: Make mobile version of navbar
+
+    if (screenWidth.width <= 1200)
     {
         return (<></>);   
     }
@@ -93,14 +95,20 @@ function NavBar(): JSX.Element  {
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
                                 </a>
                             </motion.li>
+                            <li>
+                                <ul>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </li>
                             <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
                                 <a className="mr-2" href="">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
                                 </a>
                             </motion.li>
-                            <li>
-                                <PrimaryButton text={`${strings.cta()}`}></PrimaryButton>
-                            </li>
                         </ul>
                     </div>
                 </div>

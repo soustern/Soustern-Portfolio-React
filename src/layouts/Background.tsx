@@ -59,6 +59,8 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
     };
   }, [language])
 
+  // TODO: Make background gradient change as section changes
+
   return (
     <>
       <div className={`${BackgroundColor} min-h-screen w-screen`}>
@@ -74,11 +76,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
         <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
         <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>    
-        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>              
+        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>          
       </div>
     </>
   );

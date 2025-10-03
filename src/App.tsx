@@ -2,7 +2,6 @@ import './App.css'
 import NavBar from './layouts/NavBar'
 import Background from './layouts/Background';
 import Hero from './layouts/Hero';
-import SideBar from './layouts/SideBar';
 import Projects from './layouts/Projects';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
@@ -14,7 +13,6 @@ function App() {
 
   useEffect(() => {
     window.addEventListener(`wheel`, handleWheel, {passive: false});
-    console.log(scrollProgress, pageNumber);
     return () => window.removeEventListener(`wheel`, handleWheel);
   }, [handleWheel, scrollProgress, pageNumber]);
 
@@ -39,7 +37,6 @@ function App() {
       <main className='fixed inset-0 overflow-hidden z-5'>
         <Hero />
         <Projects />
-        <SideBar />
       </main>
 
       <footer className='fixed bottom-0 left-0 w-full' />
