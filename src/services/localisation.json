@@ -9,7 +9,7 @@
       "heroTip": "Try hovering",
       "subHeading": "Scroll to explore"
     },
-    "sideBar": {
+    "sections": {
       "Hero": "Hero",
       "Projects": "Projects",
       "About": "About",
@@ -27,7 +27,7 @@
       "heroTip": "Passe o mouse",
       "subHeading": "Role para explorar"
     },
-    "sideBar": {
+    "sections": {
       "Hero": "Início",
       "Projects": "Projetos",
       "About": "Sobre",

@@ -42,8 +42,61 @@ function NavBar(): JSX.Element  {
             {
                 return languageStrings["Pt-Br"].navBar.cta;
             }
+        },
+        sections: {
+            Hero: () => {
+                if (language === `En`)
+                {
+                    return languageStrings.en.sections.Hero;
+                }
+                if (language === `Pt-Br`)
+                {
+                    return languageStrings["Pt-Br"].sections.Hero;
+                }
+            },
+            Projects: () => {
+                if (language === `En`)
+                {
+                    return languageStrings.en.sections.Projects;
+                }
+                if (language === `Pt-Br`)
+                {
+                    return languageStrings["Pt-Br"].sections.Projects;
+                }
+            },
+            About: () => {
+                if (language === `En`)
+                {
+                    return languageStrings.en.sections.About;
+                }
+                if (language === `Pt-Br`)
+                {
+                    return languageStrings["Pt-Br"].sections.About;
+                }
+            },
+            Education: () => {
+                if (language === `En`)
+                {
+                    return languageStrings.en.sections.Education;
+                }
+                if (language === `Pt-Br`)
+                {
+                    return languageStrings["Pt-Br"].sections.Education;
+                }
+            },
+            workWithMe: () => {
+                if (language === `En`)
+                {
+                    return languageStrings.en.sections.workWithMe;
+                }
+                if (language === `Pt-Br`)
+                {
+                    return languageStrings["Pt-Br"].sections.workWithMe;
+                }
+            },
         }
     }
+    
 
     const languageMenu = (): ReactNode => {
         if (isOpen && ref.current)
@@ -95,15 +148,6 @@ function NavBar(): JSX.Element  {
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
                                 </a>
                             </motion.li>
-                            <li>
-                                <ul>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                </ul>
-                            </li>
                             <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
                                 <a className="mr-2" href="">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
@@ -114,10 +158,24 @@ function NavBar(): JSX.Element  {
                 </div>
                 <div className="h-[1px] rounded-full bg-[var(--color-bg-tertiary)]"></div>
                 <div className="flex gap-2">
-                    <motion.button whileTap={{scale: 0.95}} onClick={handleClick} whileHover="hover" className="w-fit flex gap-1 items-baseline rounded-lg cursor-pointer">
-                        {languageMenu()} 
-                    </motion.button>
-                    <AnimatePresence>{isOpen && <LanguageSelector></LanguageSelector>}</AnimatePresence>
+                    <div className="flex-1 flex gap-2">
+                        <motion.button whileTap={{scale: 0.95}} onClick={handleClick} whileHover="hover" className="w-fit flex gap-1 items-baseline rounded-lg cursor-pointer">
+                            {languageMenu()}
+                        </motion.button>
+                        <AnimatePresence>{isOpen && <LanguageSelector></LanguageSelector>}</AnimatePresence>
+                    </div>
+                    <div className="">
+                        <div className="flex flex-col w-fit relative">
+                            <div className="h-[1px] rounded-full bg-amber-300 transform -translate-y-2"></div>
+                            <ul className="flex gap-4">
+                                <li><TextStandard importance="supporting" text={`${strings.sections.Hero()}`}></TextStandard></li>
+                                <li><TextStandard importance="supporting" text={`${strings.sections.Projects()}`}></TextStandard></li>
+                                <li><TextStandard importance="supporting" text={`${strings.sections.About()}`}></TextStandard></li>
+                                <li><TextStandard importance="supporting" text={`${strings.sections.Education()}`}></TextStandard></li>
+                                <li><TextStandard importance="supporting" text={`${strings.sections.workWithMe()}`}></TextStandard></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </nav>
         )
