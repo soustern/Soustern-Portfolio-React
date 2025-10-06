@@ -15,23 +15,10 @@ export function ScrollProvider({children}: {children: ReactNode}) {
     const handleWheel = useCallback((e: WheelEvent) => {
         e.preventDefault();
         setScrollProgress(prev => {
-            const delta = e.deltaY > 0 ? 0.15 : -0.15;
-            const newProgress = Math.max(0, Math.min(1, prev + delta));
-
-            if (newProgress === 1)
-            {
-                setPageNumber(p => p + 1);
-                return 0;
-            }
-            if (newProgress === 0 && pageNumber != 0)
-            {
-                setPageNumber(p => p - 1);
-                return 0.95;
-            }
-
-            return newProgress;
+            const delta = e.deltaY > 0 ? 5 : -5;
+            return Math.max(0, Math.min(100, prev + delta));
         });
-    }, [pageNumber]);
+    }, []);
 
     return (
         <ScrollContext.Provider value={{scrollProgress, handleWheel, pageNumber}}>

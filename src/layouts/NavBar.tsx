@@ -1,4 +1,4 @@
-import { useState, type JSX, type ReactNode, useRef } from "react";
+import { useState, type JSX, type ReactNode, useRef, useEffect } from "react";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
@@ -8,6 +8,7 @@ import { useLanguage } from '../components/contexts/LanguageContext'
 import languageStrings from "../services/localisation.json"
 import LanguageSelector from "../components/ui/LanguageSelector";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { useScroll } from "../components/contexts/ScrollContext";
 
 
 
@@ -15,6 +16,8 @@ function NavBar(): JSX.Element  {
     const [isOpen, setIsOpen] = useState(false);
     const {language, } = useLanguage();
     const screenWidth = useWindowSize();
+    const progressRef = useRef<HTMLDivElement>(null);
+    const {scrollProgress, pageNumber} = useScroll();
 
     const ref = useRef<HTMLParagraphElement>(null);
 
@@ -127,6 +130,14 @@ function NavBar(): JSX.Element  {
         hover: { color: "#f9fafb" }
     };
 
+    // TODO: Nav bar sections progress
+    useEffect(() => {
+        if (!progressRef.current) return;
+
+        progressRef.current.style.width = `${scrollProgress}%`;
+        console.log(progressRef.current.style.width);
+    }, [scrollProgress, pageNumber])
+
     // TODO: Make mobile version of navbar
 
     if (screenWidth.width <= 1200)
@@ -166,7 +177,7 @@ function NavBar(): JSX.Element  {
                     </div>
                     <div className="">
                         <div className="flex flex-col w-fit relative">
-                            <div className="h-[1px] rounded-full bg-amber-300 transform -translate-y-2"></div>
+                            <div ref={progressRef} className="h-[1px] w-0 rounded-full bg-amber-300 transform -translate-y-2"></div>
                             <ul className="flex gap-4">
                                 <li><TextStandard importance="supporting" text={`${strings.sections.Hero()}`}></TextStandard></li>
                                 <li><TextStandard importance="supporting" text={`${strings.sections.Projects()}`}></TextStandard></li>
