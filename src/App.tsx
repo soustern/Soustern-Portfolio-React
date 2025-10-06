@@ -31,7 +31,7 @@ function App() {
 
   return (
     <Background BackgroundColor='hero-section-gradient font-sans'>
-      <header className='fixed top-0 left-0 w-full py-20 px-10 z-50'>
+      <header className='fixed top-0 left-0 w-full py-15 px-10 z-50'>
         <NavBar />
       </header>
       

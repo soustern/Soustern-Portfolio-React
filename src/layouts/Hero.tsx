@@ -53,7 +53,7 @@ const Hero = () => {
     }
 
     useEffect(() => {
-        if (scrollProgress < 0.7 && pageNumber === 0)
+        if (scrollProgress < 15 )
         {
             setShouldRender(true);
         }
@@ -140,7 +140,7 @@ const Hero = () => {
                         <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                         </div>
-                        <TextStandard text={strings.subHeading()} className="" importance="supporting"></TextStandard>
+                        <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>
                         <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                         </div>

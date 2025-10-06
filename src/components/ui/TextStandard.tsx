@@ -7,9 +7,10 @@ interface TextStandardProps {
     className?: string;
     variants?: Variants;
     children?: ReactNode;
+    color?: string  
 }
 
-const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({text, importance, className, variants, children}, ref: React.Ref<HTMLParagraphElement>): JSX.Element => {
+const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({color,text, importance, className, variants, children}, ref: React.Ref<HTMLParagraphElement>): JSX.Element => {
     const getImportanceStyle = () => {
         switch(importance) {
             case `important`:
@@ -26,7 +27,7 @@ const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({text,
     }
     
     return (
-        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed max-w-prose ${className}`} ref={ref}>{text}{children}</motion.p>
+        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed max-w-prose ${className} ${color}`} ref={ref}>{text}{children}</motion.p>
     )
 });
 

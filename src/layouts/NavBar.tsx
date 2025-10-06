@@ -135,7 +135,6 @@ function NavBar(): JSX.Element  {
         if (!progressRef.current) return;
 
         progressRef.current.style.width = `${scrollProgress}%`;
-        console.log(progressRef.current.style.width);
     }, [scrollProgress, pageNumber])
 
     // TODO: Make mobile version of navbar
@@ -177,13 +176,13 @@ function NavBar(): JSX.Element  {
                     </div>
                     <div className="">
                         <div className="flex flex-col w-fit relative">
-                            <div ref={progressRef} className="h-[1px] w-0 rounded-full bg-amber-300 transform -translate-y-2"></div>
+                            <div ref={progressRef} className="h-[1px] w-0 rounded-full bg-[var(--color-accent-primary)] transform -translate-y-2"></div>
                             <ul className="flex gap-4">
-                                <li><TextStandard importance="supporting" text={`${strings.sections.Hero()}`}></TextStandard></li>
-                                <li><TextStandard importance="supporting" text={`${strings.sections.Projects()}`}></TextStandard></li>
-                                <li><TextStandard importance="supporting" text={`${strings.sections.About()}`}></TextStandard></li>
-                                <li><TextStandard importance="supporting" text={`${strings.sections.Education()}`}></TextStandard></li>
-                                <li><TextStandard importance="supporting" text={`${strings.sections.workWithMe()}`}></TextStandard></li>
+                                <li><TextStandard importance="metadata" text={`${strings.sections.Hero()}`}></TextStandard></li>
+                                <li><TextStandard importance="metadata" text={`${strings.sections.Projects()}`}></TextStandard></li>
+                                <li><TextStandard importance="metadata" text={`${strings.sections.About()}`}></TextStandard></li>
+                                <li><TextStandard importance="metadata" text={`${strings.sections.Education()}`}></TextStandard></li>
+                                <li><TextStandard importance="metadata" text={`${strings.sections.workWithMe()}`}></TextStandard></li>
                             </ul>
                         </div>
                     </div>

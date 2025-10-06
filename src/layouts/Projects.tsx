@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState, type ForwardedRef} from "react";
+import { useEffect, useRef, useState} from "react";
 import { useScroll } from "../components/contexts/ScrollContext";
 import { AnimatePresence } from "motion/react";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
@@ -7,6 +7,7 @@ import TextStandard from "../components/ui/TextStandard";
 
 const Projects = () => {
 
+    // TODO: Redo card design
     // TODO: Add supporting for portuguese
     const projects = [
         {
@@ -16,7 +17,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "address-card",
             },
-            image: "https://via.placeholder.com/800x450",
+            image: "src/assets/images/thx.png",
             type: "Portfolio",
             Year: "2025",
             stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Media Production, Art Direction, ",
@@ -26,7 +27,7 @@ const Projects = () => {
             title: "DND Monster Codex",
             icon: {
                 iconType: "solid",
-                icon: "dragon",
+                icon: "dungeon",
             },
             image: "src/assets/images/dnd.png",
             type: "Project",
@@ -40,7 +41,7 @@ const Projects = () => {
                 iconType: "brands",
                 icon: "ubuntu",
             },
-            image: "https://via.placeholder.com/600x400",
+            image: "src/assets/images/thx.png",
             type: "Project",
             Year: "2023",
             stack: "C, Linux, CLI, ",
@@ -62,7 +63,7 @@ const Projects = () => {
             title: "THX Digital",
             icon: {
                 iconType: "solid",
-                icon: "square-poll-vertical",
+                icon: "table",
             },
             image: "src/assets/images/thx.png",
             type: "Product",
@@ -85,10 +86,10 @@ const Projects = () => {
 
     const sectionRef = useRef<HTMLElement>(null)
     const [shouldRender, setShouldRender] = useState(true);
-    const {scrollProgress, pageNumber} = useScroll();
+    const {scrollProgress} = useScroll();
 
     useEffect(() => {
-        if (scrollProgress < 0.7 && pageNumber === 2)
+        if (scrollProgress >= 19 && scrollProgress <= 38)
         {
             setShouldRender(true);
         }
@@ -96,7 +97,7 @@ const Projects = () => {
         {
             setShouldRender(false);
         };
-    }, [scrollProgress, pageNumber]);
+    }, [scrollProgress]);
 
     // TODO: Make responsive version
     // TODO: Make transition animations
@@ -109,19 +110,17 @@ const Projects = () => {
             <section 
                 ref={sectionRef} 
                 id='Projects' 
-                className='fixed inset-0 z-5 flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12 pr-20'
+                className='flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12 pr-20'
             >
-                <div className="grid flex-1 grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 w-full max-w-[1000px] overflow-y-auto max-h-full py-4">
+                <div className="grid flex-1 grid-cols-4 lg:grid-cols-4 gap-4 lg:gap-6 w-full max-w-[1500px] max-h-full py-4">
                     {projects.slice(0, 2).map(project => (
-                        <article 
-                            key={project.id} 
-                            className="col-span-2 overflow-hidden bg-[var(--color-bg-secondary)] border border-[var(--color-bg-tertiary)] rounded-lg  shadow-black/20"
+                        <article key={project.id} className="bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black col-span-2"
                         >
-                            <div className="px-3 pt-3 overflow-hidden">
+                            <div className="border-b-[1px] border-gray-700">
                                 <img
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-auto aspect-[10/3] object-cover rounded-lg grayscale brightness-110 mix-blend-luminosity"
+                                    className="w-full h-auto aspect-[10/3] object-cover mix-blend-screen"
                                 />
                             </div>
                             <div className="p-4 lg:p-6 space-y-1">
@@ -134,7 +133,7 @@ const Projects = () => {
                                                 className="text-[var(--color-accent-primary)]"
                                             />
                                         </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-50">
+                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
                                             {project.title}
                                         </h3>
                                     </div>
@@ -159,13 +158,13 @@ const Projects = () => {
                     {projects.slice(2).map(project => (
                         <article 
                             key={project.id} 
-                            className="overflow-hidden bg-[var(--color-bg-secondary)] border border-[var(--color-bg-tertiary)] rounded-lg  shadow-black/20"
+                            className="overflow-hidden bg-[var(--color-bg-secondary)]  border-[1px] border-gray-700 rounded-xl  shadow-black"
                         >
-                            <div className="px-3 pt-3 overflow-hidden">
+                            <div className="border-b-[1px] border-gray-700">
                                 <img
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-auto aspect-[2/1] object-cover rounded-lg grayscale brightness-110 mix-blend-luminosity"
+                                    className="w-full h-auto aspect-[2/1] object-cover mix-blend-screen"
                                 />
                             </div>
                             <div className="p-4 lg:p-6 space-y-1">
@@ -178,7 +177,7 @@ const Projects = () => {
                                                 className="text-[var(--color-accent-primary)]"
                                             />
                                         </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-50">
+                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
                                             {project.title}
                                         </h3>
                                     </div>
