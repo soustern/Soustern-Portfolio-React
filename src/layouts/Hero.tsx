@@ -117,6 +117,7 @@ const Hero = () => {
 
     // TODO: Make WebGl thing be more responsive and smaller in most cases
     // TODO: Make WebGl canvas resize correctly when returning to this section
+    // TODO: Make this more interesting
 
     return (
         <AnimatePresence>
