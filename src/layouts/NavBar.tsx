@@ -1,5 +1,4 @@
 import { useState, type JSX, type ReactNode, useRef, useEffect } from "react";
-import PrimaryButton from "../components/ui/PrimaryButton";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
 import {  AnimatePresence, motion } from "motion/react";
@@ -9,7 +8,7 @@ import languageStrings from "../services/localisation.json"
 import LanguageSelector from "../components/ui/LanguageSelector";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useScroll } from "../components/contexts/ScrollContext";
-
+import gsap from "gsap";
 
 
 function NavBar(): JSX.Element  {    
@@ -17,8 +16,7 @@ function NavBar(): JSX.Element  {
     const {language, } = useLanguage();
     const screenWidth = useWindowSize();
     const progressRef = useRef<HTMLDivElement>(null);
-    const {scrollProgress, pageNumber} = useScroll();
-
+    const {scrollProgress, setScrollProgress} = useScroll();
     const ref = useRef<HTMLParagraphElement>(null);
 
     const handleClick = () => {
@@ -135,7 +133,17 @@ function NavBar(): JSX.Element  {
         if (!progressRef.current) return;
 
         progressRef.current.style.width = `${scrollProgress}%`;
-    }, [scrollProgress, pageNumber])
+
+    }, [scrollProgress])
+
+    const navigate = (percent: string) => {
+        gsap.to(progressRef.current, {width: percent, duration: 1, ease: "power4.out",
+            onUpdate: () => {
+                setScrollProgress(Number(progressRef.current!.style.width.replace("%", "")));
+            }
+        })
+    } 
+
 
     // TODO: Make mobile version of navbar
 
@@ -178,7 +186,7 @@ function NavBar(): JSX.Element  {
                         <div className="flex flex-col w-fit relative">
                             <div ref={progressRef} className="h-[1px] w-0 rounded-full bg-[var(--color-accent-primary)] transform -translate-y-2"></div>
                             <ul className="flex gap-4">
-                                <li><TextStandard importance="metadata" text={`${strings.sections.Hero()}`}></TextStandard></li>
+                                <li><button onClick={() => navigate(`0%`)} className="cursor-pointer"><TextStandard importance="metadata" text={`${strings.sections.Hero()}`}></TextStandard></button></li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.Projects()}`}></TextStandard></li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.About()}`}></TextStandard></li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.Education()}`}></TextStandard></li>
