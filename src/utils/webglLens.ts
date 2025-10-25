@@ -1,18 +1,14 @@
 import { Renderer, Camera, Transform, Texture, Program, Mesh, Plane } from 'ogl';
-
-// Simple function to load shaders
-export async function loadShader(url: string) {
-    const response = await fetch(url);
-    return response.text();
-}
+import vertexShaderUrl from '/public/shaders/vertexLens.glsl?url';
+import fragmentShaderUrl from '/public/shaders/fragmentLens.glsl?url';
 
 // Function that sets up everything
 export async function createWebGLScene(container: HTMLDivElement, video: HTMLVideoElement) {
     const rect = container.getBoundingClientRect();
     
     // Load shaders
-    const vertexShader = await loadShader("public/shaders/vertexLens.glsl");
-    const fragmentShader = await loadShader('public/shaders/fragmentLens.glsl');
+    const vertexShader = await (await fetch(vertexShaderUrl)).text();
+    const fragmentShader = await (await fetch(fragmentShaderUrl)).text();
     
     // Setup WebGL
     const renderer = new Renderer({ 

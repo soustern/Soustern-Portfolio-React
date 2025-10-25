@@ -1,15 +1,12 @@
 import { Renderer, Camera, Transform, Program, Mesh, Plane } from 'ogl';
-
-export async function loadShader(url: string) {
-    const response = await fetch(url);
-    return response.text();
-}
+import vertexShaderUrl from '/public/shaders/vertexLens.glsl?url';
+import fragmentShaderUrl from '/public/shaders/fragmentBackgroundPattern.glsl?url';
 
 export async function createWebGLScene(container: HTMLDivElement) {
     const rect = container.getBoundingClientRect();
 
-    const vertexShader = await loadShader("public/shaders/vertexLens.glsl");
-    const fragmentShader = await loadShader('public/shaders/fragmentBackgroundPattern.glsl');
+    const vertexShader = await (await fetch(vertexShaderUrl)).text();
+    const fragmentShader = await (await fetch(fragmentShaderUrl)).text();
 
     const renderer = new Renderer({
         dpr: 2,

@@ -1,14 +1,13 @@
 import {Renderer, Vec2, Geometry, Texture, Program, Mesh, Flowmap, Transform} from 'ogl'
-
-export async function loadShader(url: string) {
-    const response = await fetch(url);
-    return response.text();
-}
+import vertexShaderUrl from '/public/shaders/vertexLens.glsl?url';
+import fragmentShaderUrl from '/public/shaders/fragmentPainterLens.glsl?url';
 
 export async function createWebGLScene(container: HTMLDivElement, video: HTMLVideoElement) {
+    
     const rect = container.getBoundingClientRect();
-    const vertexShader = await loadShader("public/shaders/vertexLens.glsl");
-    const fragmentShader = await loadShader("public/shaders/fragmentPainterLens.glsl");
+
+    const vertexShader = await (await fetch(vertexShaderUrl)).text();
+    const fragmentShader = await (await fetch(fragmentShaderUrl)).text();
 
     const videoElement = container;
 
