@@ -162,12 +162,12 @@ function NavBar(): JSX.Element  {
                     <div>
                         <ul className="flex items-center">
                             <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
-                                <a className="mr-1" href="">
+                                <a className="mr-1" href="" aria-label="Linkedin">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
                                 </a>
                             </motion.li>
                             <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
-                                <a className="mr-2" href="">
+                                <a className="mr-2" href="" aria-label="Github">
                                     <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
                                 </a>
                             </motion.li>
