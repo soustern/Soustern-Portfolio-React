@@ -3,6 +3,10 @@ import { useScroll } from "../components/contexts/ScrollContext";
 import { AnimatePresence } from "motion/react";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import TextStandard from "../components/ui/TextStandard";
+import dnd from "../assets/images/dnd.png";
+import prime from "../assets/images/prime.png";
+import thx from "../assets/images/thx.png";
+import todo from "../assets/images/todo.png";
 
 const Projects = () => {
 
@@ -16,7 +20,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "address-card",
             },
-            image: "src/assets/images/thx.png",
+            image: thx,
             type: "Portfolio",
             Year: "2025",
             stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Media Production, Art Direction, ",
@@ -28,7 +32,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "dungeon",
             },
-            image: "src/assets/images/dnd.png",
+            image: dnd,
             type: "Project",
             Year: "2024",
             stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, Vercel, ",
@@ -40,7 +44,7 @@ const Projects = () => {
                 iconType: "brands",
                 icon: "ubuntu",
             },
-            image: "src/assets/images/thx.png",
+            image: thx,
             type: "Project",
             Year: "2023",
             stack: "C, Linux, CLI, ",
@@ -52,7 +56,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "list-check",
             },
-            image: "src/assets/images/todo.png",
+            image: todo,
             type: "Project",
             Year: "2025",
             stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
@@ -64,7 +68,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "table",
             },
-            image: "src/assets/images/thx.png",
+            image: thx,
             type: "Product",
             Year: "2024",
             stack: " CSS, SASS, HTML, UX, UI, NPM, Brand Design, Media Production, Naming & Copywriting, ",
@@ -76,7 +80,7 @@ const Projects = () => {
                 iconType: "solid",
                 icon: "lightbulb",
             },
-            image: "src/assets/images/prime.png",
+            image: prime,
             type: "Product",
             Year: "2025",
             stack: " CSS, SASS, HTML, UX, UI, NPM, Media Production, Naming & Copywriting, ",
