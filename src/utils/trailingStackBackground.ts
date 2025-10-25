@@ -25,7 +25,7 @@ export function createTrailingStack(container: HTMLDivElement) {
     elements.forEach((textStandard, index) => {
         // Stagger initial appearance
         setTimeout(() => {
-            const intervalId = setCoordinates(containerCoordinates, textStandard as HTMLElement, container, index);
+            const intervalId = setCoordinates(containerCoordinates, textStandard as HTMLElement, index);
             if (intervalId) intervals.push(intervalId);
         }, index * 800); // Staggered start
     });
@@ -52,7 +52,6 @@ export function createTrailingStack(container: HTMLDivElement) {
 function setCoordinates(
     containerCoordinates: DOMRect, 
     stackParagraph: HTMLElement, 
-    container: HTMLDivElement,
     elementIndex: number
 ): number {
     let currentWord: string;

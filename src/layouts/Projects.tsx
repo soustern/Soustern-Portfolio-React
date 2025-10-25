@@ -2,7 +2,6 @@ import { useEffect, useRef, useState} from "react";
 import { useScroll } from "../components/contexts/ScrollContext";
 import { AnimatePresence } from "motion/react";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
-import TextCardTitle from "../components/ui/TextCardTitle";
 import TextStandard from "../components/ui/TextStandard";
 
 const Projects = () => {

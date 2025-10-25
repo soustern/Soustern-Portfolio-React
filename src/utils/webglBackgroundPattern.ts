@@ -1,4 +1,4 @@
-import { Renderer, Camera, Transform, Texture, Program, Mesh, Plane } from 'ogl';
+import { Renderer, Camera, Transform, Program, Mesh, Plane } from 'ogl';
 
 export async function loadShader(url: string) {
     const response = await fetch(url);
@@ -96,9 +96,9 @@ export async function createWebGLScene(container: HTMLDivElement) {
                     });
                     
                     // Delete index buffer if it exists
-                    if (geometry.index && geometry.index.buffer) {
-                        gl.deleteBuffer(geometry.index.buffer);
-                    }
+                    // if (geometry.index && geometry.index.buffer) {
+                    //     gl.deleteBuffer(geometry.index.buffer);
+                    // }
                 }
 
                 // Delete shader program
