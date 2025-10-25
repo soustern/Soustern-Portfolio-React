@@ -19,7 +19,7 @@ const Hero = () => {
     const [shouldRender, setShouldRender] = useState(true);
 
     const { language } = useLanguage();
-    const {scrollProgress, pageNumber} = useScroll();
+    const {scrollProgress} = useScroll();
 
     const hoverTip = useRef<HTMLDivElement>(null);
     const scrollToExploreLeft = useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ const Hero = () => {
         {
             setShouldRender(false);
         };
-    }, [scrollProgress, pageNumber]);
+    }, [scrollProgress]);
 
     useEffect(() => {
         if (!containerRef.current || !videoRef.current || !shouldRender) return;

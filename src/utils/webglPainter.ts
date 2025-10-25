@@ -10,7 +10,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     const vertexShader = await loadShader("public/shaders/vertexLens.glsl");
     const fragmentShader = await loadShader("public/shaders/fragmentPainterLens.glsl");
 
-    const _size = [2000, 2500];
     const videoElement = container;
 
     const renderer = new Renderer({ dpr: 2 });
@@ -44,19 +43,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
         gl.canvas.height = rect.height * 11.0;
         gl.canvas.style.width = `${rect.width}px`;
         gl.canvas.style.height = `${rect.height}px`;
-
-        const videoAspect = _size[0] / _size[1];
-        const canvasAspect = rect.width / rect.height;
-        let a1, a2;
-
-        if (canvasAspect > videoAspect) {
-            a1 = videoAspect / canvasAspect;
-            a2 = 1.0;
-        }
-        else {
-            a1 = 1.0;
-            a2 = canvasAspect / videoAspect;
-        };
 
         program.uniforms.uResolution.value = new Float32Array([rect.width, rect.height]);
         
@@ -391,18 +377,6 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
                 if (program) {
                     if (program.program) {
                         gl.deleteProgram(program.program);
-                    }
-                }
-
-                if (flowmap) {
-                    if (flowmap.output && flowmap.output.texture) {
-                        gl.deleteTexture(flowmap.output.texture);
-                    }
-                }
-
-                if (flowmapSecondary) {
-                    if (flowmapSecondary.output && flowmapSecondary.output.texture) {
-                        gl.deleteTexture(flowmapSecondary.output.texture);
                     }
                 }
 
