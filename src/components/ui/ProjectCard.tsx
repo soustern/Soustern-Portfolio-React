@@ -17,15 +17,15 @@ interface ProjectCardProps {
 const ProjectCard = ({project, invisible = false}: ProjectCardProps) => {
     const Icon = project.icon;
     return (
-        <article className={`xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black ${invisible ? " pointer-events-none invisible" : ""}`}>
+        <article className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black ${invisible ? " pointer-events-none invisible" : ""}`}>
             <div className="border-b-[1px] border-gray-700">
                 <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full max-h-[150px] object-cover mix-blend-screen"
+                    className="w-full max-h-[100px] md:max-h-[150px] object-cover mix-blend-screen"
                 />
             </div>
-            <div className="p-4 lg:p-6 space-y-1">
+            <div className="p-3 md:p-4 lg:p-6 space-y-1">
                 <div className="flex items-baseline gap-3">
                     <div className="flex items-center gap-2">
                         <div className="flex-shrink-0">

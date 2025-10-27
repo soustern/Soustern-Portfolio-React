@@ -172,17 +172,17 @@ const Projects = () => {
             <section 
                 ref={sectionRef} 
                 id='Projects' 
-                className='flex items-center justify-center w-[100w] h-[100vh]'
+                className='flex items-center justify-center w-full h-full'
             >
-                <div className="flex max-w-[1200px]  w-full flex-col gap-4 ">
+                <div className="flex max-w-[1200px] max height aqui w-full flex-col gap-4 md:py-8 ">
                     <div className="max-w-[600px] w-full bg-amber-100 h-1 ">
 
                     </div>
-                    <div className="flex w-full gap-8 justify-between">
+                    <div className="flex w-full justify-between gap-4 md:gap-8 ">
                         <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
                             <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
                         </motion.button>
-                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center">
+                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center min-h-0">
                                 <ProjectCard project={projects[currentIndex]}></ProjectCard>
                                 {currentIndex === projects.length - 1 ? <ProjectCard project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard project={projects[currentIndex + 1]}></ProjectCard>}
                         </div>
