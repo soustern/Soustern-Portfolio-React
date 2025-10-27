@@ -1,14 +1,29 @@
 import { useEffect, useRef, useState} from "react";
 import { useScroll } from "../components/contexts/ScrollContext";
-import { AnimatePresence } from "motion/react";
-import PrimaryIcon from "../components/ui/PrimaryIcons";
-import TextStandard from "../components/ui/TextStandard";
+import { AnimatePresence, motion } from "motion/react";
 import dnd from "../assets/images/dnd.png";
-import prime from "../assets/images/prime.png";
 import thx from "../assets/images/thx.png";
 import todo from "../assets/images/todo.png";
+import { LiaAddressCard } from 'react-icons/lia';
+import { LiaDungeonSolid } from 'react-icons/lia';
+import { LiaCogSolid } from 'react-icons/lia';
+import { LiaClipboardListSolid } from 'react-icons/lia';
+import { LiaNetworkWiredSolid } from 'react-icons/lia';
+import { LiaLongArrowAltLeftSolid } from 'react-icons/lia';
+import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
+import ProjectCard from "../components/ui/ProjectCard";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 
 const Projects = () => {
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    const cardsContainerDesktopRef = useRef<HTMLDivElement>(null);
+    const exitTimelineRef = useRef<gsap.core.Timeline>(null);
+    const entryTimelineRef = useRef<gsap.core.Timeline>(null);
 
     // TODO: Redo card design
     // TODO: Add supporting for portuguese
@@ -16,79 +31,58 @@ const Projects = () => {
         {
             id: 1,
             title: "Portfolio",
-            icon: {
-                iconType: "solid",
-                icon: "address-card",
-            },
+            icon: LiaAddressCard,
             image: thx,
             type: "Portfolio",
             Year: "2025",
             stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Media Production, Art Direction, ",
+            next: 2,
         },
         {
             id: 2,
             title: "DND Monster Codex",
-            icon: {
-                iconType: "solid",
-                icon: "dungeon",
-            },
+            icon: LiaDungeonSolid,
             image: dnd,
             type: "Project",
             Year: "2024",
             stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, Vercel, ",
+            next: 3,
         },
         {
             id: 3,
             title: "SLS",
-            icon: {
-                iconType: "brands",
-                icon: "ubuntu",
-            },
+            icon: LiaCogSolid,
             image: thx,
             type: "Project",
             Year: "2023",
             stack: "C, Linux, CLI, ",
+            next: 4,
         },
         {
             id: 4,
             title: "To Do App",
-            icon: {
-                iconType: "solid",
-                icon: "list-check",
-            },
+            icon: LiaClipboardListSolid,
             image: todo,
             type: "Project",
             Year: "2025",
             stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
+            next: 5,
         },
         {
             id: 5,
-            title: "THX Digital",
-            icon: {
-                iconType: "solid",
-                icon: "table",
-            },
+            title: "Prance Company",
+            icon: LiaNetworkWiredSolid,
             image: thx,
             type: "Product",
             Year: "2024",
-            stack: " CSS, SASS, HTML, UX, UI, NPM, Brand Design, Media Production, Naming & Copywriting, ",
+            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, Brand Design, Naming & Copywriting, Google Search Console, Google Analytics, Github Pages, DevOps, ",
+            next: null
         },
-        {
-            id: 6,
-            title: "Prime Led",
-            icon: {
-                iconType: "solid",
-                icon: "lightbulb",
-            },
-            image: prime,
-            type: "Product",
-            Year: "2025",
-            stack: " CSS, SASS, HTML, UX, UI, NPM, Media Production, Naming & Copywriting, ",
-        }
     ];
 
     const sectionRef = useRef<HTMLElement>(null)
     const [shouldRender, setShouldRender] = useState(true);
+
     const {scrollProgress} = useScroll();
 
     useEffect(() => {
@@ -102,6 +96,71 @@ const Projects = () => {
         };
     }, [scrollProgress]);
 
+    useGSAP (() => {
+
+        if (!cardsContainerDesktopRef.current) return;
+
+        const [upperCard, lowerCard] = cardsContainerDesktopRef.current.children;
+
+        exitTimelineRef.current = gsap.timeline({ paused: true })
+        .to([upperCard, lowerCard], {
+             y: 100, 
+             opacity: 0, 
+             stagger: 0.15, 
+             duration: 0.15, 
+             ease: "power4.out" 
+        });
+
+        entryTimelineRef.current = gsap.timeline()
+        .from([upperCard, lowerCard], {
+            y: 100,
+            opacity: 0,
+            duration: 0.15,
+            ease: "power4.in",
+            stagger: 0.15
+        });
+    }, [shouldRender]);
+
+    function handleNext(): void {
+        if (currentIndex >= projects.length - 1) return;
+        if (isAnimating) return;
+
+        const entry = entryTimelineRef.current;
+        const exit = exitTimelineRef.current;
+        if (!exit || !entry) return;
+
+        exit.restart();
+        exit.eventCallback("onStart", () => {
+            setIsAnimating(true);
+        })
+        exit.eventCallback("onComplete", () => {
+            setIsAnimating(false);
+            setCurrentIndex(currentIndex + 2);
+            entry.restart();
+        });
+
+        console.log(currentIndex);
+    }
+
+    function handleBack(): void {
+        if (currentIndex <= 0) return;
+        if (isAnimating) return;
+
+        const entry = entryTimelineRef.current;
+        const exit = exitTimelineRef.current;
+        if (!exit || !entry) return;
+
+        exit.restart();
+        exit.eventCallback("onStart", () => {
+            setIsAnimating(true);
+        })
+        exit.eventCallback("onComplete", () => {
+            setIsAnimating(false);
+            setCurrentIndex(currentIndex - 2);
+            entry.restart();
+        });
+    }
+
     // TODO: Make responsive version
     // TODO: Make transition animations
     // TODO: Make hover animations
@@ -113,95 +172,24 @@ const Projects = () => {
             <section 
                 ref={sectionRef} 
                 id='Projects' 
-                className='flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12 pr-20'
+                className='flex items-center justify-center w-[100w] h-[100vh]'
             >
-                <div className="grid flex-1 grid-cols-4 lg:grid-cols-4 gap-4 lg:gap-6 w-full max-w-[1500px] max-h-full py-4">
-                    {projects.slice(0, 2).map(project => (
-                        <article key={project.id} className="bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black col-span-2"
-                        >
-                            <div className="border-b-[1px] border-gray-700">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-auto aspect-[10/3] object-cover mix-blend-screen"
-                                />
-                            </div>
-                            <div className="p-4 lg:p-6 space-y-1">
-                                <div className="flex items-baseline gap-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex-shrink-0">
-                                            <PrimaryIcon
-                                                icon={project.icon.icon}
-                                                iconType={project.icon.iconType}
-                                                className="text-[var(--color-accent-primary)]"
-                                            />
-                                        </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
-                                            {project.title}
-                                        </h3>
-                                    </div>
-                                    <div className="flex-1"></div>
-                                    <TextStandard text={project.Year} importance="supporting"></TextStandard>
-                                </div>
-                                <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1 relative">
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
-                    {projects.slice(2).map(project => (
-                        <article 
-                            key={project.id} 
-                            className="overflow-hidden bg-[var(--color-bg-secondary)]  border-[1px] border-gray-700 rounded-xl  shadow-black"
-                        >
-                            <div className="border-b-[1px] border-gray-700">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-auto aspect-[2/1] object-cover mix-blend-screen"
-                                />
-                            </div>
-                            <div className="p-4 lg:p-6 space-y-1">
-                                <div className="flex items-baseline gap-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex-shrink-0">
-                                            <PrimaryIcon
-                                                icon={project.icon.icon}
-                                                iconType={project.icon.iconType}
-                                                className="text-[var(--color-accent-primary)]"
-                                            />
-                                        </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
-                                            {project.title}
-                                        </h3>
-                                    </div>
-                                    <div className="flex-1"></div>
-                                    <TextStandard text={project.Year} importance="supporting"></TextStandard>
-                                </div>
-                                <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1">
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
+                <div className="flex max-w-[1200px]  w-full flex-col gap-4 ">
+                    <div className="max-w-[600px] w-full bg-amber-100 h-1 ">
+
+                    </div>
+                    <div className="flex w-full gap-8 justify-between">
+                        <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
+                            <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
+                        </motion.button>
+                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center">
+                                <ProjectCard project={projects[currentIndex]}></ProjectCard>
+                                {currentIndex === projects.length - 1 ? <ProjectCard project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard project={projects[currentIndex + 1]}></ProjectCard>}
+                        </div>
+                        <motion.button onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
+                            <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
+                        </motion.button>
+                    </div>
                 </div>
             </section>}
         </AnimatePresence>

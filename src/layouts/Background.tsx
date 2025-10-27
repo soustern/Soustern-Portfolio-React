@@ -64,7 +64,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
   return (
     <>
       <div className={`${BackgroundColor} min-h-screen w-screen`}>
-          <div ref={heroRef} className="[&>canvas]:z-0 [&>canvas]:pointer-events-none h-full w-full absolute left-1/2 top-1/2 transform -translate-1/2"></div>
+          <div ref={heroRef} className="[&>canvas]:z-0 [&>canvas]:pointer-events-none h-[100vh] w-[100vw] absolute left-1/2 top-1/2 transform -translate-1/2"></div>
           {children}
       </div>
       <div ref={trailingStack} className="z-0 font-mono fixed w-full h-[75%] left-1/2 top-1/2 transform -translate-1/2">
