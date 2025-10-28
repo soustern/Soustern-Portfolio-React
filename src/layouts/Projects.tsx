@@ -40,21 +40,31 @@ const Projects = () => {
             image: thx,
             type: "Portfolio",
             Year: "2025",
-            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Media Production, Art Direction, ",
+            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion ",
             next: 2,
         },
-        {
+         {
             id: 2,
+            title: "Prance Company",
+            icon: LiaNetworkWiredSolid,
+            image: thx,
+            type: "Product",
+            Year: "2024",
+            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion",
+            next: null
+        },
+        {
+            id: 3,
             title: "DND Monster Codex",
             icon: LiaDungeonSolid,
             image: dnd,
             type: "Project",
             Year: "2024",
-            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, Vercel, ",
+            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, API, Vercel, ",
             next: 3,
         },
         {
-            id: 3,
+            id: 4,
             title: "SLS",
             icon: LiaCogSolid,
             image: thx,
@@ -64,7 +74,7 @@ const Projects = () => {
             next: 4,
         },
         {
-            id: 4,
+            id: 5,
             title: "To Do App",
             icon: LiaClipboardListSolid,
             image: todo,
@@ -73,22 +83,18 @@ const Projects = () => {
             stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
             next: 5,
         },
-        {
-            id: 5,
-            title: "Prance Company",
-            icon: LiaNetworkWiredSolid,
-            image: thx,
-            type: "Product",
-            Year: "2024",
-            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, Brand Design, Naming & Copywriting, Google Search Console, Google Analytics, Github Pages, DevOps, ",
-            next: null
-        },
     ];
 
     const sectionRef = useRef<HTMLElement>(null)
     const [shouldRender, setShouldRender] = useState(true);
 
     const {scrollProgress} = useScroll();
+
+    useEffect(() => {
+        setCurrentIndex(0);
+        setIsAnimating(false);
+        setProgressPercent(0);
+    }, [shouldRender]);
 
     useEffect(() => {
         if (scrollProgress >= 19 && scrollProgress <= 38)
@@ -156,7 +162,7 @@ const Projects = () => {
         if (currentIndex >= projects.length - 1) return;
         if (isAnimating) return;
          direction.current = 1;
-         setProgressPercent(progressPercent + 101);
+         setProgressPercent(progressPercent + 101.5);
 
         const entry = entryTimelineRef.current;
         const exit = exitTimelineRef.current;
@@ -178,7 +184,7 @@ const Projects = () => {
         if (currentIndex <= 0) return;
         if (isAnimating) return;
         direction.current = -1;
-        setProgressPercent(progressPercent - 101);
+        setProgressPercent(progressPercent - 101.5);
 
         const entry = entryTimelineRef.current;
         const exit = exitTimelineRef.current;
@@ -204,36 +210,44 @@ const Projects = () => {
     return (
         <AnimatePresence>
             {shouldRender && 
-            <section 
+            <motion.section 
                 ref={sectionRef} 
                 id='Projects' 
                 className='flex items-center justify-center w-full h-full'
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
             >
                 <div className="flex max-w-[1200px] w-full flex-col gap-8 md:py-8 items-center">
-                    <div className="max-w-[600px] w-full h-1 relative rounded-xl">
-                        <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
-                            <div className="h-1 border border-gray-700 w-full"></div>
-                            <div className="h-1 border border-gray-700 w-full"></div>
-                            <div className="h-1 border border-gray-700 w-full"></div>
-                        </div>
-                        <div className="w-full h-full gap-4 relative">
-                            <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%]`}></div>
-                        </div>
-                    </div>
+                    <AnimatePresence>
+                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl">
+                            <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                            </div>
+                            <div className="w-full h-full relative">
+                                <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%] transform translate-x-0 rounded-full`}></div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
                     <div  className="flex w-full justify-between gap-4 md:gap-8 ">
-                        <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
-                            <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
-                        </motion.button>
-                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center min-h-0">
+                        <AnimatePresence>
+                            <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
+                                <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
+                            </motion.button>
+                        </AnimatePresence>
+                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
                                 <ProjectCard project={projects[currentIndex]}></ProjectCard>
-                                {currentIndex === projects.length - 1 ? <ProjectCard project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard project={projects[currentIndex + 1]}></ProjectCard>}
+                                {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
                         </div>
-                        <motion.button onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
-                            <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
-                        </motion.button>
+                        <AnimatePresence>
+                            <motion.button  onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
+                                <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
+                            </motion.button>
+                        </AnimatePresence>
                     </div>
                 </div>
-            </section>}
+            </motion.section>}
         </AnimatePresence>
     )
 };
