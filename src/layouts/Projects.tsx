@@ -20,10 +20,15 @@ const Projects = () => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [progressPercent, setProgressPercent] = useState(0);
 
     const cardsContainerDesktopRef = useRef<HTMLDivElement>(null);
+    const progressBarDesktopRef = useRef<HTMLDivElement>(null);
+
     const exitTimelineRef = useRef<gsap.core.Timeline>(null);
     const entryTimelineRef = useRef<gsap.core.Timeline>(null);
+    const page = useRef<number>(1);
+    const direction = useRef<number>(1);
 
     // TODO: Redo card design
     // TODO: Add supporting for portuguese
@@ -98,7 +103,7 @@ const Projects = () => {
 
     useGSAP (() => {
 
-        if (!cardsContainerDesktopRef.current) return;
+        if (!cardsContainerDesktopRef.current || !progressBarDesktopRef.current) return;
 
         const [upperCard, lowerCard] = cardsContainerDesktopRef.current.children;
 
@@ -110,6 +115,7 @@ const Projects = () => {
              duration: 0.15, 
              ease: "power4.out" 
         });
+        
 
         entryTimelineRef.current = gsap.timeline()
         .from([upperCard, lowerCard], {
@@ -121,9 +127,36 @@ const Projects = () => {
         });
     }, [shouldRender]);
 
+    useGSAP (() => {
+        if (!progressBarDesktopRef.current) return;
+        gsap.to(progressBarDesktopRef.current, {
+            transformOrigin: () => direction.current === 1 ? 'right center' : 'left center',
+            scaleX: 2,
+            xPercent: () => progressPercent,
+            duration: 0.35,
+            ease: "power2.inOut",
+            onComplete: () => {
+                gsap.to(progressBarDesktopRef.current, {
+                    transformOrigin: () => direction.current === -1 ? 'left center' : 'right center',
+                    scaleX: 1,
+                    duration: 0.35,
+                    fill: "forwards",
+                    ease: "power2.inOut",
+                });
+                // gsap.to(progressBarDesktopRef.current, {
+                //     xPercent: () => progressPercent,
+                //     duration: 0.35,
+                //     ease: "power2.inOut",
+                // })
+            }
+        });
+    }, [progressPercent]);
+
     function handleNext(): void {
         if (currentIndex >= projects.length - 1) return;
         if (isAnimating) return;
+         direction.current = 1;
+         setProgressPercent(progressPercent + 101);
 
         const entry = entryTimelineRef.current;
         const exit = exitTimelineRef.current;
@@ -134,17 +167,18 @@ const Projects = () => {
             setIsAnimating(true);
         })
         exit.eventCallback("onComplete", () => {
+            ++page.current;
             setIsAnimating(false);
             setCurrentIndex(currentIndex + 2);
             entry.restart();
         });
-
-        console.log(currentIndex);
     }
 
     function handleBack(): void {
         if (currentIndex <= 0) return;
         if (isAnimating) return;
+        direction.current = -1;
+        setProgressPercent(progressPercent - 101);
 
         const entry = entryTimelineRef.current;
         const exit = exitTimelineRef.current;
@@ -155,6 +189,7 @@ const Projects = () => {
             setIsAnimating(true);
         })
         exit.eventCallback("onComplete", () => {
+            --page.current;
             setIsAnimating(false);
             setCurrentIndex(currentIndex - 2);
             entry.restart();
@@ -174,11 +209,18 @@ const Projects = () => {
                 id='Projects' 
                 className='flex items-center justify-center w-full h-full'
             >
-                <div className="flex max-w-[1200px] max height aqui w-full flex-col gap-4 md:py-8 ">
-                    <div className="max-w-[600px] w-full bg-amber-100 h-1 ">
-
+                <div className="flex max-w-[1200px] w-full flex-col gap-8 md:py-8 items-center">
+                    <div className="max-w-[600px] w-full h-1 relative rounded-xl">
+                        <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
+                            <div className="h-1 border border-gray-700 w-full"></div>
+                            <div className="h-1 border border-gray-700 w-full"></div>
+                            <div className="h-1 border border-gray-700 w-full"></div>
+                        </div>
+                        <div className="w-full h-full gap-4 relative">
+                            <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%]`}></div>
+                        </div>
                     </div>
-                    <div className="flex w-full justify-between gap-4 md:gap-8 ">
+                    <div  className="flex w-full justify-between gap-4 md:gap-8 ">
                         <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
                             <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
                         </motion.button>
