@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { useProject } from "./ProjectContext";
 
 type ScrollContextType = {
     scrollProgress: number,
@@ -10,8 +11,10 @@ const ScrollContext = createContext<ScrollContextType | null>(null);
 
 export function ScrollProvider({children}: {children: ReactNode}) {
     const [scrollProgress, setScrollProgress] = useState(0);
+    const {currentProject} = useProject(); 
 
     const handleWheel = useCallback((e: WheelEvent) => {
+        if (currentProject !== null) return;
         e.preventDefault();
         setScrollProgress(prev => {
             const delta = e.deltaY > 0 ? 3 : -3;

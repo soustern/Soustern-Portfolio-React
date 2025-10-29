@@ -146,6 +146,7 @@ function NavBar(): JSX.Element  {
 
 
     // TODO: Make mobile version of navbar
+    // TODO: Implement other navigation links
 
     if (screenWidth.width <= 1200)
     {
@@ -154,7 +155,7 @@ function NavBar(): JSX.Element  {
     else
     {
         return (
-            <nav className="z-100 flex flex-col gap-2 m-auto max-w-[1200px] text-base leading-normal transition-all">
+            <nav className="z-40 flex flex-col gap-2 m-auto max-w-[1200px] text-base leading-normal transition-all">
                 <div className="flex justify-between items-center">
                     <div>
                         <Logo></Logo>

@@ -127,3 +127,7 @@ clip-path: path(
     );
   }
 }
+
+p {
+  line-height: 1.625;
+}

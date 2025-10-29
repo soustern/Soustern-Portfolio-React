@@ -5,6 +5,7 @@ import Hero from './layouts/Hero';
 import Projects from './layouts/Projects';
 import { useEffect} from 'react';
 import { useScroll } from './components/contexts/ScrollContext';
+import ProjectScreen from './layouts/ProjectScreen';
 
 function App() {
   const {scrollProgress, handleWheel} = useScroll();
@@ -20,7 +21,7 @@ function App() {
       <header className='fixed top-0 left-0 w-full py-15 px-10 z-50'>
         <NavBar />
       </header>
-      
+      <ProjectScreen/>
       <main className='fixed inset-0 overflow-hidden z-5'>
         <Hero />
         <Projects />
