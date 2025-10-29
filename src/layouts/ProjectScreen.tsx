@@ -29,7 +29,7 @@ const ProjectScreen = () => {
                     <motion.button whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[50px] text-gray-300"></LiaTimesSolid></motion.button>
                 </nav>
                 <div className="flex gap-12 overflow-hidden">
-                    <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-20">
+                    <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
                         <div>
                             <div>
                                 <img src={dnd} alt="" className="rounded-xl border-[1px] border-gray-700" />
