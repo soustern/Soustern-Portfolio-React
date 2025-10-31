@@ -21,7 +21,7 @@ gsap.registerPlugin(SplitText);
 const PranceCompany = () => {
     const { language } = useLanguage();
     const {changeProject} = useProject();
-    const buttonNavDesktopRef = useRef<HTMLElement>(null);
+    const buttonNavDesktopRef = useRef<HTMLButtonElement>(null);
 
     const strings = language === "En" ? pranceCompany.En : pranceCompany["Pt-Br"];
 
