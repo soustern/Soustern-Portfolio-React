@@ -14,6 +14,7 @@ import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 import ProjectCard from "../components/ui/ProjectCard";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import pranceCompanyHero from "../assets/images/pranceCompanyHero.webp";
 
 
 const Projects = () => {
@@ -47,7 +48,7 @@ const Projects = () => {
             id: 2,
             title: "Prance Company",
             icon: LiaNetworkWiredSolid,
-            image: thx,
+            image: pranceCompanyHero,
             type: "Product",
             Year: "2024",
             stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion",

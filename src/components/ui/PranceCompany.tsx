@@ -12,14 +12,32 @@ import pranceCompanyServiceDifference from "../../assets/images/PranceCompanyHer
 import pranceCompanyServiceStacking from "../../assets/images/pranceCompanyServiceStacking.gif";
 import pranceCompanyMobileNav from "../../assets/images/pranceCompanyMobileNav.gif";
 import pranceCompanyClientsImg from "../../assets/images/pranceCompanyClientsImg.webp";
+import { useEffect, useRef } from 'react';
+import { useProject } from '../contexts/ProjectContext';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 
 const PranceCompany = () => {
     const { language } = useLanguage();
+    const {changeProject} = useProject();
+    const buttonNavDesktopRef = useRef<HTMLElement>(null);
 
     const strings = language === "En" ? pranceCompany.En : pranceCompany["Pt-Br"];
+
+    useEffect(() => {
+        const button = buttonNavDesktopRef.current;
+        if (!button) return;
+
+        const handleChangeProject = () => {
+            changeProject(null);
+        }
+        button.addEventListener("click", handleChangeProject)
+
+        return () => {
+            button.removeEventListener("click", handleChangeProject)
+        }
+    }, )
 
     
     // TODO: Make SplitText animations
@@ -28,12 +46,13 @@ const PranceCompany = () => {
     // TODO: Make a mobile version
     // TODO: Give alt value to images
     // TODO: Make nav accessible 
+    // TODO: Stop ScrollProgress from happening
 
     return (
         <div className="px-8 py-4 bg-gradient-to-b from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)] w-full h-full max-w-[1200px] z-70 rounded-xl border-[1px] border-gray-700 shadow-black/20 shadow-xl flex flex-col gap-4">
             <nav className="flex justify-between items-center text-gray-50 text-3xl ">
                 <h3>{strings.caseStudy.title}</h3>
-                <motion.button whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[30px] text-gray-300"></LiaTimesSolid></motion.button>
+                <motion.button ref={buttonNavDesktopRef} whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[30px] text-gray-300"></LiaTimesSolid></motion.button>
             </nav>
             <div className="flex gap-8 overflow-hidden">
                 <div className="overflow-y-auto [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-400/30 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/60">
