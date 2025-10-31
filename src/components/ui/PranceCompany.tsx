@@ -51,7 +51,7 @@ const PranceCompany = () => {
     return (
         <div className="px-8 py-4 bg-gradient-to-b from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)] w-full h-full max-w-[1200px] z-70 rounded-xl border-[1px] border-gray-700 shadow-black/20 shadow-xl flex flex-col gap-4">
             <nav className="flex justify-between items-center text-gray-50 text-3xl ">
-                <h3>{strings.caseStudy.title}</h3>
+                <h3>Prance Company Institutional Website</h3>
                 <motion.button ref={buttonNavDesktopRef} whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[30px] text-gray-300"></LiaTimesSolid></motion.button>
             </nav>
             <div className="flex gap-8 overflow-hidden">
@@ -61,7 +61,7 @@ const PranceCompany = () => {
                             <img fetchPriority='high' src={pranceCompanyHero} alt="" className="rounded-xl border-[1px] border-gray-700" />
                         </div>
                         <section className=' scroll-mt-50 flex flex-col gap-4' id='Overview'>
-                            <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.overviewTitle}</h3>
+                            <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.title}</h3>
                             <div className='w-full h-1 border-b-1 border-gray-600'></div>
                             <TextStandard className='text-lg' text={strings.caseStudy.overview}></TextStandard>
                             <div className='flex gap-8'>
