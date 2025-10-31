@@ -1,14 +1,35 @@
 import { useEffect, useRef, useState} from "react";
 import { useScroll } from "../components/contexts/ScrollContext";
-import { AnimatePresence } from "motion/react";
-import PrimaryIcon from "../components/ui/PrimaryIcons";
-import TextStandard from "../components/ui/TextStandard";
+import { AnimatePresence, motion } from "motion/react";
 import dnd from "../assets/images/dnd.png";
-import prime from "../assets/images/prime.png";
 import thx from "../assets/images/thx.png";
 import todo from "../assets/images/todo.png";
+import { LiaAddressCard } from 'react-icons/lia';
+import { LiaDungeonSolid } from 'react-icons/lia';
+import { LiaCogSolid } from 'react-icons/lia';
+import { LiaClipboardListSolid } from 'react-icons/lia';
+import { LiaNetworkWiredSolid } from 'react-icons/lia';
+import { LiaLongArrowAltLeftSolid } from 'react-icons/lia';
+import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
+import ProjectCard from "../components/ui/ProjectCard";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import pranceCompanyHero from "../assets/images/pranceCompanyHero.webp";
+
 
 const Projects = () => {
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [progressPercent, setProgressPercent] = useState(0);
+
+    const cardsContainerDesktopRef = useRef<HTMLDivElement>(null);
+    const progressBarDesktopRef = useRef<HTMLDivElement>(null);
+
+    const exitTimelineRef = useRef<gsap.core.Timeline>(null);
+    const entryTimelineRef = useRef<gsap.core.Timeline>(null);
+    const page = useRef<number>(1);
+    const direction = useRef<number>(1);
 
     // TODO: Redo card design
     // TODO: Add supporting for portuguese
@@ -16,80 +37,65 @@ const Projects = () => {
         {
             id: 1,
             title: "Portfolio",
-            icon: {
-                iconType: "solid",
-                icon: "address-card",
-            },
+            icon: LiaAddressCard,
             image: thx,
             type: "Portfolio",
             Year: "2025",
-            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Media Production, Art Direction, ",
+            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion ",
+            next: 2,
         },
-        {
+         {
             id: 2,
-            title: "DND Monster Codex",
-            icon: {
-                iconType: "solid",
-                icon: "dungeon",
-            },
-            image: dnd,
-            type: "Project",
+            title: "Prance Company",
+            icon: LiaNetworkWiredSolid,
+            image: pranceCompanyHero,
+            type: "Product",
             Year: "2024",
-            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, Media Production, Art Direction, API, Vercel, ",
+            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion",
+            next: null
         },
         {
             id: 3,
+            title: "DND Monster Codex",
+            icon: LiaDungeonSolid,
+            image: dnd,
+            type: "Project",
+            Year: "2024",
+            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, API, Vercel, ",
+            next: 3,
+        },
+        {
+            id: 4,
             title: "SLS",
-            icon: {
-                iconType: "brands",
-                icon: "ubuntu",
-            },
+            icon: LiaCogSolid,
             image: thx,
             type: "Project",
             Year: "2023",
             stack: "C, Linux, CLI, ",
+            next: 4,
         },
         {
-            id: 4,
+            id: 5,
             title: "To Do App",
-            icon: {
-                iconType: "solid",
-                icon: "list-check",
-            },
+            icon: LiaClipboardListSolid,
             image: todo,
             type: "Project",
             Year: "2025",
             stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
+            next: 5,
         },
-        {
-            id: 5,
-            title: "THX Digital",
-            icon: {
-                iconType: "solid",
-                icon: "table",
-            },
-            image: thx,
-            type: "Product",
-            Year: "2024",
-            stack: " CSS, SASS, HTML, UX, UI, NPM, Brand Design, Media Production, Naming & Copywriting, ",
-        },
-        {
-            id: 6,
-            title: "Prime Led",
-            icon: {
-                iconType: "solid",
-                icon: "lightbulb",
-            },
-            image: prime,
-            type: "Product",
-            Year: "2025",
-            stack: " CSS, SASS, HTML, UX, UI, NPM, Media Production, Naming & Copywriting, ",
-        }
     ];
 
     const sectionRef = useRef<HTMLElement>(null)
     const [shouldRender, setShouldRender] = useState(true);
+
     const {scrollProgress} = useScroll();
+
+    useEffect(() => {
+        setCurrentIndex(0);
+        setIsAnimating(false);
+        setProgressPercent(0);
+    }, [shouldRender]);
 
     useEffect(() => {
         if (scrollProgress >= 19 && scrollProgress <= 38)
@@ -102,6 +108,101 @@ const Projects = () => {
         };
     }, [scrollProgress]);
 
+    useGSAP (() => {
+
+        if (!cardsContainerDesktopRef.current || !progressBarDesktopRef.current) return;
+
+        const [upperCard, lowerCard] = cardsContainerDesktopRef.current.children;
+
+        exitTimelineRef.current = gsap.timeline({ paused: true })
+        .to([upperCard, lowerCard], {
+             y: 100, 
+             opacity: 0, 
+             stagger: 0.15, 
+             duration: 0.15, 
+             ease: "power4.out" 
+        });
+        
+
+        entryTimelineRef.current = gsap.timeline()
+        .from([upperCard, lowerCard], {
+            y: 100,
+            opacity: 0,
+            duration: 0.15,
+            ease: "power4.in",
+            stagger: 0.15
+        });
+    }, [shouldRender]);
+
+    useGSAP (() => {
+        if (!progressBarDesktopRef.current) return;
+        gsap.to(progressBarDesktopRef.current, {
+            transformOrigin: () => direction.current === 1 ? 'right center' : 'left center',
+            scaleX: 2,
+            xPercent: () => progressPercent,
+            duration: 0.35,
+            ease: "power2.inOut",
+            onComplete: () => {
+                gsap.to(progressBarDesktopRef.current, {
+                    transformOrigin: () => direction.current === -1 ? 'left center' : 'right center',
+                    scaleX: 1,
+                    duration: 0.35,
+                    fill: "forwards",
+                    ease: "power2.inOut",
+                });
+                // gsap.to(progressBarDesktopRef.current, {
+                //     xPercent: () => progressPercent,
+                //     duration: 0.35,
+                //     ease: "power2.inOut",
+                // })
+            }
+        });
+    }, [progressPercent]);
+
+    function handleNext(): void {
+        if (currentIndex >= projects.length - 1) return;
+        if (isAnimating) return;
+         direction.current = 1;
+         setProgressPercent(progressPercent + 101.5);
+
+        const entry = entryTimelineRef.current;
+        const exit = exitTimelineRef.current;
+        if (!exit || !entry) return;
+
+        exit.restart();
+        exit.eventCallback("onStart", () => {
+            setIsAnimating(true);
+        })
+        exit.eventCallback("onComplete", () => {
+            ++page.current;
+            setIsAnimating(false);
+            setCurrentIndex(currentIndex + 2);
+            entry.restart();
+        });
+    }
+
+    function handleBack(): void {
+        if (currentIndex <= 0) return;
+        if (isAnimating) return;
+        direction.current = -1;
+        setProgressPercent(progressPercent - 101.5);
+
+        const entry = entryTimelineRef.current;
+        const exit = exitTimelineRef.current;
+        if (!exit || !entry) return;
+
+        exit.restart();
+        exit.eventCallback("onStart", () => {
+            setIsAnimating(true);
+        })
+        exit.eventCallback("onComplete", () => {
+            --page.current;
+            setIsAnimating(false);
+            setCurrentIndex(currentIndex - 2);
+            entry.restart();
+        });
+    }
+
     // TODO: Make responsive version
     // TODO: Make transition animations
     // TODO: Make hover animations
@@ -110,100 +211,44 @@ const Projects = () => {
     return (
         <AnimatePresence>
             {shouldRender && 
-            <section 
+            <motion.section 
                 ref={sectionRef} 
                 id='Projects' 
-                className='flex items-center justify-center w-full h-full px-6 lg:px-8 py-8 lg:py-12 pr-20'
+                className='flex items-center justify-center w-full h-full'
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
             >
-                <div className="grid flex-1 grid-cols-4 lg:grid-cols-4 gap-4 lg:gap-6 w-full max-w-[1500px] max-h-full py-4">
-                    {projects.slice(0, 2).map(project => (
-                        <article key={project.id} className="bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black col-span-2"
-                        >
-                            <div className="border-b-[1px] border-gray-700">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-auto aspect-[10/3] object-cover mix-blend-screen"
-                                />
+                <div className="flex max-w-[1200px] w-full flex-col gap-8 md:py-8 items-center">
+                    <AnimatePresence>
+                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl">
+                            <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
                             </div>
-                            <div className="p-4 lg:p-6 space-y-1">
-                                <div className="flex items-baseline gap-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex-shrink-0">
-                                            <PrimaryIcon
-                                                icon={project.icon.icon}
-                                                iconType={project.icon.iconType}
-                                                className="text-[var(--color-accent-primary)]"
-                                            />
-                                        </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
-                                            {project.title}
-                                        </h3>
-                                    </div>
-                                    <div className="flex-1"></div>
-                                    <TextStandard text={project.Year} importance="supporting"></TextStandard>
-                                </div>
-                                <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1 relative">
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                    </div>
-                                </div>
+                            <div className="w-full h-full relative">
+                                <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%] transform translate-x-0 rounded-full`}></div>
                             </div>
-                        </article>
-                    ))}
-                    {projects.slice(2).map(project => (
-                        <article 
-                            key={project.id} 
-                            className="overflow-hidden bg-[var(--color-bg-secondary)]  border-[1px] border-gray-700 rounded-xl  shadow-black"
-                        >
-                            <div className="border-b-[1px] border-gray-700">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-auto aspect-[2/1] object-cover mix-blend-screen"
-                                />
-                            </div>
-                            <div className="p-4 lg:p-6 space-y-1">
-                                <div className="flex items-baseline gap-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="flex-shrink-0">
-                                            <PrimaryIcon
-                                                icon={project.icon.icon}
-                                                iconType={project.icon.iconType}
-                                                className="text-[var(--color-accent-primary)]"
-                                            />
-                                        </div>
-                                        <h3 className="text-base font-semibold leading-tight tracking-tight text-gray-300">
-                                            {project.title}
-                                        </h3>
-                                    </div>
-                                    <div className="flex-1"></div>
-                                    <TextStandard text={project.Year} importance="supporting"></TextStandard>
-                                </div>
-                                <div className="overflow-hidden relative pt-2 lg:pt-3">
-                                    <div className="marquee flex whitespace-nowrap animate-marquee gap-1">
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <TextStandard importance="metadata">{project.stack}</TextStandard>
-                                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--color-bg-secondary)] from-5% to-transparent to-100% pointer-events-none"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
+                        </motion.div>
+                    </AnimatePresence>
+                    <div  className="flex w-full justify-between gap-4 md:gap-8 ">
+                        <AnimatePresence>
+                            <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
+                                <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
+                            </motion.button>
+                        </AnimatePresence>
+                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
+                                <ProjectCard project={projects[currentIndex]}></ProjectCard>
+                                {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
+                        </div>
+                        <AnimatePresence>
+                            <motion.button  onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
+                                <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
+                            </motion.button>
+                        </AnimatePresence>
+                    </div>
                 </div>
-            </section>}
+            </motion.section>}
         </AnimatePresence>
     )
 };

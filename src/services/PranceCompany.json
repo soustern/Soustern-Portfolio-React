@@ -1,0 +1,125 @@
+{
+  "En": {
+    "caseStudy": {
+      "title": "Prance Company Institutional Website",
+      "overviewTitle": "Overview",
+      "overview": "This project involved the end-to-end development of a high-performance institutional landing page for Prance Company, a digital marketing and branding consultancy. As the sole Front-End Developer and Designer, I was responsible for translating the client's vision into a fully optimized, visually stunning, and conversion-focused web experience. The project was completed in two weeks, utilizing a modern tech stack centered around React, TypeScript, and advanced animation libraries to create a memorable user journey.",
+      "highlightsTitle": "Highlights",
+      "performanceTitle": "Performance-Driven Architecture",
+      "performanceDesc": "Engineered for speed, achieving top-tier Lighthouse scores:",
+      "desktopScores": "Desktop: Performance: 96, Accessibility: 94, Best Practices: 100, SEO: 100.",
+      "mobileScores": "Mobile: Performance: 77, Accessibility: 95, Best Practices: 100, SEO: 100.",
+
+      "performanceTech": "Achieved through asset optimization (.webp), font preloading, lazy loading, and a Vite PWA for caching.",
+      
+      "animationTitle": "Advanced Animation System",
+
+      "animationDesc": "Implemented a sophisticated animation system using GSAP and Framer Motion to create an engaging, narrative-driven scroll experience. This includes complex timeline-based sequences, scroll-triggered reveals, and polished micro-interactions.",
+      
+      "responsiveTitle": "\"Relative Experience\" Responsive Design",
+      
+      "responsiveDesc": "Instead of a standard fluid layout, the site employs a \"Relative Experience\" strategy. It conditionally renders entirely different, tailored component trees for mobile and desktop, ensuring an optimal and custom experience for each context without compromising performance.",
+      
+      "ciCdTitle": "Automated CI/CD Pipeline",
+      
+      "ciCdDesc": "Established a fully automated deployment workflow using GitHub Actions, ensuring that every push to the `main` branch is seamlessly built, tested, and deployed, guaranteeing code quality and stability.",
+      
+      "contextTitle": "Context",
+      "contextProject": "Project: Prance Company Institutional Website",
+      "contextRole": "Role: Front End Developer & Designer",
+      "contextTimeline": "Timeline: Two Weeks",
+      "contextClient": "Client: Priscila Pavanete, Prance Company",
+      "contextIndustry": "Industry: Digital Marketing & Branding",
+
+      "problemTitle": "The Problem",
+      "problemDesc": "Prance Company previously relied solely on social media and limited site builders for its online presence. This approach lacked professionalism and scalability, making it difficult to convert leads effectively from paid ad campaigns. The primary business goals were:",
+      
+      "problemGoal1": "Establish a professional, high-end digital \"storefront\" to build brand authority and trust.",
+      "problemGoal2": "Create a high-converting landing page optimized for paid traffic campaigns.",
+      "problemGoal3": "Develop a scalable foundation that could be expanded with future functionalities, such as a blog.",
+      
+      "flowTitle": "Development and Deployment Flow",
+      "flowDesc": "The project's workflow was built on efficiency and modern development practices. A CI/CD pipeline was implemented using GitHub Actions, which automated the entire deployment process. On every push to the `main` branch, the workflow would trigger, install dependencies, build the optimized production assets using Vite, and deploy the final `dist` directory to GitHub Pages. This ensured rapid, consistent, and error-free updates.",
+      
+      "layoutTitle": "Layout",
+      "layoutDesc": "The layout is built on a \"Relative Experience\" architecture. Instead of relying purely on responsive CSS, a custom `useWindowSize` hook detects the viewport width. Based on a 975px breakpoint, the application renders either a `Mobile` or `Desktop` component tree. This strategic decision allows for:",
+      "layoutBenefit1Title": "Highly Tailored Experiences",
+      "layoutBenefit1Desc": "Animations, layouts, and component structures are completely customized for each context, providing a truly device-specific user experience.",
+      "layoutBenefit2Title": "Performance Optimization",
+      "layoutBenefit2Desc": "Mobile users don't download unnecessary desktop assets or render hidden complex DOM trees, significantly improving load times and performance.",
+      "layoutTech": "Tailwind CSS was used for utility-first styling, enabling rapid and consistent development within both the mobile and desktop component trees.",
+      
+      "interactionsTitle": "Interactions",
+      "interactionsDesc": "The user experience is heavily driven by purposeful animations designed to guide and engage. The interaction system was built with two primary libraries:",
+      "interactionsGsap": "GSAP (GreenSock Animation Platform): Used for all complex, high-performance, scroll-based animations. GSAP's `ScrollTrigger` orchestrates entire sections, like the \"pinning\" effect of the service cards, while `SplitText` creates sophisticated, line-by-line text reveals that draw the user's eye down the page.",
+      "interactionsFramer": "Framer Motion: Leveraged for micro-interactions and state-based animations within the React paradigm. This was ideal for UI elements like button hover/tap effects (`whileHover`, `whileTap`) and managing the enter/exit animations of the mobile navigation menu with `AnimatePresence`.",
+      
+      "visualTitle": "Visual Design",
+      "visualDesc": "Inspired by the clean and modern aesthetic of industry leaders like Apple, the design aimed to be both elegant and professional. The primary color palette was pre-defined by the client's brand guidelines. I expanded on this by developing a full system of background and text colors to ensure high contrast, readability, and a comfortable user experience. The 'Cal Sans' typeface was chosen for its modern and clean characteristics, reinforcing the brand's sophisticated image.",
+      
+      "finalDesignsTitle": "Final Designs",
+      "heroTitle": "Hero Section",
+      "servicesTitle": "Services Section",
+      "navTitle": "Mobile Navigation",
+      "clientsTitle": "Clients Section",
+      
+      "retrospectiveTitle": "Retrospective",
+      "retrospectiveDesc1": "This project was a deep dive into performance-first web development and advanced animation. One of the biggest technical challenges was synchronizing GSAP's `ScrollTrigger` animations with the site's font loading. I resolved this by ensuring all fonts were fully loaded before initializing any animations, preventing layout shifts and animation glitches. Another challenge was optimizing mobile performance, which was addressed by serving fonts locally, implementing a Vite PWA cache, using `react-icons` instead of a CDN, lazy loading images, and setting `fetchpriority` on key hero assets.",
+      "retrospectiveDesc2": "A key architectural decision was the \"Relative Experience\" layout. It proved highly effective for creating distinct, optimized user journeys on different devices. If I were to revisit the project, I would explore implementing `prefers-reduced-motion` to provide a more accessible experience for all users.",
+      "retrospectiveDesc3": "Overall, the project successfully delivered a top-tier, conversion-focused landing page that met all of the client's business objectives and set a new standard for their digital presence."
+    }
+  },
+  "Pt-Br": {
+    "caseStudy": {
+      "title": "Estudo de Caso: Website Institucional da Prance Company",
+      "overview": "Este projeto envolveu o desenvolvimento de ponta a ponta de uma landing page institucional de alta performance para a Prance Company, uma consultoria de marketing digital e branding. Como único Desenvolvedor Front-End e Designer, fui responsável por traduzir a visão do cliente em uma experiência web totalmente otimizada, visualmente impressionante e focada em conversão. O projeto foi concluído em duas semanas, utilizando uma stack de tecnologia moderna centrada em React, TypeScript e bibliotecas de animação avançadas para criar uma jornada de usuário memorável.",
+      "highlightsTitle": "Destaques",
+      "performanceTitle": "Arquitetura Focada em Performance",
+      "performanceDesc": "Projetado para velocidade, alcançando pontuações de alto nível no Lighthouse:",
+      "desktopScores": "Desktop: Performance: 96, Acessibilidade: 94, Boas Práticas: 100, SEO: 100.",
+      "mobileScores": "Mobile: Performance: 77, Acessibilidade: 95, Boas Práticas: 100, SEO: 100.",
+      "performanceTech": "Resultados alcançados através da otimização de ativos (.webp), pré-carregamento de fontes, lazy loading e um Vite PWA para cache.",
+      "animationTitle": "Sistema de Animação Avançado",
+      "animationDesc": "Implementei um sistema de animação sofisticado usando GSAP e Framer Motion para criar uma experiência de rolagem narrativa e envolvente. Isso inclui sequências complexas baseadas em timelines, revelações acionadas por scroll e microinterações polidas.",
+      "responsiveTitle": "Design Responsivo de \"Experiência Relativa\"",
+      "responsiveDesc": "Em vez de um layout fluido padrão, o site emprega uma estratégia de \"Experiência Relativa\". Ele renderiza condicionalmente árvores de componentes totalmente diferentes e personalizadas para mobile e desktop, garantindo uma experiência ótima e customizada para cada contexto sem comprometer a performance.",
+      "ciCdTitle": "Pipeline de CI/CD Automatizado",
+      "ciCdDesc": "Estabeleci um fluxo de implantação totalmente automatizado usando GitHub Actions, garantindo que cada push para a branch `main` seja construído, testado e implantado de forma contínua, garantindo a qualidade e estabilidade do código.",
+      "contextTitle": "Contexto",
+      "contextProject": "Projeto: Website Institucional da Prance Company",
+      "contextRole": "Função: Desenvolvedor Front-End & Designer",
+      "contextTimeline": "Prazo: Duas Semanas",
+      "contextClient": "Cliente: Priscila Pavanete, Prance Company",
+      "contextIndustry": "Indústria: Marketing Digital & Branding",
+      "problemTitle": "O Problema",
+      "problemDesc": "A Prance Company anteriormente dependia exclusivamente de redes sociais e construtores de sites limitados para sua presença online. Essa abordagem carecia de profissionalismo e escalabilidade, dificultando a conversão eficaz de leads de campanhas de tráfego pago. Os principais objetivos de negócio eram:",
+      "problemGoal1": "Estabelecer uma \"vitrine\" digital profissional e de alto padrão para construir autoridade e confiança na marca.",
+      "problemGoal2": "Criar uma landing page de alta conversão otimizada para campanhas de tráfego pago.",
+      "problemGoal3": "Desenvolver uma base escalável que pudesse ser expandida com futuras funcionalidades, como um blog.",
+      "flowTitle": "Fluxo de Desenvolvimento e Implantação",
+      "flowDesc": "O fluxo de trabalho do projeto foi construído com base na eficiência e em práticas de desenvolvimento modernas. Um pipeline de CI/CD foi implementado usando GitHub Actions, que automatizou todo o processo de implantação. A cada push para a branch `main`, o fluxo era acionado, instalava dependências, construía os ativos de produção otimizados com o Vite e implantava o diretório `dist` final no GitHub Pages. Isso garantiu atualizações rápidas, consistentes e livres de erros.",
+      "layoutTitle": "Layout",
+      "layoutDesc": "O layout é construído sobre uma arquitetura de \"Experiência Relativa\". Em vez de depender puramente de CSS responsivo, um hook customizado `useWindowSize` detecta a largura da viewport. Com base em um breakpoint de 975px, a aplicação renderiza uma árvore de componentes `Mobile` ou `Desktop`. Essa decisão estratégica permite:",
+      "layoutBenefit1Title": "Experiências Altamente Personalizadas:",
+      "layoutBenefit1Desc": "Animações, layouts e estruturas de componentes são completamente customizados para cada contexto, proporcionando uma experiência de usuário verdadeiramente específica para o dispositivo.",
+      "layoutBenefit2Title": "Otimização de Performance:",
+      "layoutBenefit2Desc": "Usuários mobile não baixam ativos desnecessários de desktop nem renderizam árvores DOM complexas ocultas, melhorando significativamente os tempos de carregamento e a performance.",
+      "layoutTech": "O Tailwind CSS foi usado para estilização 'utility-first', permitindo um desenvolvimento rápido e consistente tanto nas árvores de componentes mobile quanto desktop.",
+      "interactionsTitle": "Interações",
+      "interactionsDesc": "A experiência do usuário é fortemente impulsionada por animações intencionais, projetadas para guiar e engajar. O sistema de interação foi construído com duas bibliotecas principais:",
+      "interactionsGsap": "GSAP (GreenSock Animation Platform): Usado para todas as animações complexas, de alta performance e baseadas em scroll. O `ScrollTrigger` do GSAP orquestra seções inteiras, como o efeito de \"fixação\" (pinning) dos cards de serviço, enquanto o `SplitText` cria revelações de texto sofisticadas, linha por linha, que atraem o olhar do usuário pela página.",
+      "interactionsFramer": "Framer Motion: Utilizado para microinterações e animações baseadas em estado dentro do paradigma React. Foi ideal para elementos de UI como efeitos de hover/tap em botões (`whileHover`, `whileTap`) e para gerenciar as animações de entrada/saída do menu de navegação mobile com `AnimatePresence`.",
+      "visualTitle": "Design Visual",
+      "visualDesc": "Inspirado na estética limpa e moderna de líderes da indústria como a Apple, o design visava ser tanto elegante quanto profissional. A paleta de cores primária foi pré-definida pelas diretrizes da marca do cliente. Eu expandi isso desenvolvendo um sistema completo de cores de fundo e texto para garantir alto contraste, legibilidade e uma experiência de usuário confortável. A tipografia 'Cal Sans' foi escolhida por suas características modernas e limpas, reforçando a imagem sofisticada da marca.",
+      "finalDesignsTitle": "Designs Finais",
+      "heroTitle": "Seção Hero",
+      "servicesTitle": "Seção de Serviços",
+      "navTitle": "Navegação Mobile",
+      "clientsTitle": "Seção de Clientes",
+      "retrospectiveTitle": "Retrospectiva",
+      "retrospectiveDesc1": "Este projeto foi um mergulho profundo em desenvolvimento web focado em performance e animação avançada. Um dos maiores desafios técnicos foi sincronizar as animações `ScrollTrigger` do GSAP com o carregamento das fontes do site. Resolvi isso garantindo que todas as fontes estivessem totalmente carregadas antes de inicializar qualquer animação, evitando 'layout shifts' e falhas de animação. Outro desafio foi otimizar a performance mobile, o que foi abordado servindo fontes localmente, implementando um cache com Vite PWA, usando `react-icons` em vez de CDN, lazy loading de imagens e definindo `fetchpriority` nos principais ativos da seção hero.",
+      "retrospectiveDesc2": "Uma decisão arquitetônica chave foi o layout de \"Experiência Relativa\". Ele se mostrou altamente eficaz para criar jornadas de usuário distintas и otimizadas em diferentes dispositivos. Se eu pudesse revisitar o projeto, exploraria a implementação de `prefers-reduced-motion` para fornecer uma experiência mais acessível para todos os usuários.",
+      "retrospectiveDesc3": "No geral, o projeto entregou com sucesso uma landing page de primeira linha, focada em conversão, que atendeu a todos os objetivos de negócio do cliente e estabeleceu um novo padrão para sua presença digital."
+    }
+  }
+}

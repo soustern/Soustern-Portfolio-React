@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
+
 .font-sans { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
 /* .font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; } */
 .font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; }
@@ -126,4 +127,12 @@ clip-path: path(
       "M 165, 3.6 L 288, 70.8 A 18 18 0 0 1 300, 90 L 300, 210 A 18 18 0 0 1 288, 229.2 L 165, 296.4 A 18 6 0 0 1 135, 296.4 L 12, 229.2 A 18 18 0 0 1 0, 210 L 0, 90 A 18 18 0 0 1 12, 70.8 L 135, 3.6 A 18 6 0 0 1 165, 3.6 Z"
     );
   }
+}
+
+p {
+  line-height: 1.625;
+}
+
+html {
+  scroll-behavior: smooth;
 }

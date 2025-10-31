@@ -133,19 +133,21 @@ const Hero = () => {
             id='hero' 
             className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full'>
 
-                <div ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
+                <motion.div initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} transition={{ duration: 0.3, type: "spring" }} ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
                     <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src={heroVideo}></video>
-                </div>
+                </motion.div>
                 <div className="space-y-4 z-10 relative">
                     <TextHeadline className="font-mono" text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
                     <div className="flex items-center w-full gap-2">
-                        <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
+                        <motion.div initial={{x: -100, opacity: 0 }} animate={{x: 0, opacity: 1}}  className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
-                        </div>
-                        <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>
-                        <div className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
+                        </motion.div>
+                        <motion.div initial={{y: 100, opacity: 0 }} animate={{y: 0, opacity: 1}}>
+                            <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>
+                        </motion.div>
+                        <motion.div initial={{x: 100, opacity: 0 }} animate={{x: 0, opacity: 1}} className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
-                        </div>
+                        </motion.div>
                     </div>
                     <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100">   
                         <AnimatePresence>
