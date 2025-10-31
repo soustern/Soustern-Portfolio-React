@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
+
 .font-sans { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
 /* .font-mono { font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace; } */
 .font-mono { font-family: 'Fira Code', 'SF Mono', Monaco, monospace; }
@@ -130,4 +131,8 @@ clip-path: path(
 
 p {
   line-height: 1.625;
+}
+
+html {
+  scroll-behavior: smooth;
 }
