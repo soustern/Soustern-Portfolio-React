@@ -14,11 +14,16 @@ import pranceCompanyMobileNav from "../../assets/images/pranceCompanyMobileNav.g
 import pranceCompanyClientsImg from "../../assets/images/pranceCompanyClientsImg.webp";
 import { useEffect, useRef } from 'react';
 import { useProject } from '../contexts/ProjectContext';
+import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 
-const PranceCompany = () => {
+interface PranceCompanyProps {
+    fontsReady: boolean;
+}
+
+const PranceCompany = (fontsReady: PranceCompanyProps) => {
     const { language } = useLanguage();
     const {changeProject} = useProject();
     const buttonNavDesktopRef = useRef<HTMLButtonElement>(null);
@@ -38,6 +43,13 @@ const PranceCompany = () => {
             button.removeEventListener("click", handleChangeProject)
         }
     }, )
+
+    useGSAP(() => {
+        if (!fontsReady) return;
+
+        
+
+    }, [fontsReady]);
 
     
     // TODO: Make SplitText animations

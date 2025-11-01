@@ -137,7 +137,7 @@ function NavBar(): JSX.Element  {
     }, [scrollProgress])
 
     const navigate = (percent: string) => {
-        gsap.to(progressRef.current, {width: percent, duration: 1, ease: "power4.out",
+        gsap.to(progressRef.current, {width: percent, duration: 0.2, ease: "none",
             onUpdate: () => {
                 setScrollProgress(Number(progressRef.current!.style.width.replace("%", "")));
             }
