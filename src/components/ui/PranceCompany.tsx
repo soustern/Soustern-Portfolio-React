@@ -115,12 +115,9 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
         }
     }, )
     
-    // TODO: Make ScrollTrigger animations
-    // TODO: Change ID of each section
     // TODO: Make a mobile version
     // TODO: Give alt value to images
     // TODO: Make nav accessible 
-    // TODO: Stop ScrollProgress from happening
 
     return (
         <AnimatePresence>
