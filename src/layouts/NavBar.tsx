@@ -128,7 +128,6 @@ function NavBar(): JSX.Element  {
         hover: { color: "#f9fafb" }
     };
 
-    // TODO: Nav bar sections progress
     useEffect(() => {
         if (!progressRef.current) return;
 
