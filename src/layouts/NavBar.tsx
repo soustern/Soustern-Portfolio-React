@@ -1,7 +1,7 @@
 import { useState, type JSX, type ReactNode, useRef, useEffect } from "react";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
-import {  AnimatePresence, motion } from "motion/react";
+import {  AnimatePresence, color, hover, motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from '../components/contexts/LanguageContext'
 import languageStrings from "../services/localisation.json"
@@ -147,6 +147,7 @@ function NavBar(): JSX.Element  {
 
     // TODO: Make mobile version of navbar
     // TODO: Implement other navigation links
+    // TODO: Refactor icons here to react
 
     if (screenWidth.width <= 1200)
     {
@@ -187,10 +188,17 @@ function NavBar(): JSX.Element  {
                         <div className="flex flex-col w-fit relative">
                             <div ref={progressRef} className="h-[1px] w-0 rounded-full bg-[var(--color-accent-primary)] transform -translate-y-2"></div>
                             <ul className="flex gap-4">
-                                <li><button onClick={() => navigate(`0%`)} className="cursor-pointer"><TextStandard importance="metadata" text={`${strings.sections.Hero()}`}></TextStandard></button></li>
-                                <li><TextStandard importance="metadata" text={`${strings.sections.Projects()}`}></TextStandard></li>
+                                <li>
+                                    <motion.button whileHover={"hover"} onClick={() => navigate(`0%`)} className="cursor-pointer">
+                                        <TextStandard importance={scrollProgress <= 15 ? "important" : "metadata"} text={`${strings.sections.Hero()}`}></TextStandard>
+                                    </motion.button>
+                                </li>
+                                <li>
+                                    <button onClick={() => navigate(`19%`)} className="cursor-pointer">
+                                        <TextStandard importance={scrollProgress >= 19 ? "important" : "metadata"} text={`${strings.sections.Projects()}`}></TextStandard>
+                                    </button>
+                                </li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.About()}`}></TextStandard></li>
-                                <li><TextStandard importance="metadata" text={`${strings.sections.Education()}`}></TextStandard></li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.workWithMe()}`}></TextStandard></li>
                             </ul>
                         </div>

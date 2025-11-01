@@ -60,6 +60,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
   }, [language])
 
   // TODO: Make background gradient change as section changes
+  // TODO: Make a responsive padding y and padding x system
 
   return (
     <>

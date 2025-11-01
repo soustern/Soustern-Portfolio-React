@@ -14,7 +14,7 @@ const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({color
     const getImportanceStyle = () => {
         switch(importance) {
             case `important`:
-                return `text-base font-medium text-[#f9fafb]`;
+                return `text-base font-medium text-gray-200`;
             case `supporting`:
                 return `text-base font-normal text-gray-500`;
             case `metadata`:

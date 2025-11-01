@@ -12,7 +12,7 @@ interface PrimaryIconProps {
 function PrimaryIcon({ iconType, icon, className, variants, color }: PrimaryIconProps): JSX.Element {
     return (
         <>
-            <motion.i variants={variants} className={`fa-${iconType} fa-${icon} ${color ? color : 'text-[#f9fafb]' } ${className}`}></motion.i>
+            <motion.i variants={variants} className={`fa-${iconType} fa-${icon} ${color ? color : 'text-gray-300' } ${className}`}></motion.i>
         </>
     );
 }
