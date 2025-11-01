@@ -146,7 +146,7 @@ function NavBar(): JSX.Element  {
 
     // TODO: Make mobile version of navbar
     // TODO: Implement other navigation links
-    // TODO: Refactor icons here to react
+    // TODO: Refactor icons here to react Icons
 
     if (screenWidth.width <= 1200)
     {
