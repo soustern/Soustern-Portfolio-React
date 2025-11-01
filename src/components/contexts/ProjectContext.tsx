@@ -8,7 +8,6 @@ type ProjectContextType = {
 const ProjectContext = createContext<ProjectContextType | null>(null);
 
 export function ProjectProvider({children}: {children: React.ReactNode}) {
-    // TODO: This state should be initialized as null after testing is done
     const [currentProject, setCurrentProject] = useState<number | null>(null);
 
     const changeProject = (projectNumber: number | null) => {
