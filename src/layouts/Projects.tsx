@@ -204,8 +204,6 @@ const Projects = () => {
     }
 
     // TODO: Make responsive version
-    // TODO: Make transition animations
-    // TODO: Make hover animations
     // TODO: Make pages
 
     return (
