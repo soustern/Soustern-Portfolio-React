@@ -120,6 +120,8 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
     
     // TODO: Give alt value to images
     // TODO: Make nav accessible 
+    // TODO: Add default padding to this sections
+    // TODO: Add media queries to texts
 
     if (pageSize.width <= 900)
     {
