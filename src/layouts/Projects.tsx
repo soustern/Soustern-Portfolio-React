@@ -50,7 +50,7 @@ const Projects = () => {
             icon: LiaNetworkWiredSolid,
             image: pranceCompanyHero,
             type: "Product",
-            Year: "2024",
+            Year: "2025",
             stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion",
             next: null
         },

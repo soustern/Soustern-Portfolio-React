@@ -23,7 +23,7 @@ interface PranceCompanyProps {
     fontsReady: boolean;
 }
 
-const PranceCompany = (fontsReady: PranceCompanyProps) => {
+const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
     const { language } = useLanguage();
     const {changeProject} = useProject();
     const buttonNavDesktopRef = useRef<HTMLButtonElement>(null);
@@ -49,27 +49,57 @@ const PranceCompany = (fontsReady: PranceCompanyProps) => {
     useGSAP(() => {
         if (!fontsReady) return;
 
-        const refs = [pranceCompanyHeroRef, pranceCompanyOverview, pranceCompanyContext, pranceCompanyHighlights, pranceCompanyProblem, pranceCompanyFlow, pranceCompanyLayout, pranceCompanyInteractions, pranceCompanyVisual, pranceCompanyFinalDesign, pranceCompanyRetrospective,];
+        const refs = [pranceCompanyHighlights, pranceCompanyProblem, pranceCompanyFlow, pranceCompanyLayout, pranceCompanyInteractions, pranceCompanyVisual, pranceCompanyFinalDesign, pranceCompanyRetrospective,];
         
         if (!sectionRef.current || !scrollerRef.current) return;
         if (refs.some(ref => !ref)) return;
 
-        refs.forEach(ref => {
-            gsap.from(ref.current, {
-                x: -100, 
-                opacity: 0, 
-                duration: 0.3, 
-                ease: "power4.inOut", 
-                scrollTrigger:{
-                    trigger: ref.current,
-                    scroller: scrollerRef.current,
-                    start: "top 85%",
-                    once: true,
-                    markers: true
-                }
-            });
-        })
-    }, [fontsReady]);
+        gsap.from(pranceCompanyHeroRef.current, {
+            x: -100, 
+            opacity: 0, 
+            duration: 0.3, 
+            ease: "power4.inOut", 
+        });
+
+        gsap.from(pranceCompanyOverview.current, {
+            x: -100, 
+            opacity: 0, 
+            duration: 0.3, 
+            ease: "power4.inOut", 
+        });
+
+        gsap.from(pranceCompanyContext.current, {
+            x: -100, 
+            opacity: 0, 
+            duration: 0.3, 
+            ease: "power4.inOut", 
+        });
+
+        const initAnimation = () => {
+            refs.forEach(ref => {
+                gsap.from(ref.current, {
+                    x: -100, 
+                    opacity: 0, 
+                    duration: 0.3, 
+                    ease: "power4.inOut", 
+                    scrollTrigger:{
+                        trigger: ref.current,
+                        scroller: scrollerRef.current,
+                        start: "top 85%",
+                        once: true,
+                    }
+                });
+            })
+        }
+
+        // This is necessary to make the full layout after rendering be taken into consideration when calculating the ScrollTrigger
+        const initTimeout = setTimeout(initAnimation, 500);
+        
+        return () => {
+            clearTimeout(initTimeout);
+        }
+
+    }, {dependencies: [fontsReady]});
 
     useEffect(() => {
         const button = buttonNavDesktopRef.current;
@@ -164,7 +194,7 @@ const PranceCompany = (fontsReady: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.flowTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.flowDesc}></TextStandard>
-                                <img loading='lazy' decoding='async' className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg} alt="" />
+                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg} alt="" />
                             </section>
                             <section ref={pranceCompanyLayout} className=' scroll-mt-50 flex flex-col gap-4' id='Layout'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutTitle}</h3>
@@ -175,7 +205,7 @@ const PranceCompany = (fontsReady: PranceCompanyProps) => {
                                 <h4 className='text-lg font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutBenefit2Title}</h4>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutBenefit2Desc}></TextStandard>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutTech}></TextStandard>
-                                <img loading='lazy' decoding='async' className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} alt="" />
+                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} alt="" />
                             </section>
                             <section ref={pranceCompanyInteractions} className=' scroll-mt-50 flex flex-col gap-4' id='Interactions'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.interactionsTitle}</h3>
@@ -186,7 +216,7 @@ const PranceCompany = (fontsReady: PranceCompanyProps) => {
                                     <br />
                                     <li><TextStandard className='text-lg' text={strings.caseStudy.interactionsFramer}></TextStandard></li>
                                 </ul>
-                                <img loading='lazy' decoding='async' className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} alt="" />
+                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} alt="" />
                             </section>
                             <section ref={pranceCompanyVisual} className=' scroll-mt-50 flex flex-col gap-4' id='VisualDesign'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.visualTitle}</h3>
@@ -197,9 +227,9 @@ const PranceCompany = (fontsReady: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.finalDesignsTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.navTitle}></TextStandard>
-                                <img loading='lazy' decoding='async' className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} alt="" />
+                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} alt="" />
                                 <TextStandard className='text-lg' text={strings.caseStudy.clientsTitle}></TextStandard>
-                                <img loading='lazy' decoding='async' className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} alt="" />
+                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} alt="" />
                             </section>
                             <section ref={pranceCompanyRetrospective} className=' scroll-mt-50 flex flex-col gap-4' id='Retrospective'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.retrospectiveTitle}</h3>
