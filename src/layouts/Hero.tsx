@@ -4,12 +4,13 @@ import { createWebGLScene as createWebGLScenePainter } from "../utils/webglPaint
 import languageStrings from "../services/localisation.json"
 import { useLanguage } from "../components/contexts/LanguageContext";
 import TextStandard from "../components/ui/TextStandard";
-import PrimaryIcon from "../components/ui/PrimaryIcons";
 import { AnimatePresence, motion } from "motion/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useScroll } from "../components/contexts/ScrollContext";
 import heroVideo from "../assets/videos/hero.mp4";
+import { FaExclamation } from 'react-icons/fa6';
+import { LiaArrowRightSolid } from 'react-icons/lia';
 
 const Hero = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -148,14 +149,14 @@ const Hero = () => {
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                         </motion.div>
                     </div>
-                    <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100">   
+                    <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100 flex items-center">   
                         <AnimatePresence>
-                            {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className={`absolute ${language === `En` ? `-left-26` : `-left-30`}  top-0.5 w-fit`}>
+                            {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className={`absolute ${language === `En` ? `-left-26` : `-left-30`}  top-0.3 w-fit`}>
                                 <TextStandard className="" text={strings.heroTip()} ></TextStandard>
                             </motion.div>}
                         </AnimatePresence>
-                        <div ref={hoverTip} className="w-fit rounded-lg px-4 py-1 bg-[var(--color-bg-secondary)] transform scale-[0.8]">
-                            <PrimaryIcon className={isHovered ? "" : "animate-pulse"} icon={isHovered ? "arrow-right" : "exclamation"} iconType={"solid"}></PrimaryIcon>
+                        <div ref={hoverTip} className="w-fit rounded-lg p-4 py-1 bg-[var(--color-bg-secondary)] transform scale-[0.8]">
+                            {isHovered ? <LiaArrowRightSolid size="32" className="text-gray-300"></LiaArrowRightSolid> : <FaExclamation size="32" className="animate-pulse text-gray-300"></FaExclamation>}
                         </div>
                     </div>
                 </div>

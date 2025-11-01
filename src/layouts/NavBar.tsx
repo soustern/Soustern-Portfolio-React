@@ -1,5 +1,4 @@
 import { useState, type JSX, type ReactNode, useRef, useEffect } from "react";
-import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
 import {  AnimatePresence,  motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
@@ -9,6 +8,10 @@ import LanguageSelector from "../components/ui/LanguageSelector";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useScroll } from "../components/contexts/ScrollContext";
 import gsap from "gsap";
+import { FaGithub } from 'react-icons/fa6';
+import { FaLinkedin } from 'react-icons/fa6';
+import { FaXmark } from 'react-icons/fa6';
+import { FaPlus } from 'react-icons/fa6';
 
 
 function NavBar(): JSX.Element  {    
@@ -104,19 +107,19 @@ function NavBar(): JSX.Element  {
         {
             ref.current.style.color = "";
             return (
-                <>
+                <div className="flex items-center gap-1">
                     <TextStandard text={`${strings.languageButton()}`} importance={`important`} ref={ref}></TextStandard>
-                    <PrimaryIcon iconType="solid" className="text-sm" icon={"xmark"}></PrimaryIcon>
-                </> 
+                    <FaXmark className="text-xl text-gray-300" ></FaXmark>
+                </div> 
             )
         }
         else 
         {
             return(
                 <>
-                    <motion.div variants={hoverColor} transition={{duration: 0.1}} className="flex items-baseline gap-1 text-[#6a7282]">
+                    <motion.div variants={hoverColor} transition={{duration: 0.1}} className="flex items-center gap-1 text-[#6a7282]">
                         <TextStandard text={`${strings.languageButton()}`} importance={`blank`} ref={ref}></TextStandard>
-                        <PrimaryIcon iconType="solid" className="text-sm" color="text-inherit" icon={"plus"}></PrimaryIcon>
+                        <FaPlus className="text-lg text-inherit"></FaPlus>
                     </motion.div>
                 </>
             )
@@ -161,15 +164,15 @@ function NavBar(): JSX.Element  {
                         <Logo></Logo>
                     </div>
                     <div>
-                        <ul className="flex items-center">
-                            <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
-                                <a className="mr-1" href="" aria-label="Linkedin">
-                                    <PrimaryIcon iconType="brands" className="text-xl" icon={"linkedin-in"}></PrimaryIcon>
+                        <ul className="flex items-center gap-2">
+                            <motion.li className="flex items-center justify-center" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring", bounce: 0.6}}>
+                                <a href="https://www.linkedin.com/in/rafael-antoniassi-vicechio-812a40149/" target="_blank" aria-label="Linkedin">
+                                    <FaLinkedin className="text-2xl text-gray-300" ></FaLinkedin>
                                 </a>
                             </motion.li>
-                            <motion.li whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.1, type: "spring", bounce: 0.5}}>
-                                <a className="mr-2" href="" aria-label="Github">
-                                    <PrimaryIcon iconType="brands" className="text-xl" icon={"github"}></PrimaryIcon>
+                            <motion.li className="flex items-center justify-center" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring", bounce: 0.6}}>
+                                <a  href="https://github.com/soustern" target="_blank" aria-label="Github">
+                                    <FaGithub className="text-2xl text-gray-300"></FaGithub>
                                 </a>
                             </motion.li>
                         </ul>
