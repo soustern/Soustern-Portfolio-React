@@ -205,7 +205,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Flow");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text={language === "En" ? "Update Flow" : "Fluxo de Update"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Update Flow" : "Fluxo"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
