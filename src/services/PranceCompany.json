@@ -71,7 +71,7 @@
   },
   "Pt-Br": {
     "caseStudy": {
-      "title": "Estudo de Caso: Website Institucional da Prance Company",
+      "title": "Visão Geral",
       "overview": "Este projeto envolveu o desenvolvimento de ponta a ponta de uma landing page institucional de alta performance para a Prance Company, uma consultoria de marketing digital e branding. Como único Desenvolvedor Front-End e Designer, fui responsável por traduzir a visão do cliente em uma experiência web totalmente otimizada, visualmente impressionante e focada em conversão. O projeto foi concluído em duas semanas, utilizando uma stack de tecnologia moderna centrada em React, TypeScript e bibliotecas de animação avançadas para criar uma jornada de usuário memorável.",
       "highlightsTitle": "Destaques",
       "performanceTitle": "Arquitetura Focada em Performance",

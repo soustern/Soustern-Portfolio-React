@@ -51,7 +51,7 @@ const PranceCompany = () => {
     return (
         <div className="px-8 py-4 bg-gradient-to-b from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)] w-full h-full max-w-[1200px] z-70 rounded-xl border-[1px] border-gray-700 shadow-black/20 shadow-xl flex flex-col gap-4">
             <nav className="flex justify-between items-center text-gray-50 text-3xl ">
-                <h3>Prance Company Institutional Website</h3>
+                <h3>Prance Company</h3>
                 <motion.button ref={buttonNavDesktopRef} whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[30px] text-gray-300"></LiaTimesSolid></motion.button>
             </nav>
             <div className="flex gap-8 overflow-hidden">
@@ -173,7 +173,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Overview");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Overview" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Overview" : "Visão geral"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -181,7 +181,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Context");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Context" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Context" : "Contexto"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -189,7 +189,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Highlights");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Highlights" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Highlights" : "Destaques"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -197,7 +197,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Problems");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="The Problem" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "The Problem" : "O Problema"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -205,7 +205,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Flow");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Update Flow" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Update Flow" : "Fluxo de Update"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -213,7 +213,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Layout");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Layout" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Layout" : "Interface"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -221,7 +221,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Interactions");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Interactions" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Interactions" : "Interações"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -229,7 +229,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#VisualDesign");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Visual Design" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Visual Design" : "Design Visual"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -237,7 +237,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#FinalDesign");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Final Designs" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Final Design" : "Design Final"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                             <li className="cursor-pointer group">
@@ -245,7 +245,7 @@ const PranceCompany = () => {
                                     const section = document.querySelector("#Retrospective");
                                     section?.scrollIntoView({ behavior: "smooth" });
                                 }} className='cursor-pointer'>
-                                    <TextStandard text="Retrospective" importance="metadata" className="group-hover:text-gray-400"></TextStandard>
+                                    <TextStandard text={language === "En" ? "Retrospective" : "Retrospectiva"} importance="metadata" className="group-hover:text-gray-400"></TextStandard>
                                 </button>
                             </li>
                         </ul>
