@@ -61,7 +61,6 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
         const article = articleRef.current;
         if (!article) return;
         
-        // TODO: See why there is a delay on the change here
         const initChangeProject = () => {
             changeProject(project.id);
             console.log(currentProject);
