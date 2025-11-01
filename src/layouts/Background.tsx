@@ -33,7 +33,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
             const backgroundScene = await createWebGLBackgroundPattern(heroRef.current);
             
             // Set opacity
-            backgroundScene.program.uniforms.uOpacity.value = 0.006;
+            backgroundScene.program.uniforms.uOpacity.value = 0.0065;
 
             // Store cleanup functions
             webglBackgroundCleanup = backgroundScene.cleanup;
@@ -69,18 +69,18 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
           {children}
       </div>
       <div ref={trailingStack} className="z-0 pointer-events-none font-mono fixed w-full h-[75%] left-1/2 top-1/2 transform -translate-1/2">
-        <TextStandard className="stack-paragraph absolute opacity-85 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-95 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-50 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-95 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-95 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-md"></TextStandard>    
-        <TextStandard className="stack-paragraph absolute opacity-50 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-85 flex text-sm"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-75 flex text-md"></TextStandard>
-        <TextStandard className="stack-paragraph absolute opacity-95 flex text-sm"></TextStandard>       
+        <TextStandard className="stack-paragraph absolute opacity-65 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>    
+        <TextStandard className="stack-paragraph absolute opacity-30 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-65 flex text-sm"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-55 flex text-md"></TextStandard>
+        <TextStandard className="stack-paragraph absolute opacity-75 flex text-sm"></TextStandard>       
       </div>
     </>
   );
