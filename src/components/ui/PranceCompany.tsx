@@ -118,7 +118,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
         }
     }, )
     
-    // TODO: Give alt value to images
+    // TODO: Give alt value to images. [IN BOTH LANGUAGES]
     // TODO: Make nav accessible 
     // TODO: Add default padding to this sections
     // TODO: Add media queries to texts
