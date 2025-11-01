@@ -33,7 +33,7 @@ const Background = ({BackgroundColor, children}: BackgroundProps): JSX.Element =
             const backgroundScene = await createWebGLBackgroundPattern(heroRef.current);
             
             // Set opacity
-            backgroundScene.program.uniforms.uOpacity.value = 0.008;
+            backgroundScene.program.uniforms.uOpacity.value = 0.006;
 
             // Store cleanup functions
             webglBackgroundCleanup = backgroundScene.cleanup;
