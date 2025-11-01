@@ -1,7 +1,7 @@
 import { useState, type JSX, type ReactNode, useRef, useEffect } from "react";
 import PrimaryIcon from "../components/ui/PrimaryIcons";
 import Logo from "../components/ui/Logo";
-import {  AnimatePresence, color, hover, motion } from "motion/react";
+import {  AnimatePresence,  motion } from "motion/react";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from '../components/contexts/LanguageContext'
 import languageStrings from "../services/localisation.json"
@@ -194,8 +194,8 @@ function NavBar(): JSX.Element  {
                                     </motion.button>
                                 </li>
                                 <li>
-                                    <button onClick={() => navigate(`19%`)} className="cursor-pointer">
-                                        <TextStandard importance={scrollProgress >= 19 ? "important" : "metadata"} text={`${strings.sections.Projects()}`}></TextStandard>
+                                    <button onClick={() => navigate(`20%`)} className="cursor-pointer">
+                                        <TextStandard importance={scrollProgress >= 20 ? "important" : "metadata"} text={`${strings.sections.Projects()}`}></TextStandard>
                                     </button>
                                 </li>
                                 <li><TextStandard importance="metadata" text={`${strings.sections.About()}`}></TextStandard></li>
