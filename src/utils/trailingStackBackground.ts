@@ -154,7 +154,7 @@ function animateText(span: HTMLSpanElement, duration: number, animation: string)
     setTimeout(() => {
         span.classList.add(animation);
         // Even more subtle
-        span.style.opacity = '.06';
+        span.style.opacity = '.09';
         span.style.filter = 'drop-shadow(0 0 8px rgba(255,255,255,0.4))';
     }, duration);
 }

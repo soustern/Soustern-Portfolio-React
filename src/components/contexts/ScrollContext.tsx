@@ -19,7 +19,7 @@ export function ScrollProvider({children}: {children: ReactNode}) {
             const delta = e.deltaY > 0 ? 3 : -3;
             return Math.max(0, Math.min(100, prev + delta));
         });
-    }, []);
+    }, [currentProject]);
 
     return (
         <ScrollContext.Provider value={{scrollProgress, handleWheel, setScrollProgress}}>
