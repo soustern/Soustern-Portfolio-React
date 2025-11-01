@@ -118,7 +118,6 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
         }
     }, )
     
-    // TODO: Give alt value to images. [IN BOTH LANGUAGES]
     // TODO: Add default padding to this sections
     // TODO: Add media queries to texts
 
@@ -135,7 +134,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                     <div ref={scrollerRef} className="overflow-y-auto [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-400/30 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/60">
                         <div ref={sectionRef} className='flex flex-col gap-12'>
                             <div>
-                                <img ref={pranceCompanyHeroRef} fetchPriority='high' src={pranceCompanyHero} alt="" className="rounded-xl border-[1px] border-gray-700" />
+                                <img alt={language === "en" ? "Prance Company Hero Image" : "Imagem de apresentação da Prance Company"} title={language === "en" ? "Prance Company Hero Image" : "Imagem de apresentação da Prance Company"} ref={pranceCompanyHeroRef} fetchPriority='high' src={pranceCompanyHero} className="rounded-xl border-[1px] border-gray-700" />
                             </div>
                             <section ref={pranceCompanyOverview} className=' scroll-mt-50 flex flex-col gap-4' id='Overview'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.title}</h3>
@@ -196,7 +195,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.flowTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.flowDesc}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg} alt="" />
+                                <img alt={language === 'en' ? "Github Actions Flow Code Snippet" : "Pedaço de código do Github Actions"} title={language === 'en' ? "Github Actions Flow Code Snippet" : "Pedaço de código do Github Actions"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg} />
                             </section>
                             <section ref={pranceCompanyLayout} className=' scroll-mt-50 flex flex-col gap-4' id='Layout'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutTitle}</h3>
@@ -207,7 +206,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h4 className='text-lg font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutBenefit2Title}</h4>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutBenefit2Desc}></TextStandard>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutTech}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} alt="" />
+                                <img alt={language === 'en' ? "Image Demonstration of the Services Section Layout" : "Imagem demonstrativa do layout da seção de serviços"} title={language === 'en' ? "Image Demonstration of the Services Section Layout" : "Imagem demonstrativa do layout da seção de serviços"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} />
                             </section>
                             <section ref={pranceCompanyInteractions} className=' scroll-mt-50 flex flex-col gap-4' id='Interactions'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.interactionsTitle}</h3>
@@ -218,7 +217,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                     <br />
                                     <li><TextStandard className='text-lg' text={strings.caseStudy.interactionsFramer}></TextStandard></li>
                                 </ul>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} alt="" />
+                                <img alt={language === 'en' ? "Gif Demonstration of the Services Section Animations" : "Gif demonstrativo das animações da seção de serviços"} title={language === 'en' ? "Gif Demonstration of the Services Section Animations" : "Gif demonstrativo das animações da seção de serviços"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} />
                             </section>
                             <section ref={pranceCompanyVisual} className=' scroll-mt-50 flex flex-col gap-4' id='VisualDesign'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.visualTitle}</h3>
@@ -229,9 +228,9 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.finalDesignsTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.navTitle}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} alt="" />
+                                <img alt={language === 'en' ? "Gif Demonstration of the Mobile Navbar Animations" : "Gif demonstrativo das animações da navegação da versão mobile"} title={language === 'en' ? "Gif Demonstration of the Mobile Navbar Animations" : "Gif demonstrativo das animações da navegação da versão mobile"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} />
                                 <TextStandard className='text-lg' text={strings.caseStudy.clientsTitle}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} alt="" />
+                                <img alt={language === 'en' ? "GifDemonstration of the Client Section Layout" : "demonstrativo do layout da seção de clientes"} title={language === 'en' ? "GifDemonstration of the Client Section Layout" : "demonstrativo do layout da seção de clientes"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} />
                             </section>
                             <section ref={pranceCompanyRetrospective} className=' scroll-mt-50 flex flex-col gap-4' id='Retrospective'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.retrospectiveTitle}</h3>
@@ -258,7 +257,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                     <div ref={scrollerRef} className="overflow-y-auto [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-400/30 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/60">
                         <div ref={sectionRef} className='flex flex-col gap-12'>
                             <div>
-                                <img ref={pranceCompanyHeroRef} fetchPriority='high' src={pranceCompanyHero} alt="" className="rounded-xl border-[1px] border-gray-700" />
+                                <img alt={language === "en" ? "Prance Company Hero Image" : "Imagem de apresentação da Prance Company"} title={language === "en" ? "Prance Company Hero Image" : "Imagem de apresentação da Prance Company"} ref={pranceCompanyHeroRef} fetchPriority='high' src={pranceCompanyHero} className="rounded-xl border-[1px] border-gray-700" />
                             </div>
                             <section ref={pranceCompanyOverview} className=' scroll-mt-50 flex flex-col gap-4' id='Overview'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.title}</h3>
@@ -319,7 +318,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.flowTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.flowDesc}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg} alt="" />
+                                <img alt={language === 'en' ? "Github Actions Flow Code Snippet" : "Pedaço de código do Github Actions"} title={language === 'en' ? "Github Actions Flow Code Snippet" : "Pedaço de código do Github Actions"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyFlowImg}/>
                             </section>
                             <section ref={pranceCompanyLayout} className=' scroll-mt-50 flex flex-col gap-4' id='Layout'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutTitle}</h3>
@@ -330,7 +329,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h4 className='text-lg font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.layoutBenefit2Title}</h4>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutBenefit2Desc}></TextStandard>
                                 <TextStandard className='text-lg' text={strings.caseStudy.layoutTech}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} alt="" />
+                                <img alt={language === 'en' ? "Image Demonstration of the Services Section Layout" : "Imagem demonstrativa do layout da seção de serviços"} title={language === 'en' ? "Image Demonstration of the Services Section Layout" : "Imagem demonstrativa do layout da seção de serviços"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceDifference} />
                             </section>
                             <section ref={pranceCompanyInteractions} className=' scroll-mt-50 flex flex-col gap-4' id='Interactions'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.interactionsTitle}</h3>
@@ -341,7 +340,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                     <br />
                                     <li><TextStandard className='text-lg' text={strings.caseStudy.interactionsFramer}></TextStandard></li>
                                 </ul>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} alt="" />
+                                <img alt={language === 'en' ? "Gif Demonstration of the Services Section Animations" : "Gif demonstrativo das animações da seção de serviços"} title={language === 'en' ? "Gif Demonstration of the Services Section Animations" : "Gif demonstrativo das animações da seção de serviços"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyServiceStacking} />
                             </section>
                             <section ref={pranceCompanyVisual} className=' scroll-mt-50 flex flex-col gap-4' id='VisualDesign'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.visualTitle}</h3>
@@ -352,9 +351,9 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.finalDesignsTitle}</h3>
                                 <div className='w-full h-1 border-b-1 border-gray-600'></div>
                                 <TextStandard className='text-lg' text={strings.caseStudy.navTitle}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} alt="" />
+                                <img alt={language === 'en' ? "Gif Demonstration of the Mobile Navbar Animations" : "Gif demonstrativo das animações da navegação da versão mobile"} title={language === 'en' ? "Gif Demonstration of the Mobile Navbar Animations" : "Gif demonstrativo das animações da navegação da versão mobile"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyMobileNav} />
                                 <TextStandard className='text-lg' text={strings.caseStudy.clientsTitle}></TextStandard>
-                                <img className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} alt="" />
+                                <img alt={language === 'en' ? "GifDemonstration of the Client Section Layout" : "demonstrativo do layout da seção de clientes"} title={language === 'en' ? "GifDemonstration of the Client Section Layout" : "demonstrativo do layout da seção de clientes"} className="rounded-xl border-[1px] border-gray-700" src={pranceCompanyClientsImg} />
                             </section>
                             <section ref={pranceCompanyRetrospective} className=' scroll-mt-50 flex flex-col gap-4' id='Retrospective'>
                                 <h3 className='text-xl font-semibold leading-tight tracking-tight text-gray-300'>{strings.caseStudy.retrospectiveTitle}</h3>
