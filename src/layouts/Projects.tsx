@@ -31,8 +31,8 @@ const Projects = () => {
     const page = useRef<number>(1);
     const direction = useRef<number>(1);
 
-    // TODO: Redo card design
-    // TODO: Add supporting for portuguese
+    // TODO: mobile version    
+
     const projects = [
         {
             id: 1,
