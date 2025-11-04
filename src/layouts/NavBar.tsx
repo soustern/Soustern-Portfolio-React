@@ -12,7 +12,10 @@ import { FaGithub } from 'react-icons/fa6';
 import { FaLinkedin } from 'react-icons/fa6';
 import { FaXmark } from 'react-icons/fa6';
 import { FaPlus } from 'react-icons/fa6';
-
+import { FaBars } from 'react-icons/fa6';
+import BorderButton from "../components/ui/BorderButton";
+import TextSectionTitle from "../components/ui/TextSectionTitle";
+import { FaSquareWhatsapp } from 'react-icons/fa6';
 
 function NavBar(): JSX.Element  {    
     const [isOpen, setIsOpen] = useState(false);
@@ -100,7 +103,10 @@ function NavBar(): JSX.Element  {
             },
         }
     }
-    
+
+    const navOptions = [["Hero", "0%"], ["Projects", "20%"], ["About", "40%"], ["Contact", "60%"]];
+    const navOptionsPtBr = [["Hero", "0%"], ["Projetos", "20%"], ["Sobre", "40%"], ["Contato", "60%"]];
+
 
     const languageMenu = (): ReactNode => {
         if (isOpen && ref.current)
@@ -126,6 +132,10 @@ function NavBar(): JSX.Element  {
         };
     }
 
+    useEffect(() => {
+        setIsOpen(false);
+    }, [language])
+
     const hoverColor = {
         idle: { color: "#6a7282" },
         hover: { color: "#f9fafb" }
@@ -146,14 +156,105 @@ function NavBar(): JSX.Element  {
         })
     } 
 
+    const navigateMobile = (percent: string) => {
+                setScrollProgress(Number(percent.replace("%", "")));
+    } 
 
     // TODO: Make mobile version of navbar
     // TODO: Implement other navigation links
     // TODO: Refactor icons here to react Icons
+    // TODO: Make portuguese version of mobile version
 
     if (screenWidth.width <= 1200)
     {
-        return (<></>);   
+        return (
+            
+            <nav className="bg-[var(--color-bg-primary)]/80 backdrop-blur-3xl px-4 pointer-events-auto">
+                <div className="flex items-center justify-between">
+                    <Logo></Logo>
+                    <div id="hamburger">
+                        <motion.button aria-expanded={isOpen} aria-label="Abrir o menu" aria-controls="menu" whileTap={{scale: 0.8}} transition={{duration: 0.05, type: "spring", stiffness: 500, damping: 30}} className="cursor-pointer py-3" onClick={() => setIsOpen(!isOpen)}>
+                        {
+                            isOpen ? <FaXmark className="fa-solid fa-xmark text-slate-200 text-4xl"></FaXmark> : <FaBars className="fa-solid fa-bars text-slate-200 text-4xl"></FaBars>
+                        }
+                        </motion.button>
+                    </div>
+                </div>
+                <AnimatePresence mode="wait">
+                    {isOpen && 
+                    <motion.div id="menu" initial={{height: 0}} animate={{height: "auto"}} transition={{duration: 0.2, ease: "easeOut"}} className=" w-full overflow-hidden will-change-transform" exit={{height: 0}} style={{contain: 'layout style paint'}}>
+                        <div className={`px-8 pt-8 pb-30 h-screen overflow-y-auto  ${isOpen ? `pointer-events-auto` : `pointer-events-none`}`}>
+                            <ul className="w-full flex flex-wrap items-start gap-2">
+                                <motion.li className="w-full mb-8">
+                                    <div className="flex items-baseline gap-2 mb-8">
+                                        <TextSectionTitle text={"Sections"}></TextSectionTitle>
+                                        <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2}} className="h-[1px] bg-gray-300"></motion.div>
+                                    </div>
+                                    <div className="flex flex-wrap gap-4">
+                                        {
+                                            language === "Pt-Br" && navOptions.map((option, index) => 
+                                                {
+                                                    return (
+                                                        <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.1 * index}}>
+                                                            <BorderButton  onClick={() => {navigateMobile(`${option[1]}`); setIsOpen(false)}} key={index} text={option[0]} className="text-xl p-2" active={option[1] === `${scrollProgress}%`}></BorderButton>
+                                                        </motion.div>
+                                                    )
+                                                }
+                                            )
+                                            
+                                        } 
+                                        {
+                                            language === "En" && navOptionsPtBr.map((option, index) => 
+                                                {
+                                                    return (
+                                                        <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.1 * index}}>
+                                                            <BorderButton  onClick={() => {navigateMobile(`${option[1]}`); setIsOpen(false)}} key={index} text={option[0]} className="text-xl p-2" active={option[1] === `${scrollProgress}%`}></BorderButton>
+                                                        </motion.div>
+                                                    )
+                                                }
+                                            )
+                                        } 
+                                    </div>
+                                </motion.li>
+                                <motion.li className="w-full [will-change: transform, opacity] mb-8" initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.4}}>
+                                    <div className="flex items-baseline gap-2 mb-8">
+                                        <TextSectionTitle text={"Socials"}></TextSectionTitle>
+                                        <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2, delay: 0.4}} className="w-full h-[1px] bg-gray-300"></motion.div>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.4}}>
+                                            <BorderButton text="Github" onClick={() => {window.open("https://github.com/soustern", "_blank"); setIsOpen(false)}} className="text-xl p-2  flex items-center justify-center gap-2" active={false}>
+                                                <FaGithub className="text-2xl text-gray-300"></FaGithub>
+                                            </BorderButton>
+                                        </motion.div>
+                                        <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.5}}>
+                                            <BorderButton text="Linkedin"  onClick={() => {window.open("https://www.linkedin.com/in/rafael-antoniassi-vicechio-812a40149/", "_blank"); setIsOpen(false)}} className="text-xl p-2  flex items-center justify-center gap-2" active={false}>
+                                                <FaLinkedin className="text-2xl text-gray-300"></FaLinkedin>
+                                            </BorderButton>
+                                        </motion.div>
+                                        <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.6}}>
+                                            <BorderButton text="Whatsapp"  onClick={() => {window.open("https://wa.link/71i1m6", "_blank"); setIsOpen(false)}} className="text-xl p-2  flex items-center justify-center gap-2" active={false}>
+                                                <FaSquareWhatsapp className="text-2xl text-gray-300"></FaSquareWhatsapp>
+                                            </BorderButton>
+                                        </motion.div>
+                                    </div>
+                                </motion.li>
+                                <motion.li initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.7}}  className="w-full">
+                                    <div className="flex items-baseline gap-2 mb-8 w-full">
+                                        <TextSectionTitle text={"Language"}></TextSectionTitle>
+                                        <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2, delay: 0.7}} className="w-full h-[1px] bg-gray-300"></motion.div>
+                                    </div>
+                                    <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.8}}  className="">
+                                        <LanguageSelector className="text-xl p-2"></LanguageSelector>
+                                    </motion.div>
+                                </motion.li>
+                            </ul>
+                        </div>
+                    </motion.div>
+                    }
+                </AnimatePresence>
+            </nav>
+        ) 
     }
     else
     {
@@ -173,6 +274,11 @@ function NavBar(): JSX.Element  {
                             <motion.li className="flex items-center justify-center" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring", bounce: 0.6}}>
                                 <a  href="https://github.com/soustern" target="_blank" aria-label="Github">
                                     <FaGithub className="text-2xl text-gray-300"></FaGithub>
+                                </a>
+                            </motion.li>
+                            <motion.li className="flex items-center justify-center" whileHover={{scale: 1.2}} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring", bounce: 0.6}}>
+                                <a  href="https://wa.link/71i1m6" target="_blank" aria-label="Github">
+                                    <FaSquareWhatsapp className="text-2xl text-gray-300"></FaSquareWhatsapp>
                                 </a>
                             </motion.li>
                         </ul>

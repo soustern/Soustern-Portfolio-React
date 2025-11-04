@@ -37,7 +37,7 @@ function App() {
 
   return (
     <Background BackgroundColor='hero-section-gradient font-sans'>
-      <header className='fixed top-0 left-0 w-full pt-[clamp(1.5rem,10vw,2.5rem)] z-50'>
+      <header className='fixed top-0 left-0 w-full xl:pt-[clamp(1.5rem,10vw,2.5rem)] z-50'>
         <NavBar />
       </header>
       <ProjectScreen fontsReady={fontsReady}/>
