@@ -27,7 +27,7 @@ const TextStandard = forwardRef<HTMLParagraphElement, TextStandardProps>(({color
     }
     
     return (
-        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed ${className} ${color}`} ref={ref}>{text}{children}</motion.p>
+        <motion.p variants={variants} className={`${getImportanceStyle()} text-base leading-relaxed ${className} ${color}`} ref={ref}>{children}{text}</motion.p>
     )
 });
 
