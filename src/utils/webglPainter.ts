@@ -53,9 +53,9 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
 
     // NEW: Enhanced flowmap with better settings for fluid motion
     const flowmap = new Flowmap(gl, {
-        falloff: 0.2,        // Wider spread for more organic flow
+        falloff: 0.25,        // Wider spread for more organic flow
         dissipation: 0.97,    // Very slow dissipation for lingering trails
-        alpha: 1.7,           // Stronger effect intensity
+        alpha: 1.9,           // Stronger effect intensity
     });
 
     // NEW: Secondary flowmap for dual-layer distortion
