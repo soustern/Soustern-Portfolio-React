@@ -15,9 +15,11 @@ import ProjectCard from "../components/ui/ProjectCard";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import pranceCompanyHero from "../assets/images/pranceCompanyHero.webp";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 
 const Projects = () => {
+    const pageSize = useWindowSize();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -205,20 +207,29 @@ const Projects = () => {
 
     // TODO: Make responsive version
     // TODO: Make pages
+    // TODO: Remove red div after production
+    // TODO: Create placeholder card (see more at github)
+    
 
-    return (
-        <AnimatePresence>
-            {shouldRender && 
-            <motion.section 
-                ref={sectionRef} 
-                id='Projects' 
-                className='flex items-center justify-center w-full h-full'
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-            >
-                <div className="flex max-w-[1200px] w-full flex-col gap-8 md:py-8 items-center">
-                    <AnimatePresence>
-                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl">
+
+    if (pageSize.width <= 900)
+    {
+        return (
+            <AnimatePresence>
+                {shouldRender && 
+                <motion.section 
+                    ref={sectionRef} 
+                    id='Projects' 
+                    className='flex items-center justify-center w-full h-full px-6 flex-col pb-[clamp(1rem,5vw,2.5rem)]'
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    
+                >
+                    <div className="bg-red-800 w-full h-full max-h-14">
+
+                    </div>
+                    <div className="flex max-w-[1200px] w-full flex-col gap-4 md:gap-8 items-center min-h-0 shrink-1">
+                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl min-h-0">
                             <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
                                 <div className="h-1 border border-gray-700 w-full rounded-full"></div>
                                 <div className="h-1 border border-gray-700 w-full rounded-full"></div>
@@ -228,27 +239,69 @@ const Projects = () => {
                                 <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%] transform translate-x-0 rounded-full`}></div>
                             </div>
                         </motion.div>
-                    </AnimatePresence>
-                    <div  className="flex w-full justify-between gap-4 md:gap-8 ">
-                        <AnimatePresence>
+                        <div  className="flex flex-col w-full items-center gap-4 min-h-0">
+                            <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center min-h-0">
+                                    <ProjectCard project={projects[currentIndex]}></ProjectCard>
+                                    {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
+                            </div>
+                            <div className="flex gap-4 justify-between w-full">
+                                <motion.button onClick={handleBack} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring"}} className={`w-full  flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-2 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
+                                    <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
+                                </motion.button>
+                                <motion.button  onClick={handleNext} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring"}} className={`w-full flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-2 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
+                                    <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
+                                </motion.button>
+                            </div>
+                        </div>
+                    </div>
+                </motion.section>}
+            </AnimatePresence>
+        )  
+    }
+    else 
+    {
+        return (
+            <AnimatePresence>
+                {shouldRender && 
+                <motion.section 
+                    ref={sectionRef} 
+                    id='Projects' 
+                    className='flex items-center justify-center w-full h-full px-12 pb-[clamp(1.5rem,10vw,2.5rem)] flex-col'
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    
+                >
+                    <div className="bg-red-800 w-full h-full max-h-34">
+
+                    </div>
+                    <div className="flex max-w-[1200px] w-full flex-col gap-8 items-center min-h-0 shrink-1">
+                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl min-h-0">
+                            <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                                <div className="h-1 border border-gray-700 w-full rounded-full"></div>
+                            </div>
+                            <div className="w-full h-full relative">
+                                <div ref={progressBarDesktopRef} className={`h-1 bg-gray-400 w-[33%] transform translate-x-0 rounded-full`}></div>
+                            </div>
+                        </motion.div>
+                        <div  className="flex w-full justify-between gap-4 md:gap-8 min-h-0">
                             <motion.button onClick={handleBack} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
                                 <LiaLongArrowAltLeftSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltLeftSolid>
                             </motion.button>
-                        </AnimatePresence>
-                        <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
-                                <ProjectCard project={projects[currentIndex]}></ProjectCard>
-                                {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
-                        </div>
-                        <AnimatePresence>
+                            <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
+                                    <ProjectCard project={projects[currentIndex]}></ProjectCard>
+                                    {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
+                            </div>
                             <motion.button  onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
                                 <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>
                             </motion.button>
-                        </AnimatePresence>
+                        </div>
                     </div>
-                </div>
-            </motion.section>}
-        </AnimatePresence>
-    )
+                </motion.section>}
+            </AnimatePresence>
+        )
+    }
 };
 
 export default Projects;

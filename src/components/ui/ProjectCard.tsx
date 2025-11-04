@@ -76,15 +76,15 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
 
     const Icon = project.icon;
     return (
-        <article ref={articleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow`}>
-            <div className="border-b-[1px] border-gray-700 pointer-events-none">
+        <article ref={articleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col`}>
+            <div className="border-b-[1px] border-gray-700 pointer-events-none min-h-0 shrink-1 overflow-hidden">
                 <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full max-h-[100px] md:max-h-[150px] object-cover mix-blend-screen"
+                    className="w-full max-h-[clamp(100px,10vh,150px)] md:max-h-[150px] object-cover mix-blend-screen"
                 />
             </div>
-            <div className="p-3 md:p-4 lg:p-6 space-y-1 pointer-events-none">
+            <div className="p-3 md:p-4 lg:p-6 pointer-events-none flex flex-col">
                 <div className="flex items-baseline gap-3">
                     <div className="flex items-center gap-2">
                         <div className="flex-shrink-0">
@@ -97,7 +97,7 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
                     <div className="flex-1"></div>
                     <TextStandard text={project.Year} importance="supporting"></TextStandard>
                 </div>
-                <div className="overflow-x-hidden relative pt-2 lg:pt-3">
+                <div className="overflow-x-hidden relative pt-0.5 lg:pt-3">
                     <div ref={marqueeRef} className="flex flex-nowrap gap-2 relative whitespace-nowrap">
                         <TextStandard className="" importance="metadata">{project.stack}</TextStandard>
                         <TextStandard className="" importance="metadata">{project.stack}</TextStandard>
