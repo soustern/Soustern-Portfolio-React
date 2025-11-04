@@ -11,7 +11,7 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
 
     const videoElement = container;
 
-    const renderer = new Renderer({ dpr: 2 });
+    const renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio, 1.5) });
     const gl = renderer.gl;
     const canvas = document.createElement("canvas");
     videoElement.appendChild(canvas);
@@ -35,11 +35,14 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
 
     // Track animation frame ID for cleanup
     let animationId: number;
+
+    // A safe maximum DPR to prevent overkill on high-end phones
+    const dpr = Math.min(window.devicePixelRatio, 2);
     
     function resize() {
         const rect = videoElement.getBoundingClientRect();
-        gl.canvas.width = rect.width * 11.0;
-        gl.canvas.height = rect.height * 11.0;
+        gl.canvas.width = rect.width * dpr;
+        gl.canvas.height = rect.height * dpr;
         gl.canvas.style.width = `${rect.width}px`;
         gl.canvas.style.height = `${rect.height}px`;
 
