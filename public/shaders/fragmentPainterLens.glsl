@@ -39,13 +39,13 @@ float fbm(vec2 p) {
     float value = 0.0;
     float amplitude = 0.5;
     float frequency = 1.0;
-    
-    for(int i = 0; i < 4; i++) {
-        value += amplitude * noise(p * frequency);
-        frequency *= 2.0;
-        amplitude *= 0.5;
-    }
-    
+
+    value += amplitude * noise(p * frequency);
+    frequency *= 2.0;
+    amplitude *= 0.5;
+
+    value += amplitude * noise(p * frequency);
+
     return value;
 }
 
@@ -72,38 +72,21 @@ vec3 vibrance(vec3 color, float amount) {
 
 vec2 calculateFlowDistortion(vec2 uv) {
     vec3 flow = texture2D(tFlow, uv).rgb;
-    
-    float radius = 0.03;
-    vec2 offset1 = vec2(radius, 0.0);
-    vec2 offset2 = vec2(0.0, radius);
-    vec2 offset3 = vec2(-radius, 0.0);
-    vec2 offset4 = vec2(0.0, -radius);
-    
-    vec3 flowAvg = (
-        texture2D(tFlow, uv + offset1).rgb +
-        texture2D(tFlow, uv + offset2).rgb +
-        texture2D(tFlow, uv + offset3).rgb +
-        texture2D(tFlow, uv + offset4).rgb +
-        flow
-    ) / 5.0;
-    
-    vec2 mouseDistortion = flowAvg.xy * 0.9;
-    
-    // Enhanced waves with FBM
+    vec2 mouseDistortion = flow.xy * 0.9; // Use the direct value, not an average
+
     float languidFrequency = 6.0;
     float languidSpeed = 0.03;
     float languidStrength = 0.03;
-    
+
     float fbmValue = fbm(uv * 3.0 + uTime * 0.02);
-    
+
     vec2 wave1 = vec2(sin(uv.y * languidFrequency + uTime * languidSpeed), cos(uv.x * languidFrequency + uTime * languidSpeed));
     vec2 wave2 = vec2(sin(uv.x * languidFrequency * 0.7 + uTime * languidSpeed * 0.6), cos(uv.y * languidFrequency * 0.7 + uTime * languidSpeed * 0.6));
     vec2 languidDistortion = (wave1 + wave2) * languidStrength * (0.8 + fbmValue * 0.4);
-    
+
     return mouseDistortion + languidDistortion;
 }
 
-// ===== NEW MASTERPIECE EFFECTS (NOW WITH FLOW DISTORTION) =====
 
 // Film grain for organic texture (uses distorted UV)
 float filmGrain(vec2 uv, float time) {
@@ -125,17 +108,17 @@ float godRays(vec2 uv, vec2 center, float time) {
     vec2 dir = uv - center;
     float dist = length(dir);
     dir = normalize(dir);
-    
+
     float rays = 0.0;
-    float rayIntensity = 0.3;
-    
-    for(int i = 0; i < 8; i++) {
-        float t = float(i) / 8.0;
+    float rayIntensity = 0.4;
+
+    for(int i = 0; i < 4; i++) {
+        float t = float(i) / 4.0; // Adjust divisor to match
         vec2 samplePos = center + dir * dist * t;
         rays += noise(samplePos * 3.0 + time * 0.02) * rayIntensity;
-        rayIntensity *= 0.8;
+        rayIntensity *= 0.75;
     }
-    
+
     return rays * (1.0 - smoothstep(0.0, 0.7, dist));
 }
 
@@ -162,25 +145,21 @@ vec3 colorTemperature(vec3 color, float temperature) {
 }
 
 float ambientOcclusion(vec2 uv, float distortion) {
-    float ao = 1.0;
-    float radius = 0.02;
-    
-    for(int i = 0; i < 4; i++) {
-        float angle = float(i) * 6.28318 / 4.0;
-        vec2 offset = vec2(cos(angle), sin(angle)) * radius;
-        float sample = length(calculateFlowDistortion(uv + offset));
-        ao -= (distortion - sample) * 0.05; // Reduced from 0.1 to 0.05
-    }
-    
-    return clamp(ao, 0.7, 1.0); // Changed min from 0.0 to 0.7 to prevent blackness
+    float ao = 1.0 - pow(distortion, 2.0) * 0.5;
+    return clamp(ao, 0.7, 1.0);
 }
 
 // ===== EFFECTS =====
 
-vec3 iridescence(vec2 uv, float distortion, float time) {
+vec3 iridescence(vec2 uv, float distortion, float time, vec2 flowDir) {
     float angle = atan(uv.y - 0.5, uv.x - 0.5);
+    
+    float flowAngle = atan(flowDir.y, flowDir.x) / 6.28318; // Normalize to 0-1
+    
     float fbmMod = fbm(uv * 4.0 + time * 0.01) * 0.3;
-    float hue = fract(angle / 6.28318 + distortion * 3.0 + time * 0.08 + fbmMod);
+    
+    float hue = fract(angle / 6.28318 + distortion * 3.0 + time * 0.08 + fbmMod + flowAngle * 2.0);
+    
     float hue2 = fract(length(uv - 0.5) * 2.0 - time * 0.05);
     hue = mix(hue, hue2, 0.3);
     vec3 rgb = clamp(abs(mod(hue * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
@@ -266,7 +245,7 @@ vec4 painterEffect(vec2 distortedUv, vec2 totalDistortion) {
     return vec4(finalColor, distortionStrength);
 }
 
-vec4 causticReflections(vec2 uv, float time) {
+vec4 causticReflections(vec2 uv, float time, float distortion) {
     float speed = 0.03;
     float scale = 3.0;
     
@@ -276,10 +255,12 @@ vec4 causticReflections(vec2 uv, float time) {
     
     float combinedNoise = pow(abs(noise1 + noise2 + fbmLayer), 2.0) * 0.5 + 0.5;
     float caustics = smoothstep(0.5, 0.9, combinedNoise);
+
+    float flare = 1.0 + pow(distortion, 1.5) * 5.0; 
     
-    vec3 causticColor = vec3(0.9, 0.95, 1.0) * caustics;
+    vec3 causticColor = vec3(0.9, 0.95, 1.0) * caustics * flare;
     
-    return vec4(causticColor, caustics * 0.3);
+    return vec4(causticColor, caustics * 0.3 * (1.0 + distortion * 2.0));
 }
 
 // ===== MAIN COMPOSITION =====
@@ -298,16 +279,19 @@ void main() {
     vec4 lensResult = lensDistortion(distortedUv, vUv);
     vec4 painterResult = painterEffect(distortedUv, flowDistortion);
     
+    float dynamicMix = smoothstep(0.0, 0.1, distortionStrength);
+    float finalMix = mix(uMixAmount * 0.5, uMixAmount, dynamicMix);
+
     // Mix the two base effects
-    vec4 mixedColor = mix(lensResult, painterResult, uMixAmount);
-    float distortionMask = mix(lensResult.a, painterResult.a, uMixAmount);
+    vec4 mixedColor = mix(lensResult, painterResult, finalMix);
+    float distortionMask = mix(lensResult.a, painterResult.a, finalMix);
     
     // Use distorted UVs for iridescence
-    vec3 iriColor = iridescence(distortedUv, distortionMask, uTime);
+    vec3 iriColor = iridescence(distortedUv, distortionMask, uTime, flowDistortion);
     mixedColor.rgb += iriColor * uIridescenceStrength * distortionMask * 0.3;
     
     // Use distorted UVs for caustics
-    vec4 caustics = causticReflections(distortedUv, uTime);
+    vec4 caustics = causticReflections(distortedUv, uTime, distortionStrength);
     mixedColor.rgb = mixedColor.rgb * (1.0 - caustics.a) + caustics.rgb * caustics.a * 0.55;
     
     // Use distorted UVs for Fresnel
@@ -316,7 +300,7 @@ void main() {
     mixedColor.rgb += rimColor * fresnelTerm * 0.08 * (1.0 + distortionMask * 0.3);
     
     // Use distorted UVs for rim iridescence
-    vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2);
+    vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2, flowDistortion);
     mixedColor.rgb += rimIridescence * fresnelTerm * uIridescenceStrength * 0.6;
     
     // ===== MASTERPIECE LAYERS (ALL WITH DISTORTED UVs) =====
@@ -328,7 +312,7 @@ void main() {
     float rays = godRays(distortedUv, vec2(0.5), uTime);
     mixedColor.rgb += vec3(0.9, 0.95, 1.0) * rays * 0.15;
     
-    // 3. Ambient occlusion - DISABLED TO DEBUG
+    // 3. Ambient occlusion 
     float ao = ambientOcclusion(distortedUv, distortionStrength);
     mixedColor.rgb *= ao;
     
@@ -339,6 +323,10 @@ void main() {
     mixedColor.rgb = colorCorrection(mixedColor.rgb, 1.35, 1.12, 1.05);
     mixedColor.rgb = vibrance(mixedColor.rgb, 0.35);
     
+    float distortionPop = smoothstep(0.01, 0.3, distortionStrength);
+    vec3 brightColor = mixedColor.rgb * 1.2; // A 20% brighter version
+    mixedColor.rgb = mix(mixedColor.rgb, brightColor, distortionPop);
+
     // 6. Subtle color temperature adjustment
     mixedColor.rgb = colorTemperature(mixedColor.rgb, 0.1);
     

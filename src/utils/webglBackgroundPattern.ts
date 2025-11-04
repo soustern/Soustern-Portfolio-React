@@ -9,7 +9,7 @@ export async function createWebGLScene(container: HTMLDivElement) {
     const fragmentShader = await (await fetch(fragmentShaderUrl)).text();
 
     const renderer = new Renderer({
-        dpr: 2,
+        dpr: Math.min(window.devicePixelRatio, 1.5),
         alpha: true,
         width: rect.width,
         height: rect.height,
