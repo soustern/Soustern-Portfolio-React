@@ -74,10 +74,12 @@ vec2 calculateFlowDistortion(vec2 uv) {
     vec3 flow = texture2D(tFlow, uv).rgb;
     vec2 mouseDistortion = flow.xy * 0.9; // Use the direct value, not an average
 
+    // Enhanced waves with FBM
     float languidFrequency = 6.0;
     float languidSpeed = 0.03;
     float languidStrength = 0.03;
 
+    // The FBM here is now cheaper thanks to our previous optimization
     float fbmValue = fbm(uv * 3.0 + uTime * 0.02);
 
     vec2 wave1 = vec2(sin(uv.y * languidFrequency + uTime * languidSpeed), cos(uv.x * languidFrequency + uTime * languidSpeed));
@@ -151,15 +153,10 @@ float ambientOcclusion(vec2 uv, float distortion) {
 
 // ===== EFFECTS =====
 
-vec3 iridescence(vec2 uv, float distortion, float time, vec2 flowDir) {
+vec3 iridescence(vec2 uv, float distortion, float time) {
     float angle = atan(uv.y - 0.5, uv.x - 0.5);
-    
-    float flowAngle = atan(flowDir.y, flowDir.x) / 6.28318; // Normalize to 0-1
-    
     float fbmMod = fbm(uv * 4.0 + time * 0.01) * 0.3;
-    
-    float hue = fract(angle / 6.28318 + distortion * 3.0 + time * 0.08 + fbmMod + flowAngle * 2.0);
-    
+    float hue = fract(angle / 6.28318 + distortion * 3.0 + time * 0.08 + fbmMod);
     float hue2 = fract(length(uv - 0.5) * 2.0 - time * 0.05);
     hue = mix(hue, hue2, 0.3);
     vec3 rgb = clamp(abs(mod(hue * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
@@ -245,7 +242,7 @@ vec4 painterEffect(vec2 distortedUv, vec2 totalDistortion) {
     return vec4(finalColor, distortionStrength);
 }
 
-vec4 causticReflections(vec2 uv, float time, float distortion) {
+vec4 causticReflections(vec2 uv, float time) {
     float speed = 0.03;
     float scale = 3.0;
     
@@ -255,12 +252,10 @@ vec4 causticReflections(vec2 uv, float time, float distortion) {
     
     float combinedNoise = pow(abs(noise1 + noise2 + fbmLayer), 2.0) * 0.5 + 0.5;
     float caustics = smoothstep(0.5, 0.9, combinedNoise);
-
-    float flare = 1.0 + pow(distortion, 1.5) * 5.0; 
     
-    vec3 causticColor = vec3(0.9, 0.95, 1.0) * caustics * flare;
+    vec3 causticColor = vec3(0.9, 0.95, 1.0) * caustics;
     
-    return vec4(causticColor, caustics * 0.3 * (1.0 + distortion * 2.0));
+    return vec4(causticColor, caustics * 0.3);
 }
 
 // ===== MAIN COMPOSITION =====
@@ -279,19 +274,16 @@ void main() {
     vec4 lensResult = lensDistortion(distortedUv, vUv);
     vec4 painterResult = painterEffect(distortedUv, flowDistortion);
     
-    float dynamicMix = smoothstep(0.0, 0.1, distortionStrength);
-    float finalMix = mix(uMixAmount * 0.5, uMixAmount, dynamicMix);
-
     // Mix the two base effects
-    vec4 mixedColor = mix(lensResult, painterResult, finalMix);
-    float distortionMask = mix(lensResult.a, painterResult.a, finalMix);
+    vec4 mixedColor = mix(lensResult, painterResult, uMixAmount);
+    float distortionMask = mix(lensResult.a, painterResult.a, uMixAmount);
     
     // Use distorted UVs for iridescence
-    vec3 iriColor = iridescence(distortedUv, distortionMask, uTime, flowDistortion);
+    vec3 iriColor = iridescence(distortedUv, distortionMask, uTime);
     mixedColor.rgb += iriColor * uIridescenceStrength * distortionMask * 0.3;
     
     // Use distorted UVs for caustics
-    vec4 caustics = causticReflections(distortedUv, uTime, distortionStrength);
+    vec4 caustics = causticReflections(distortedUv, uTime);
     mixedColor.rgb = mixedColor.rgb * (1.0 - caustics.a) + caustics.rgb * caustics.a * 0.55;
     
     // Use distorted UVs for Fresnel
@@ -300,7 +292,7 @@ void main() {
     mixedColor.rgb += rimColor * fresnelTerm * 0.08 * (1.0 + distortionMask * 0.3);
     
     // Use distorted UVs for rim iridescence
-    vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2, flowDistortion);
+    vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2);
     mixedColor.rgb += rimIridescence * fresnelTerm * uIridescenceStrength * 0.6;
     
     // ===== MASTERPIECE LAYERS (ALL WITH DISTORTED UVs) =====
@@ -312,7 +304,7 @@ void main() {
     float rays = godRays(distortedUv, vec2(0.5), uTime);
     mixedColor.rgb += vec3(0.9, 0.95, 1.0) * rays * 0.15;
     
-    // 3. Ambient occlusion 
+    // 3. Ambient occlusion - DISABLED TO DEBUG
     float ao = ambientOcclusion(distortedUv, distortionStrength);
     mixedColor.rgb *= ao;
     
@@ -323,10 +315,6 @@ void main() {
     mixedColor.rgb = colorCorrection(mixedColor.rgb, 1.35, 1.12, 1.05);
     mixedColor.rgb = vibrance(mixedColor.rgb, 0.35);
     
-    float distortionPop = smoothstep(0.01, 0.3, distortionStrength);
-    vec3 brightColor = mixedColor.rgb * 1.2; // A 20% brighter version
-    mixedColor.rgb = mix(mixedColor.rgb, brightColor, distortionPop);
-
     // 6. Subtle color temperature adjustment
     mixedColor.rgb = colorTemperature(mixedColor.rgb, 0.1);
     
