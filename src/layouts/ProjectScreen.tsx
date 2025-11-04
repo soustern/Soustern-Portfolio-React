@@ -30,7 +30,7 @@ const ProjectScreen = ({fontsReady}: ProjectScreenProps) => {
 
     return (
         <AnimatePresence>
-            <motion.article key="project-screen" id="project-screen" className="fixed inset-0 h-[100vh] w-[100vw] z-60 flex justify-center items-center">
+            <motion.article key="project-screen" id="project-screen" className="fixed inset-0 h-[100vh] w-[100vw] z-60 flex justify-center items-center py-4">
                 <motion.div key="blur-background" id="blur-background" exit={{opacity: 0}} transition={{ duration: 0.2 }} initial={{opacity: 0}} animate={{opacity: 1}} ref={projectScreenBackgroundDesktopRef} className="absolute inset-0 w-full h-full backdrop-blur-sm z-60">
                 </motion.div>
                 {currentProject === 2 && <PranceCompany fontsReady={fontsReady}/>}
