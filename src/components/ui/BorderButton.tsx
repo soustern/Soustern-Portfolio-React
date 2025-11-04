@@ -3,7 +3,7 @@ import type { JSX, ReactElement } from "react"
 import TextStandard from "./TextStandard"
 
 interface BorderButtonProps {
-    text: string;
+    text?: string;
     active?: boolean;
     onClick?: () => void,
     children?: ReactElement,
@@ -12,8 +12,8 @@ interface BorderButtonProps {
 
 const BorderButton = ({text, active = false, onClick, children, className}: BorderButtonProps): JSX.Element => {
     return (
-        <motion.button onClick={onClick} whileTap={{scale: 0.9}} className={`border-1  rounded-lg px-4 py-1 cursor-pointer ${active ? `border-[#f9fafb] ${className}` : `border-[#1e2939]`}`}>
-            <TextStandard text={text}>{children}</TextStandard>
+        <motion.button onClick={onClick} whileTap={{scale: 0.9}} className={`border-1 flex rounded-lg px-4 py-1 cursor-pointer ${active ? `border-[#f9fafb]` : `border-[#1e2939]`} ${className}`}>
+            <TextStandard text={text} className={className}>{children}</TextStandard>
         </motion.button>
     )
 }
