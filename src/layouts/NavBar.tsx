@@ -187,7 +187,7 @@ function NavBar(): JSX.Element  {
                             <ul className="w-full flex flex-wrap items-start gap-2">
                                 <motion.li className="w-full mb-8">
                                     <div className="flex items-baseline gap-2 mb-8">
-                                        <TextSectionTitle text={"Sections"}></TextSectionTitle>
+                                        <TextSectionTitle text={language === "Pt-Br" ? "Seções" : "Sections"}></TextSectionTitle>
                                         <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2}} className="h-[1px] bg-gray-300"></motion.div>
                                     </div>
                                     <div className="flex flex-wrap gap-4">
@@ -218,7 +218,7 @@ function NavBar(): JSX.Element  {
                                 </motion.li>
                                 <motion.li className="w-full [will-change: transform, opacity] mb-8" initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.4}}>
                                     <div className="flex items-baseline gap-2 mb-8">
-                                        <TextSectionTitle text={"Socials"}></TextSectionTitle>
+                                        <TextSectionTitle text={language === "Pt-Br" ? "Midias" : "Socials"}></TextSectionTitle>
                                         <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2, delay: 0.4}} className="w-full h-[1px] bg-gray-300"></motion.div>
                                     </div>
                                     <div className="flex flex-wrap gap-2">
@@ -241,7 +241,7 @@ function NavBar(): JSX.Element  {
                                 </motion.li>
                                 <motion.li initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.7}}  className="w-full">
                                     <div className="flex items-baseline gap-2 mb-8 w-full">
-                                        <TextSectionTitle text={"Language"}></TextSectionTitle>
+                                        <TextSectionTitle text={language === "Pt-Br" ? "Idioma" : "Language"}></TextSectionTitle>
                                         <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2, delay: 0.7}} className="w-full h-[1px] bg-gray-300"></motion.div>
                                     </div>
                                     <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.8}}  className="">
