@@ -220,7 +220,7 @@ const Projects = () => {
                 <motion.section 
                     ref={sectionRef} 
                     id='Projects' 
-                    className='flex items-center justify-center w-full h-full px-6 flex-col pb-[clamp(1rem,5vw,2.5rem)]'
+                    className='flex items-center justify-center w-full h-full defaultPadding flex-col pb-[clamp(1rem,5vw,2.5rem)]'
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
                     
@@ -266,7 +266,7 @@ const Projects = () => {
                 <motion.section 
                     ref={sectionRef} 
                     id='Projects' 
-                    className='flex items-center justify-center w-full h-full px-12 pb-[clamp(1.5rem,10vw,2.5rem)] flex-col'
+                    className='flex items-center justify-center w-full h-full pb-[clamp(1.5rem,10vw,2.5rem)] flex-col'
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
                     

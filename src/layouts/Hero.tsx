@@ -131,7 +131,7 @@ const Hero = () => {
             transition={{ duration: 0.3 }} 
             ref={sectionRef} 
             id='hero' 
-            className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full'>
+            className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full defaultPadding'>
 
                 <motion.div initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} transition={{ duration: 0.3, type: "spring" }} ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
                     <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src={heroVideo}></video>

@@ -6,7 +6,7 @@ interface TextSectionTitleProps {
 
 const TextSectionTitle = ({text}: TextSectionTitleProps): JSX.Element => {
     return (
-        <h2 className={`text-gray-300 text-xl sm:text-3xl font-semibold leading-tight tracking-tight`}>{text}</h2>
+        <h2 className={`text-gray-300 text-xl font-semibold leading-tight tracking-tight`}>{text}</h2>
     );
 }
 

@@ -169,13 +169,13 @@ function NavBar(): JSX.Element  {
     {
         return (
             
-            <nav className="bg-[var(--color-bg-primary)]/80 backdrop-blur-3xl px-4 pointer-events-auto">
+            <nav className="bg-[var(--color-bg-primary)]/50 backdrop-blur-3xl defaultPadding pointer-events-auto">
                 <div className="flex items-center justify-between">
                     <Logo></Logo>
                     <div id="hamburger">
                         <motion.button aria-expanded={isOpen} aria-label="Abrir o menu" aria-controls="menu" whileTap={{scale: 0.8}} transition={{duration: 0.05, type: "spring", stiffness: 500, damping: 30}} className="cursor-pointer py-3" onClick={() => setIsOpen(!isOpen)}>
                         {
-                            isOpen ? <FaXmark className="fa-solid fa-xmark text-slate-200 text-4xl"></FaXmark> : <FaBars className="fa-solid fa-bars text-slate-200 text-4xl"></FaBars>
+                            isOpen ? <FaXmark className="fa-solid fa-xmark text-gray-300 text-4xl"></FaXmark> : <FaBars className="fa-solid fa-bars text-gray-300 text-4xl"></FaBars>
                         }
                         </motion.button>
                     </div>
@@ -183,16 +183,16 @@ function NavBar(): JSX.Element  {
                 <AnimatePresence mode="wait">
                     {isOpen && 
                     <motion.div id="menu" initial={{height: 0}} animate={{height: "auto"}} transition={{duration: 0.2, ease: "easeOut"}} className=" w-full overflow-hidden will-change-transform" exit={{height: 0}} style={{contain: 'layout style paint'}}>
-                        <div className={`px-8 pt-8 pb-30 h-screen overflow-y-auto  ${isOpen ? `pointer-events-auto` : `pointer-events-none`}`}>
+                        <div className={`pt-6 pb-30 h-screen overflow-y-auto  ${isOpen ? `pointer-events-auto` : `pointer-events-none`}`}>
                             <ul className="w-full flex flex-wrap items-start gap-2">
-                                <motion.li className="w-full mb-8">
-                                    <div className="flex items-baseline gap-2 mb-8">
+                                <motion.li className="w-full mb-6">
+                                    <div className="flex items-baseline gap-2 mb-6">
                                         <TextSectionTitle text={language === "Pt-Br" ? "Seções" : "Sections"}></TextSectionTitle>
                                         <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2}} className="h-[1px] bg-gray-300"></motion.div>
                                     </div>
                                     <div className="flex flex-wrap gap-4">
                                         {
-                                            language === "Pt-Br" && navOptions.map((option, index) => 
+                                            language === "En" && navOptions.map((option, index) => 
                                                 {
                                                     return (
                                                         <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.1 * index}}>
@@ -204,7 +204,7 @@ function NavBar(): JSX.Element  {
                                             
                                         } 
                                         {
-                                            language === "En" && navOptionsPtBr.map((option, index) => 
+                                            language === "Pt-Br" && navOptionsPtBr.map((option, index) => 
                                                 {
                                                     return (
                                                         <motion.div initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.1, delay: 0.1 * index}}>
@@ -216,8 +216,8 @@ function NavBar(): JSX.Element  {
                                         } 
                                     </div>
                                 </motion.li>
-                                <motion.li className="w-full [will-change: transform, opacity] mb-8" initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.4}}>
-                                    <div className="flex items-baseline gap-2 mb-8">
+                                <motion.li className="w-full [will-change: transform, opacity] mb-6" initial={{translateY: 20, opacity: 0}} animate={{translateY: 0, opacity: 1}} transition={{duration: 0.2, delay: 0.4}}>
+                                    <div className="flex items-baseline gap-2 mb-6">
                                         <TextSectionTitle text={language === "Pt-Br" ? "Midias" : "Socials"}></TextSectionTitle>
                                         <motion.div initial={{width: 0}} animate={{width: "100%"}} transition={{duration: 0.2, delay: 0.4}} className="w-full h-[1px] bg-gray-300"></motion.div>
                                     </div>
