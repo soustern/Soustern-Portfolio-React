@@ -169,7 +169,7 @@ function NavBar(): JSX.Element  {
     {
         return (
             
-            <nav className="bg-[var(--color-bg-primary)]/50 backdrop-blur-3xl defaultPadding pointer-events-auto">
+            <nav className={`${isOpen && 'bg-[var(--color-bg-primary)]/75'} backdrop-blur-3xl defaultPadding pointer-events-auto`}>
                 <div className="flex items-center justify-between">
                     <Logo></Logo>
                     <div id="hamburger">
@@ -180,6 +180,7 @@ function NavBar(): JSX.Element  {
                         </motion.button>
                     </div>
                 </div>
+                <div className={`w-full h-[1px] rounded-full bg-[var(--color-bg-tertiary)] ${isOpen && "hidden"}`}></div>
                 <AnimatePresence mode="wait">
                     {isOpen && 
                     <motion.div id="menu" initial={{height: 0}} animate={{height: "auto"}} transition={{duration: 0.2, ease: "easeOut"}} className=" w-full overflow-hidden will-change-transform" exit={{height: 0}} style={{contain: 'layout style paint'}}>

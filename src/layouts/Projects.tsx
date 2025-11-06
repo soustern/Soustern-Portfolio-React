@@ -225,7 +225,7 @@ const Projects = () => {
                     transition={{ duration: 0.3 }}
                     
                 >
-                    <div className="bg-red-800 w-full h-full max-h-14">
+                    <div className="w-full h-full max-h-14">
 
                     </div>
                     <div className="flex max-w-[1200px] w-full flex-col gap-4 md:gap-8 items-center min-h-0 shrink-1">
