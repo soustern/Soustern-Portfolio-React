@@ -11,6 +11,7 @@ import { useScroll } from "../components/contexts/ScrollContext";
 import heroVideo from "../assets/videos/hero.webm";
 import { FaExclamation } from 'react-icons/fa6';
 import { LiaArrowRightSolid } from 'react-icons/lia';
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const Hero = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -19,6 +20,7 @@ const Hero = () => {
 
     const [isHovered, setIsHovered] = useState(false);
     const [shouldRender, setShouldRender] = useState(true);
+    const pageSize = useWindowSize();
 
     const { language } = useLanguage();
     const {scrollProgress} = useScroll();
@@ -143,7 +145,8 @@ const Hero = () => {
                             <div ref={scrollToExploreLeft} className="absolute transform -translate-y-1/2  w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                         </motion.div>
                         <motion.div initial={{y: 100, opacity: 0 }} animate={{y: 0, opacity: 1}}>
-                            <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>
+                            {pageSize.width  > 900 && <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>}
+                            {pageSize.width  <= 900 && <TextStandard text={language === `En` ? "Open the menu to explore" : "Abra o menu para explorar"} importance="supporting"></TextStandard>}
                         </motion.div>
                         <motion.div initial={{x: 100, opacity: 0 }} animate={{x: 0, opacity: 1}} className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
