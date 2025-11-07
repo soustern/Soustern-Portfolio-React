@@ -76,7 +76,7 @@ const GreetingsModal = ({fontsReady}: greetingsModalProps) => {
                         {language === 'Pt-Br' && <TextStandard ref={explanationParagraphRef} text="Este site foi projetado para telas maiores e não possui uma navegação convencional. Em dispositivos móveis, navegue abrindo o menu e selecionando a seção desejada."></TextStandard>}
                     </div>
                 </div>}    
-                <div className="flex justify-end w-full">
+                <div className="flex justify-end w-full pb-15">
                     {pageNumber === 1 && <BorderButton onClick={() => {setPageNumber(pageNumber + 1)}} text={language === "En" ? "Next" : "Próximo"} className={`transition-opacity duration-300 text-xl p-2 flex items-center justify-center gap-2 ${language === null ? "opacity-0 pointer-events-none" : ""}`} active={false}>  
                     </BorderButton>}
                     {pageNumber === 2 && <BorderButton onClick={() => {setClosed(true)}} text={language === "En" ? "Finish" : "Finalizar"} className={`transition-opacity duration-300 text-xl p-2 flex items-center justify-center gap-2`} active={false}>  
