@@ -146,7 +146,7 @@ const Hero = () => {
                         </motion.div>
                         <motion.div initial={{y: 100, opacity: 0 }} animate={{y: 0, opacity: 1}}>
                             {pageSize.width  > 900 && <TextStandard text={strings.subHeading()} importance="supporting"></TextStandard>}
-                            {pageSize.width  <= 900 && <TextStandard text={language === `En` ? "Open the menu to explore" : "Abra o menu para explorar"} importance="supporting" textSecond={language === `En` ? "(Touch the liquid surface above!)" : "(Toque na superfície líquida acima.)"} className="text-center text-sm"></TextStandard>}
+                            {pageSize.width  <= 900 && <TextStandard text={language === `En` ? "Touch the liquid" : "Toque na superfície"} importance="supporting" textSecond={language === `En` ? "surface above!" : "líquida acima!"} className="text-center"></TextStandard>}
                         </motion.div>
                         <motion.div initial={{x: 100, opacity: 0 }} animate={{x: 0, opacity: 1}} className="flex-1 h-[1px] bg-[var(--color-bg-tertiary)] overflow-hidden relative rounded-full">
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
