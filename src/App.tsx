@@ -4,6 +4,7 @@ import Background from './layouts/Background';
 import { lazy, Suspense, useEffect, useState} from 'react';
 import { useScroll } from './components/contexts/ScrollContext';
 import ProjectScreen from './layouts/ProjectScreen';
+import GreetingsModal from './layouts/GreetingsModal';
 
 // TODO: Lazy load other sections
 const Hero = lazy(() => import('./layouts/Hero'));
@@ -40,6 +41,7 @@ function App() {
       <header className='fixed top-0 left-0 w-full xl:pt-[clamp(1.5rem,10vw,2.5rem)] z-50'>
         <NavBar />
       </header>
+      <GreetingsModal fontsReady={fontsReady}></GreetingsModal>
       <ProjectScreen fontsReady={fontsReady}/>
       <main className='fixed inset-0 overflow-hidden z-5'>
         <Suspense fallback={LoadingSpinner()}>
