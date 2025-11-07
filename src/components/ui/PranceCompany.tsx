@@ -125,7 +125,7 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
     {
         return (
         <AnimatePresence>
-            <motion.div key="prance-company" id="prance-company"  exit={{opacity: 0}} transition={{ duration: 0.2 }} initial={{opacity: 0}} animate={{opacity: 1}} className="defaultPadding md:px-8 py-4 bg-gradient-to-b from-[var(--color-bg-secondary)] to-[var(--color-bg-primary)] w-full h-full max-w-[1200px] z-70 rounded-xl border-[1px] border-gray-700 shadow-black/20 shadow-xl flex flex-col gap-4">
+            <motion.div key="prance-company" id="prance-company"  exit={{opacity: 0}} transition={{ duration: 0.2 }} initial={{opacity: 0}} animate={{opacity: 1}} className="defaultPadding md:px-8 py-4 bg-gradient-to-b from-[var(--color-bg-tertiary)] to-[var(--color-bg-primary)] w-full h-full max-w-[1200px] z-70 rounded-xl border-[1px] border-gray-700 shadow-black/20 shadow-xl flex flex-col gap-4">
                 <nav className="flex justify-between items-center text-gray-50 text-3xl">
                     <h3>Prance Company</h3>
                     <motion.button ref={buttonNavDesktopRef} whileTap={{scale: 0.8}} transition={{duration: 0.2, type: "spring"}} aria-controls="Close Project" className="cursor-pointer p-1 rounded-xl border-[1px] border-gray-700 hover:bg-gray-50/5 transition-colors" aria-label="Close Button"><LiaTimesSolid className="text-[30px] text-gray-300"></LiaTimesSolid></motion.button>

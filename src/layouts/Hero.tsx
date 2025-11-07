@@ -115,8 +115,8 @@ const Hero = () => {
     useGSAP(() => {
         if (!scrollToExploreLeft.current || !scrollToExploreRight.current || !shouldRender) return;
 
-        gsap.fromTo(scrollToExploreLeft.current, {x: -180, ease: "power3.in", opacity: 1}, {x: 180, opacity: 1, duration: 1.7,  delay: 1, repeat: -1, repeatDelay: 4});
-        gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power3.in", opacity: 1}, {x: -180, opacity: 1, duration: 1.7,  delay: 1, repeat: -1, repeatDelay: 4});
+        gsap.fromTo(scrollToExploreLeft.current, {x: -180, ease: "power3.in", opacity: 1}, {x: 180, opacity: 1, duration: 1.6,  delay: 1, repeat: -1, repeatDelay: 2});
+        gsap.fromTo(scrollToExploreRight.current, {x: 180, ease: "power3.in", opacity: 1}, {x: -180, opacity: 1, duration: 1.6,  delay: 1, repeat: -1, repeatDelay: 2});
     }, [shouldRender]);
 
     // TODO: Make WebGl thing be more responsive and smaller in most cases

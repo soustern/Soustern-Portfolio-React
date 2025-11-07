@@ -1,16 +1,17 @@
 import {createContext, useContext, useState, type ReactNode } from 'react';
 
 type LanguageContextType = {
-    language: string,
-    changeLanguage:(lang: string) => void;
+    language: string | null,
+    changeLanguage:(lang: string | null) => void;
 };
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export function LanguageProvider({children}: {children: ReactNode}) {
-    const [language, setLanguage] = useState(`En`);
+    // Must be null at first, so the language buttons do not display a active state at first (And so we can display the continue button only when user chooses)
+    const [language, setLanguage] = useState<string | null>(null);
 
-    const changeLanguage = (lang: string) => {
+    const changeLanguage = (lang: string | null) => {
         setLanguage(lang);
     }
 
