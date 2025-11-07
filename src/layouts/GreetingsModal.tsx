@@ -1,7 +1,6 @@
 import { useWindowSize } from "../hooks/useWindowSize"
 import gsap from "gsap"
 import { SplitText } from "gsap/SplitText"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from "../components/contexts/LanguageContext";
@@ -10,7 +9,6 @@ import { motion } from "motion/react";
 import LanguageSelector from "../components/ui/LanguageSelector";
 import BorderButton from "../components/ui/BorderButton";
 
-gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(SplitText);
 
 interface greetingsModalProps {
