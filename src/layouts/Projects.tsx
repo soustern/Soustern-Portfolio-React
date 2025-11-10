@@ -312,7 +312,6 @@ const Projects = () => {
                             </motion.button>
                             <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
                                     <ProjectCard project={projects[currentIndex]}></ProjectCard>
-                                    {/* This is the bane of my existence. If I dont pass a object with id null, clicking on the see more card will make it so the last index project is opened as well (even though I am setting pointer events to none, go figure) */}
                                     {currentIndex === projects.length - 1 ? 
                                         <>
                                             <ProjectCard page={page.current} project={{id: null, title: ".", icon: LiaDungeonSolid, image: dnd, type: ".", Year: ".", stack: "."}} className="pointer-events-none">
