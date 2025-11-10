@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState} from "react";
 import { useScroll } from "../components/contexts/ScrollContext";
 import { AnimatePresence, motion } from "motion/react";
-import dnd from "../assets/images/dnd.png";
-import thx from "../assets/images/thx.png";
+import dnd from "../assets/images/dnd_monster_codex/dndMonsterCodexHero_11zon.webp";
 import todo from "../assets/images/todo.png";
+import sls from "../assets/images/sls/slsHero.webp";
+import portfolio from "../assets/images/portfolio/portfolioHero.webp";
 import { LiaAddressCard } from 'react-icons/lia';
 import { LiaDungeonSolid } from 'react-icons/lia';
 import { LiaCogSolid } from 'react-icons/lia';
@@ -43,7 +44,7 @@ const Projects = () => {
             id: 1,
             title: "Portfolio",
             icon: LiaAddressCard,
-            image: thx,
+            image: portfolio,
             type: "Portfolio",
             Year: "2025",
             stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion,",
@@ -73,7 +74,7 @@ const Projects = () => {
             id: 4,
             title: "SLS",
             icon: LiaCogSolid,
-            image: thx,
+            image: sls,
             type: "Project",
             Year: "2023",
             stack: " C, Linux, CLI,",
