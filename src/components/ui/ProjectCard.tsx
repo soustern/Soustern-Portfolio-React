@@ -77,12 +77,13 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
     const Icon = project.icon;
     return (
         <article ref={articleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col`}>
-            <div className="border-b-[1px] border-gray-700 pointer-events-none min-h-0 shrink-1 overflow-hidden">
+            <div className="border-b-[1px] border-gray-700 pointer-events-none min-h-0 shrink-1 overflow-hidden relative">
                 <img
                     src={project.image}
                     alt={project.title}
                     className="w-full max-h-[clamp(100px,10vh,150px)] md:max-h-[150px] object-cover mix-blend-screen"
                 />
+                <div className="absolute h-full w-full inset-0 bg-gradient-to-t from-[var(--color-bg-primary)]/50 from-5% to-40% to-transparent"></div>
             </div>
             <div className="p-3 md:p-4 lg:p-6 pointer-events-none flex flex-col">
                 <div className="flex items-baseline gap-3">
