@@ -14,7 +14,7 @@ import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 import ProjectCard from "../components/ui/ProjectCard";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import pranceCompanyHero from "../assets/images/pranceCompanyHero.webp";
+import pranceCompanyHero from "../assets/images/prance_company/pranceCompanyHero.webp";
 import { useWindowSize } from "../hooks/useWindowSize";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from "../components/contexts/LanguageContext";
