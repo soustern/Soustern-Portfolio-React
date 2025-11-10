@@ -19,6 +19,7 @@ import pranceCompanyHero from "../assets/images/prance_company/pranceCompanyHero
 import { useWindowSize } from "../hooks/useWindowSize";
 import TextStandard from "../components/ui/TextStandard";
 import { useLanguage } from "../components/contexts/LanguageContext";
+import SeeMoreCard from "../components/ui/SeeMoreCard";
 
 
 const Projects = () => {
@@ -247,9 +248,21 @@ const Projects = () => {
                             </div>
                         </motion.div>
                         <div  className="flex flex-col w-full items-center gap-4 min-h-0">
-                            <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center min-h-0">
-                                    <ProjectCard project={projects[currentIndex]}></ProjectCard>
-                                    {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
+                            <div ref={cardsContainerDesktopRef} className="flex flex-col gap-4 w-full items-center min-h-0 relative">
+                                <ProjectCard project={projects[currentIndex]}></ProjectCard>
+                                {currentIndex === projects.length - 1 ? 
+                                    <>
+                                        <ProjectCard page={page.current} project={{id: null, title: ".", icon: LiaDungeonSolid, image: dnd, type: ".", Year: ".", stack: "."}} className="pointer-events-none">
+                                            <SeeMoreCard className="shrink-1 absolute inset-0 z-10 pointer-events-auto"></SeeMoreCard>
+                                        </ProjectCard> 
+                                    </>
+                                    : 
+                                    <>
+                                        <ProjectCard page={page.current} project={projects[currentIndex + 1]}>
+                                            <SeeMoreCard className="shrink-1 absolute inset-0 pointer-events-none" invisible={true}></SeeMoreCard>
+                                        </ProjectCard>
+                                    </>
+                                }
                             </div>
                             <div className="flex gap-4 justify-between w-full">
                                 <motion.button onClick={handleBack} whileTap={{scale: 0.9}} transition={{duration: 0.2, type: "spring"}} className={`w-full  flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-2 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex <= 0 ? "pointer-events-none opacity-0" : ""}`}>
@@ -299,7 +312,19 @@ const Projects = () => {
                             </motion.button>
                             <div ref={cardsContainerDesktopRef} className="flex flex-col gap-8 w-full items-center min-h-0">
                                     <ProjectCard project={projects[currentIndex]}></ProjectCard>
-                                    {currentIndex === projects.length - 1 ? <ProjectCard page={page.current} project={projects[currentIndex]} invisible={true}></ProjectCard> : <ProjectCard page={page.current} project={projects[currentIndex + 1]}></ProjectCard>}
+                                    {currentIndex === projects.length - 1 ? 
+                                        <>
+                                            <ProjectCard page={page.current} project={{id: null, title: ".", icon: LiaDungeonSolid, image: dnd, type: ".", Year: ".", stack: "."}} className="pointer-events-none">
+                                                <SeeMoreCard className="shrink-1 absolute inset-0 z-10 pointer-events-auto"></SeeMoreCard>
+                                            </ProjectCard> 
+                                        </>
+                                        : 
+                                        <>
+                                            <ProjectCard page={page.current} project={projects[currentIndex + 1]}>
+                                                <SeeMoreCard className="shrink-1 absolute inset-0 pointer-events-none" invisible={true}></SeeMoreCard>
+                                            </ProjectCard>
+                                        </>
+                                    }
                             </div>
                             <motion.button  onClick={handleNext} whileTap={{scale: 0.95}} transition={{duration: 0.2, type: "spring"}} className={`w-full max-w-[70px] flex justify-center items-center border border-gray-700 rounded-xl hover:bg-gray-50/2 hover:cursor-pointer hover:border-gray-400 group transition-colors transition-opacity p-3 ${isAnimating ? "pointer-events-none" : ""} ${currentIndex >= projects.length - 1 ? "pointer-events-none opacity-0" : ""}`}>
                                 <LiaLongArrowAltRightSolid className="text-4xl text-gray-700 group-hover:text-gray-400 transition-colors"></LiaLongArrowAltRightSolid>

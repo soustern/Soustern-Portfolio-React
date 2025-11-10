@@ -31,8 +31,6 @@ const PranceCompany = ({fontsReady}: PranceCompanyProps) => {
 
     const pageSize = useWindowSize();
 
-    console.log(fontsReady)
-
     const strings = language === "En" ? pranceCompany.En : pranceCompany["Pt-Br"];
 
     const scrollerRef = useRef<HTMLDivElement>(null);
