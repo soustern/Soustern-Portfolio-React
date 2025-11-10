@@ -43,7 +43,7 @@ const Projects = () => {
             image: thx,
             type: "Portfolio",
             Year: "2025",
-            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion ",
+            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion,",
             next: 2,
         },
          {
@@ -53,7 +53,7 @@ const Projects = () => {
             image: pranceCompanyHero,
             type: "Product",
             Year: "2025",
-            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion",
+            stack: " Tailwind CSS, React, TypeScript, UX, UI, NPM, DevOps, GSAP, Motion,",
             next: null
         },
         {
@@ -63,7 +63,7 @@ const Projects = () => {
             image: dnd,
             type: "Project",
             Year: "2024",
-            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, API, Vercel, ",
+            stack: " CSS, SASS, HTML, JS, UX, UI, NPM, API, Vercel,",
             next: 3,
         },
         {
@@ -73,7 +73,7 @@ const Projects = () => {
             image: thx,
             type: "Project",
             Year: "2023",
-            stack: "C, Linux, CLI, ",
+            stack: " C, Linux, CLI,",
             next: 4,
         },
         {
@@ -83,7 +83,7 @@ const Projects = () => {
             image: todo,
             type: "Project",
             Year: "2025",
-            stack: " JavaScript, CSS, HTML, UX, UI, NPM, ",
+            stack: " JavaScript, CSS, HTML, UX, UI, NPM,",
             next: 5,
         },
     ];
