@@ -233,7 +233,9 @@ const Projects = () => {
 
                     </div>
                     <div className="flex max-w-[1200px] w-full flex-col gap-4 md:gap-8 items-center min-h-0 shrink-1">
-                        <TextStandard className="-mb-2" text={language === "En" ? "Tap on a project to see more:" : "Toque em um projeto para ver mais:"}></TextStandard>
+                        <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }}>
+                            <TextStandard className="-mb-2" text={language === "En" ? "Tap on a project to see more:" : "Toque em um projeto para ver mais:"}></TextStandard>
+                        </motion.div>
                         <motion.div exit={{y: -100, opacity: 0 }} initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} className="max-w-[600px] w-full h-1 relative rounded-xl min-h-0">
                             <div className="absolute inset-0 grid place-items-center grid-cols-3 w-full h-full gap-4">
                                 <div className="h-1 border border-gray-700 w-full rounded-full"></div>
