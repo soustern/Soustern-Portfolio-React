@@ -32,7 +32,6 @@ function App() {
 
   useEffect(() => {
     window.addEventListener(`wheel`, handleWheel, {passive: false});
-    console.log(scrollProgress);
     return () => window.removeEventListener(`wheel`, handleWheel);
   }, [handleWheel, scrollProgress]);
 

@@ -2,12 +2,12 @@ import type { IconType } from "react-icons";
 import TextStandard from "./TextStandard";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useProject } from "../contexts/ProjectContext";
 
 interface ProjectCardProps {
     project: {
-        id: number;
+        id: number | null;
         title: string;
         image: string;
         icon: IconType;
@@ -16,10 +16,12 @@ interface ProjectCardProps {
         stack: string;
     }; 
     invisible?: boolean,
-    page?: number
+    page?: number,
+    children?: ReactNode;
+    className?: string
 }
 
-const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
+const ProjectCard = ({project, invisible = false, page, children, className}: ProjectCardProps) => {
     const marqueeRef = useRef<HTMLDivElement>(null);
     const articleRef = useRef<HTMLElement>(null);
     const {currentProject, changeProject} = useProject();
@@ -63,7 +65,7 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
         
         const initChangeProject = () => {
             changeProject(project.id);
-            console.log(currentProject);
+            console.log("Cliquei no projeto: ", currentProject, " ", project.id);
         };
 
         article.addEventListener("click", initChangeProject);
@@ -76,7 +78,8 @@ const ProjectCard = ({project, invisible = false, page}: ProjectCardProps) => {
 
     const Icon = project.icon;
     return (
-        <article ref={articleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col`}>
+        <article ref={articleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] h-full max-h-[245px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col relative ${className}`}>
+            {children}
             <div className="border-b-[1px] border-gray-700 pointer-events-none min-h-0 shrink-1 overflow-hidden relative">
                 <img
                     src={project.image}
