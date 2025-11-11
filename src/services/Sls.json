@@ -1,0 +1,97 @@
+{
+  "En": {
+    "caseStudy": {
+      "title": "Overview",
+      "overview": "The Simple Logistical System (SLS) is a high-performance, command-line logistics management application built entirely in pure C. Conceived as a personal challenge to gain a profound, low-level understanding of computer science fundamentals, this solo project was completed over a two-month period. It demonstrates mastery of manual memory management, custom data structure implementation, and persistent storage through file I/O, all within a robust, menu-driven interface for managing products, employees, and suppliers.",
+
+
+      "highlightsTitle": "Highlights",
+      "highlight1Title": "High-Performance Data Core",
+      "highlight1Desc": "The application's core logic is built around custom-implemented hash tables, providing an average time complexity of O(1) for all critical create, read, update, and delete (CRUD) operations. This ensures the system remains fast and responsive regardless of data volume.",
+      "highlight2Title": "Meticulous Memory Management",
+      "highlight2Desc": "All memory is managed manually using `malloc` and `free`. The architecture includes carefully designed `unload` functions that traverse every data structure to prevent memory leaks, demonstrating a critical low-level programming skill.",
+      "highlight3Title": "Modular C Architecture",
+      "highlight3Desc": "The codebase is componentized into multiple `.c` files organized by feature and role. This separation of concerns—main logic, admin functions, user functions, and shared utilities—creates a clean, maintainable, and scalable architecture, even without object-oriented features.",
+      "highlight4Title": "Persistent Flat-File Storage",
+      "highlight4Desc": "Data integrity is guaranteed through an \"immediate write\" persistence model. Every change made during runtime is instantly saved to a `.txt` flat-file database, ensuring no data loss between sessions and demonstrating robust file I/O handling.",
+
+
+      "contextTitle": "Context",
+      "contextProject": "Project: Simple Logistical System (SLS) - C Edition",
+      "contextRole": "Role: C Developer",
+      "contextTimeline": "Timeline: Two Months",
+      "contextFocus": "Focus: C, Data Structures, Memory Management, File I/O",
+
+      "problemTitle": "The Problem",
+      "problemDesc": "The primary challenge was a self-imposed goal: to build the best possible logistics management program entirely in C. The project's purpose was not to solve an existing market need but to serve as a rigorous technical exercise. The key objectives were to implement complex data structures from scratch, achieve perfect, leak-free memory management, and build a fully functional application without the safety nets or abstractions of modern, high-level languages.",
+
+
+      "architectureTitle": "Architecture",
+      "architectureDesc": "The application follows a highly modular design to ensure organization and security. Logic is separated based on roles, a critical feature for the system's integrity. Privileged operations, such as creating new users or deleting data, are encapsulated within `functions_admin.c`. Read-only and general-use operations are in `functions_limited.c` and `functions_general.c`, respectively. All function prototypes and structs are declared in a central `functions.h` header file, which acts as a single, clear API for the entire program. This approach not only promotes code reuse but also adds a layer of security and reliability by strictly separating privileged functions from common ones.",
+
+      "structuresTitle": "Data Structures",
+      "structuresDesc": "The core of the system's performance lies in its custom-implemented hash tables. Each data model (accounts, products, employees) is stored in a dedicated hash table in memory. To handle collisions, a **separate chaining** strategy was implemented, where each hash table index points to the head of a linked list. This classic solution ensures robust performance even as the data scales. The hash function, while straightforward, was exhaustively debugged and tested using Valgrind to confirm its reliability and ability to distribute data evenly across the table, minimizing collisions.",
+      "structuresDesc2": "On startup, these hash tables are populated by reading from the flat-file database. New nodes are dynamically created and inserted at the head of the appropriate linked list.",
+
+
+      "memoryTitle": "Memory Management",
+      "memoryDesc": "As a pure C application, all memory is managed manually. Every node in the linked lists and every piece of dynamically sized data is allocated on the heap using `malloc`. The most critical part of this process is preventing memory leaks. A set of `unload_*_databases()` functions was designed for this purpose. When the program exits or a database is no longer needed in memory, these functions meticulously traverse every node in every hash table and linked list, explicitly calling `free()` on each one. This disciplined approach ensures that all allocated memory is returned to the system. The biggest challenge was debugging segmentation faults that arose during development, which were systematically solved using the Valgrind memory analysis tool.",
+      "memoryDesc2": "The most critical part of this process is the deallocation. When the program exits, a set of `unload_*_databases()` functions meticulously traverse every node in every hash table's linked list, explicitly calling `free()` on each one. This discipline was validated extensively with Valgrind to ensure a leak-free application.",
+
+      "snippetsTitle": "Code Snippets",
+      "snippet1Title": "Data Modeling with Structs",
+      "snippet1Desc": "All data entities are modeled using C structs, with pointers for implementing linked lists as part of the hash table's separate chaining mechanism.",
+      "snippet2Title": "Hash Table Population from File",
+      "snippet2Desc": "On startup, data is read from a `.txt` file and used to populate the in-memory hash table. This snippet shows how a new `employee` node is created, populated, and inserted at the head of the linked list at the correct hash index.",
+      "snippet3Title": "Manual Memory Deallocation",
+      "snippet3Desc": "To prevent memory leaks, this function iterates through every linked list in the hash table and frees each dynamically allocated `employee` node one by one.",
+      
+      "retrospectiveTitle": "Retrospective",
+      "retrospectiveDesc": "This project was a foundational deep dive into the principles of software engineering. The most demanding aspect was undoubtedly the manual memory management; encountering, debugging, and solving segmentation faults with Valgrind provided an invaluable and practical education in how C interacts with memory. Visualizing and correctly implementing multi-dimensional arrays for the hash tables and their linked lists was another significant challenge.",
+      "retrospectiveLearning": "By completing this project, I successfully mastered the core concepts of data structures and memory management from the ground up. While building everything in C was a powerful learning experience, it also highlighted the productivity gains from higher-level languages. If I were to start this project again with the knowledge I have now, I might choose a language like C++ or Rust to leverage features like smart pointers and RAII, demonstrating an understanding of when to use powerful abstractions after having mastered the fundamentals."
+    }
+  },
+  "Pt-Br": {
+    "caseStudy": {
+      "title": "Visão Geral",
+      "overview": "O Simple Logistical System (SLS) é uma aplicação de linha de comando para gerenciamento logístico, de alta performance e construída inteiramente em C puro. Concebido como um desafio pessoal para obter um entendimento profundo e de baixo nível dos fundamentos da ciência da computação, este projeto solo foi concluído em um período de dois meses. Ele demonstra maestria em gerenciamento manual de memória, implementação de estruturas de dados customizadas e armazenamento persistente através de E/S de arquivos, tudo dentro de uma interface robusta e orientada por menus para gerenciar produtos, funcionários e fornecedores.",
+      "highlightsTitle": "Destaques",
+      "highlight1Title": "Núcleo de Dados de Alta Performance",
+      "highlight1Desc": "A lógica central da aplicação é construída em torno de tabelas de dispersão (hash tables) implementadas de forma customizada, fornecendo uma complexidade de tempo média de O(1) para todas as operações críticas de criar, ler, atualizar e deletar (CRUD). Isso garante que o sistema permaneça rápido e responsivo, independentemente do volume de dados.",
+      "highlight2Title": "Gerenciamento de Memória Meticuloso",
+      "highlight2Desc": "Toda a memória é gerenciada manualmente usando `malloc` e `free`. A arquitetura inclui funções de `unload` cuidadosamente projetadas que percorrem cada estrutura de dados para prevenir vazamentos de memória (memory leaks), demonstrando uma habilidade crítica de programação de baixo nível.",
+      "highlight3Title": "Arquitetura Modular em C",
+      "highlight3Desc": "A base de código é componentizada em múltiplos arquivos `.c` organizados por funcionalidade e perfil de usuário. Essa separação de responsabilidades — lógica principal, funções de administrador, funções de usuário e utilitários compartilhados — cria uma arquitetura limpa, manutenível e escalável, mesmo sem recursos de orientação a objetos.",
+      "highlight4Title": "Armazenamento Persistente em Arquivo",
+      "highlight4Desc": "A integridade dos dados é garantida através de um modelo de persistência de \"escrita imediata\". Cada alteração feita durante a execução é instantaneamente salva em um banco de dados de arquivo de texto (`.txt`), garantindo que não haja perda de dados entre as sessões e demonstrando um manuseio robusto de E/S de arquivos.",
+      "contextTitle": "Contexto",
+      "contextProject": "Projeto: Simple Logistical System (SLS) - Edição C",
+      "contextRole": "Função: Desenvolvedor C",
+      "contextTimeline": "Prazo: Dois Meses",
+      "contextFocus": "Foco: C, Estruturas de Dados, Gerenciamento de Memória, E/S de Arquivos",
+      "problemTitle": "O Problema",
+      "problemDesc": "O desafio principal foi uma meta autoimposta: construir o melhor programa de gerenciamento logístico possível, inteiramente em C. O propósito do projeto não era resolver uma necessidade de mercado existente, mas servir como um rigoroso exercício técnico. Os objetivos chave eram implementar estruturas de dados complexas do zero, alcançar um gerenciamento de memória perfeito e sem vazamentos, e construir uma aplicação totalmente funcional sem as redes de segurança ou abstrações de linguagens modernas de alto nível.",
+      "architectureTitle": "Arquitetura",
+      "architectureDesc": "A aplicação segue um design altamente modular para garantir organização e segurança. A lógica é separada com base nos perfis de usuário, uma característica crítica para a integridade do sistema. Operações privilegiadas, como criar novos usuários ou deletar dados, são encapsuladas em `functions_admin.c`. Operações de apenas leitura e de uso geral estão em `functions_limited.c` e `functions_general.c`, respectivamente. Todos os protótipos de função e structs são declarados em um arquivo de cabeçalho central, `functions.h`, que atua como uma API única e clara para todo o programa. Essa abordagem não apenas promove o reuso de código, mas também adiciona uma camada de segurança e confiabilidade ao separar estritamente as funções privilegiadas das comuns.",
+      "structuresTitle": "Estruturas de Dados",
+      "structuresDesc": "O núcleo da performance do sistema reside em suas tabelas de dispersão (hash tables) implementadas de forma customizada. Cada modelo de dados (contas, produtos, funcionários) é armazenado em uma tabela de dispersão dedicada na memória. Para lidar com colisões, uma estratégia de **encadeamento separado** foi implementada, onde cada índice da tabela aponta para o início de uma lista encadeada. Esta solução clássica garante um desempenho robusto mesmo com o aumento do volume de dados. A função de hash, embora simples, foi exaustivamente depurada e testada com o Valgrind para confirmar sua confiabilidade e capacidade de distribuir os dados de maneira uniforme pela tabela, minimizando colisões.",
+      "structuresDesc2": "Na inicialização, essas tabelas hash são preenchidas através da leitura do banco de dados em arquivo simples. Novos nós são criados dinamicamente e inseridos no início da lista encadeada apropriada.",
+
+
+      "memoryTitle": "Gerenciamento de Memória",
+      "memoryDesc": "Como uma aplicação em C puro, toda a memória é gerenciada manualmente. Cada nó nas listas encadeadas e cada porção de dados de tamanho dinâmico é alocado no heap usando `malloc`. A parte mais crítica deste processo é prevenir vazamentos de memória. Um conjunto de funções `unload_*_databases()` foi projetado para este propósito. Quando o programa termina ou um banco de dados não é mais necessário na memória, essas funções percorrem meticulosamente cada nó em cada tabela de dispersão e lista encadeada, chamando explicitamente `free()` em cada um. Essa abordagem disciplinada garante que toda a memória alocada seja devolvida ao sistema. O maior desafio foi depurar falhas de segmentação (segmentation faults) que surgiram durante o desenvolvimento, que foram sistematicamente resolvidas usando a ferramenta de análise de memória Valgrind.",
+      "memoryDesc2": "A parte mais crítica desse processo é a desalocação. Quando o programa é encerrado, um conjunto de funções unload_*_databases() percorre meticulosamente cada nó em cada lista encadeada das tabelas hash, chamando explicitamente free() em cada um deles. Essa disciplina foi validada extensivamente com o Valgrind para garantir uma aplicação livre de vazamentos de memória.",
+      
+      "snippetsTitle": "Trechos de Código",
+      "snippet1Title": "Modelagem de Dados com Structs",
+      "snippet1Desc": "Todas as entidades de dados são modeladas usando structs em C, com ponteiros para implementar listas encadeadas como parte do mecanismo de encadeamento separado da tabela de dispersão.",
+      "snippet2Title": "Povoamento da Tabela de Dispersão a Partir de Arquivo",
+      "snippet2Desc": "Na inicialização, os dados são lidos de um arquivo `.txt` e usados para preencher a tabela de dispersão em memória. Este trecho mostra como um novo nó de `employee` é criado, preenchido e inserido no início da lista encadeada no índice de hash correto.",
+      "snippet3Title": "Desalocação Manual de Memória",
+      "snippet3Desc": "Para prevenir vazamentos de memória, esta função itera através de cada lista encadeada na tabela de dispersão e libera cada nó `employee` alocado dinamicamente, um por um.",
+      "retrospectiveTitle": "Retrospectiva",
+      "retrospectiveDesc": "Este projeto foi um mergulho fundamental nos princípios da engenharia de software. O aspecto mais exigente foi, sem dúvida, o gerenciamento manual de memória; encontrar, depurar e resolver falhas de segmentação com o Valgrind proporcionou uma educação prática e inestimável sobre como C interage com a memória. Visualizar e implementar corretamente arrays multidimensionais para as tabelas de dispersão e suas listas encadeadas foi outro desafio significativo.",
+      "retrospectiveLearning": "Ao completar este projeto, eu dominei com sucesso os conceitos centrais de estruturas de dados e gerenciamento de memória a partir do zero. Embora construir tudo em C tenha sido uma poderosa experiência de aprendizado, também destacou os ganhos de produtividade de linguagens de nível superior. Se eu fosse começar este projeto novamente com o conhecimento que tenho agora, eu poderia escolher uma linguagem como C++ ou Rust para aproveitar recursos como ponteiros inteligentes e RAII, demonstrando um entendimento de quando usar abstrações poderosas após ter dominado os fundamentos."
+    }
+  }
+}
