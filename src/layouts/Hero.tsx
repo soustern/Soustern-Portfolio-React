@@ -136,7 +136,7 @@ const Hero = () => {
             className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full defaultPadding'>
 
                 <motion.div initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} transition={{ duration: 0.3, type: "spring" }} ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
-                    <video ref={videoRef} autoPlay muted playsInline loop className='object-fill' src={heroVideo}></video>
+                    <video ref={videoRef} preload={shouldRender ? "auto" : "none"}  autoPlay muted playsInline loop className='object-fill' src={heroVideo}></video>
                 </motion.div>
                 <div className="space-y-4 z-10 relative">
                     <TextHeadline className="font-mono" text={""}><span className="text-[var(--color-accent-primary)]">&lt;</span>{strings.heading()}<span className="text-[var(--color-accent-primary)]">/&gt;</span></TextHeadline>
