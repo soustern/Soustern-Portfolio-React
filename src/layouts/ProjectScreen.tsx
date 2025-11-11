@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useProject } from "../components/contexts/ProjectContext";
 import PranceCompany from "../components/ui/PranceCompany";
 import { AnimatePresence, motion } from "motion/react";
+import DndMonsterCodex from "./DndMonsterCodex";
 
 interface ProjectScreenProps {
     fontsReady: boolean
@@ -34,6 +35,7 @@ const ProjectScreen = ({fontsReady}: ProjectScreenProps) => {
                 <motion.div key="blur-background" id="blur-background" exit={{opacity: 0}} transition={{ duration: 0.2 }} initial={{opacity: 0}} animate={{opacity: 1}} ref={projectScreenBackgroundDesktopRef} className="absolute inset-0 w-full h-full backdrop-blur-sm z-60">
                 </motion.div>
                 {currentProject === 2 && <PranceCompany fontsReady={fontsReady}/>}
+                {currentProject === 3 && <DndMonsterCodex fontsReady={fontsReady}/>}
             </motion.article>
         </AnimatePresence>
     )
