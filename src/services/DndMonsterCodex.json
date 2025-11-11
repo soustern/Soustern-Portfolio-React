@@ -1,0 +1,79 @@
+{
+  "En": {
+    "caseStudy": {
+      "title": "Overview",
+      "overview": "The D&D 5e Monster Codex is a full-stack web application designed as a fast, intuitive, and visually engaging digital compendium for Dungeons & Dragons 5th Edition monsters. Developed as a solo project over five days, its primary goal was to deepen my understanding of API integration and complex, from-scratch DOM manipulation. The project features a lightweight Python/Flask backend and a dynamic frontend built entirely with vanilla JavaScript, demonstrating the ability to create a rich, data-driven user interface without relying on modern frameworks.",
+      "highlightsTitle": "Highlights",
+      "highlight1Title": "Framework-Free Dynamic Frontend",
+      "highlight1Desc": "The entire monster stat block is dynamically constructed in the browser using only vanilla JavaScript. Upon receiving data from the D&D 5e API, the application creates and appends dozens of DOM elements, showcasing a deep understanding of core web technologies and the ability to manage application state without the abstractions of a framework.",
+      "highlight2Title": "Scalable SASS Architecture",
+      "highlight2Desc": "To ensure a clean and maintainable codebase, the project's styling was architected using the 7-1 SASS pattern combined with the BEM naming convention. This approach provided robust organization and structure, which was crucial for managing the application's styles without a component-based framework.",
+      "highlight3Title": "Lightweight Serverless Backend",
+      "highlight3Desc": "The application is powered by a simple yet effective Python/Flask backend, which handles routing and serves the initial HTML. This backend is deployed on Vercel as a serverless function, demonstrating experience with modern, scalable, and cost-effective cloud deployment architectures.",
+      "highlight4Title": "Iterative, User-Centric Design",
+      "highlight4Desc": "The final user interface was the result of multiple iterations and user testing, focusing on creating an aesthetically pleasing, responsive, and practical tool for D&D players that improves upon existing solutions.",
+      "contextTitle": "Context",
+      "contextProject": "Project: D&D 5e Monster Codex",
+      "contextRole": "Role: Full-Stack Developer",
+      "contextTimeline": "Timeline: 5 Days",
+      "contextFocus": "Focus: API Integration, Vanilla JS DOM Manipulation, SASS Architecture",
+      "problemTitle": "The Problem",
+      "problemDesc": "While many digital tools for Dungeons & Dragons exist, they often lack a polished and intuitive user experience. The goal was to create a monster lookup tool that was not only functional but also aesthetically pleasing, responsive, and practical for players. The project was conceived as a technical challenge: how to fetch, parse, and organize a large, complex dataset from an external API and present it in a clean, organized, and attractive way across all screen sizes, all without the aid of a frontend framework.",
+      "flowTitle": "Development and Deployment Flow",
+      "flowDesc": "The development process focused on a clear separation of concerns. The Flask backend was kept minimal, with its sole responsibility being to serve the main `index.html` file. All data-fetching logic and UI rendering were offloaded to the client-side vanilla JavaScript. For deployment, the project was configured for Vercel. A key challenge was properly setting up the `vercel.json` file to ensure Vercel could correctly build the Python environment and serve the Flask application as a serverless function, which was a valuable learning experience in modern cloud deployment.",
+
+
+      "layoutTitle": "Layout",
+      "layoutDesc": "The project's visual structure and styling are governed by a strict and scalable SASS architecture. By implementing the 7-1 pattern, the CSS codebase was divided into logical folders for variables, components, base styles, etc. This was a crucial decision that enforced organization and maintainability, even in the absence of a frontend framework. It ensured that styles were predictable and that the complex stat block component (`c-sheet`) could be styled effectively using the BEM naming convention without conflicts or code bloat.",
+
+      "interactionsTitle": "Interactions",
+      "interactionsDesc": "The core interaction is designed to be simple, self-explanatory, and visually rewarding. When a user first loads the page, they are presented with a large, thematic header and a single search bar. Upon focusing on the input, a smooth CSS transition shrinks the header and reveals the monster sheet container, immediately focusing the user's attention. After a search, the stat block is populated with data. This entire experience was built to solidify a foundational understanding of JavaScript. By intentionally avoiding frameworks, I focused on mastering event handling, asynchronous data fetching (`async/await`), and direct, precise manipulation of the DOM.",
+
+      "visualTitle": "Visual Design",
+      "visualDesc": "The final design was not predetermined but was the result of an iterative process involving multiple rounds of user testing. The dark, fantasy-inspired theme was developed by applying solid graphic design principles, focusing on readability, contrast, and thematic consistency to create a UI that felt native to the Dungeons & Dragons experience.",
+      
+      "finalDesignsTitle": "Final Designs",
+      "design1Title": "Initial Search View",
+      "design2Title": "Dynamic Stat Block",
+      "retrospectiveTitle": "Retrospective",
+      "retrospectiveDesc": "This project was a fantastic exercise in core development fundamentals. The single biggest technical challenge was parsing the deeply nested and sometimes inconsistent JSON data returned from the D&D 5e API. Developing the logic to handle all possible data structures (arrays of objects, missing keys, etc.) and correctly build the corresponding HTML was a significant but rewarding task. The secondary challenge involved correctly configuring the Vercel deployment for a Python/Flask backend, which provided practical experience in serverless architecture.",
+      "retrospectiveLearning": "The key takeaway was a deep, practical knowledge of asynchronous JavaScript and DOM manipulation. While successful, the project also highlighted the value of frontend frameworks. If I were to build this again today, I would use a framework like React to manage the component state more efficiently, demonstrating an understanding of when to use foundational skills and when to leverage powerful tools for scalability."
+    }
+  },
+  "Pt-Br": {
+    "caseStudy": {
+      "title": "Visão Geral",
+      "overview": "O Códice de Monstros de D&D 5e é uma aplicação web full-stack projetada como um compêndio digital rápido, intuitivo e visualmente atraente para os monstros da 5ª Edição de Dungeons & Dragons. Desenvolvido como um projeto solo ao longo de cinco dias, seu objetivo principal foi aprofundar meu entendimento sobre integração de APIs e manipulação complexa do DOM do zero. O projeto apresenta um backend leve em Python/Flask e um frontend dinâmico construído inteiramente com JavaScript puro (vanilla), demonstrando a capacidade de criar uma interface de usuário rica e orientada a dados sem depender de frameworks modernos.",
+      "highlightsTitle": "Destaques",
+      "highlight1Title": "Frontend Dinâmico Sem Frameworks",
+      "highlight1Desc": "Todo o bloco de estatísticas do monstro é construído dinamicamente no navegador usando apenas JavaScript puro. Ao receber os dados da API de D&D 5e, a aplicação cria e anexa dezenas de elementos DOM, exibindo um profundo entendimento das tecnologias web essenciais e a habilidade de gerenciar o estado da aplicação sem as abstrações de um framework.",
+      "highlight2Title": "Arquitetura SASS Escalável",
+      "highlight2Desc": "Para garantir uma base de código limpa e de fácil manutenção, o estilo do projeto foi arquitetado usando o padrão SASS 7-1 combinado com a convenção de nomenclatura BEM. Essa abordagem proporcionou uma organização e estrutura robustas, cruciais para gerenciar os estilos da aplicação sem um framework baseado em componentes.",
+      "highlight3Title": "Backend Leve e Serverless",
+      "highlight3Desc": "A aplicação é sustentada por um backend simples, mas eficaz, em Python/Flask, que lida com o roteamento e serve o HTML inicial. Este backend é implantado na Vercel como uma função serverless, demonstrando experiência com arquiteturas de nuvem modernas, escaláveis e de baixo custo.",
+      "highlight4Title": "Design Iterativo e Centrado no Usuário",
+      "highlight4Desc": "A interface final foi o resultado de múltiplas iterações e testes com usuários, com foco em criar uma ferramenta esteticamente agradável, responsiva e prática para jogadores de D&D que melhora as soluções existentes.",
+      "contextTitle": "Contexto",
+      "contextProject": "Projeto: Códice de Monstros de D&D 5e",
+      "contextRole": "Função: Desenvolvedor Full-Stack",
+      "contextTimeline": "Prazo: 5 Dias",
+      "contextFocus": "Foco: Integração de API, Manipulação de DOM com JS Puro, Arquitetura SASS",
+      "problemTitle": "O Problema",
+      "problemDesc": "Embora existam muitas ferramentas digitais para Dungeons & Dragons, elas frequentemente carecem de uma experiência de usuário polida e intuitiva. O objetivo era criar uma ferramenta de consulta de monstros que não fosse apenas funcional, mas também esteticamente agradável, responsiva e prática para os jogadores. O projeto foi concebido como um desafio técnico: como buscar, analisar e organizar um conjunto de dados grande e complexo de uma API externa e apresentá-lo de forma limpa, organizada e atraente em todos os tamanhos de tela, tudo sem a ajuda de um framework de frontend.",
+      "flowTitle": "Fluxo de Desenvolvimento e Implantação",
+      "flowDesc": "O processo de desenvolvimento focou em uma clara separação de responsabilidades. O backend em Flask foi mantido minimalista, com sua única responsabilidade sendo servir o arquivo principal `index.html`. Toda a lógica de busca de dados e renderização da UI foi transferida para o JavaScript puro do lado do cliente. Para a implantação, o projeto foi configurado para a Vercel. Um desafio chave foi configurar corretamente o arquivo `vercel.json` para garantir que a Vercel pudesse construir o ambiente Python e servir a aplicação Flask como uma função serverless, o que foi uma valiosa experiência de aprendizado em implantação na nuvem moderna.",
+      "layoutTitle": "Layout",
+      "layoutDesc": "A estrutura visual e o estilo do projeto são governados por uma arquitetura SASS rigorosa e escalável. Ao implementar o padrão 7-1, a base de código CSS foi dividida em pastas lógicas para variáveis, componentes, estilos base, etc. Esta foi uma decisão crucial que impôs organização e manutenibilidade, mesmo na ausência de um framework de frontend. Garantiu que os estilos fossem previsíveis e que o complexo componente do bloco de estatísticas (`c-sheet`) pudesse ser estilizado eficazmente usando a convenção de nomenclatura BEM sem conflitos ou excesso de código.",
+      "interactionsTitle": "Interações",
+      "interactionsDesc": "A interação principal foi projetada para ser simples, autoexplicativa e visualmente recompensadora. Quando um usuário carrega a página pela primeira vez, ele é apresentado a um cabeçalho temático grande e uma única barra de pesquisa. Ao focar no input, uma transição suave de CSS encolhe o cabeçalho e revela o contêiner da ficha do monstro, focando imediatamente a atenção do usuário. Após uma pesquisa, o bloco de estatísticas é preenchido com dados. Toda essa experiência foi construída para solidificar um entendimento fundamental de JavaScript. Ao evitar intencionalmente frameworks, foquei em dominar o manuseio de eventos, a busca de dados assíncrona (`async/await`) e a manipulação direta e precisa do DOM.",
+      "visualTitle": "Design Visual",
+      "visualDesc": "O design final не foi predeterminado, mas foi o resultado de um processo iterativo envolvendo várias rodadas de testes com usuários. O tema escuro e inspirado em fantasia foi desenvolvido aplicando princípios sólidos de design gráfico, com foco em legibilidade, contraste e consistência temática para criar uma UI que parecesse nativa da experiência de Dungeons & Dragons.",
+      "finalDesignsTitle": "Designs Finais",
+      "design1Title": "Visual Inicial de Pesquisa",
+      "design2Title": "Bloco de Estatísticas Dinâmico",
+      "retrospectiveTitle": "Retrospectiva",
+      "retrospectiveDesc": "Este projeto foi um exercício fantástico em fundamentos de desenvolvimento. O maior desafio técnico foi analisar os dados JSON profundamente aninhados e às vezes inconsistentes retornados pela API de D&D 5e. Desenvolver a lógica para lidar com todas as estruturas de dados possíveis (arrays de objetos, chaves ausentes, etc.) e construir corretamente o HTML correspondente foi uma tarefa significativa, mas recompensadora. O desafio secundário envolveu configurar corretamente a implantação na Vercel para um backend Python/Flask, o que proporcionou experiência prática em arquitetura serverless.",
+      "retrospectiveLearning": "O principal aprendizado foi um conhecimento profundo e prático de JavaScript assíncrono e manipulação do DOM. Embora bem-sucedido, o projeto também destacou o valor dos frameworks de frontend. Se eu fosse construir isso novamente hoje, usaria um framework como React para gerenciar o estado dos componentes de forma mais eficiente, demonstrando um entendimento de quando usar habilidades fundamentais e quando aproveitar ferramentas poderosas para escalabilidade."
+    }
+  }
+}
