@@ -65,7 +65,7 @@ vec3 vibrance(vec3 color, float amount) {
     float sat = max_color - min_color;
     float luminance = dot(color, vec3(0.299, 0.587, 0.114));
     vec3 saturated = mix(vec3(luminance), color, 1.0 + amount);
-    return mix(color, saturated, (1.0 - sat));
+    return mix(color, saturated, (1.2 - sat));
 }
 
 // ===== CALCULATE FLOW DISTORTION =====
@@ -77,7 +77,7 @@ vec2 calculateFlowDistortion(vec2 uv) {
     // Enhanced waves with FBM
     float languidFrequency = 6.0;
     float languidSpeed = 0.03;
-    float languidStrength = 0.03;
+    float languidStrength = 0.13;
 
     // The FBM here is now cheaper thanks to our previous optimization
     float fbmValue = fbm(uv * 3.0 + uTime * 0.02);
@@ -147,7 +147,7 @@ vec3 colorTemperature(vec3 color, float temperature) {
 }
 
 float ambientOcclusion(vec2 uv, float distortion) {
-    float ao = 1.0 - pow(distortion, 2.0) * 0.5;
+    float ao = 1.0 - pow(distortion, 2.0) * 0.21;
     return clamp(ao, 0.7, 1.0);
 }
 
@@ -199,7 +199,7 @@ vec4 lensDistortion(vec2 uv, vec2 baseUv) {
     
     vec2 direction = normalize(fragCoord - sphereCenter);
     float distortionAmount = pow(normalizedDistance, focusFactor);
-    vec2 baseDistortion = direction * distortionAmount * 2.0 * smoothEdgeFalloff;
+    vec2 baseDistortion = direction * distortionAmount * 3.5 * smoothEdgeFalloff;
     
     vec2 dispersionDir = direction * smoothEdgeFalloff;
     result = spectralDispersion(tMap, zoomedUv + baseDistortion, dispersionDir, uDispersionStrength);
@@ -213,7 +213,7 @@ vec4 lensDistortion(vec2 uv, vec2 baseUv) {
 vec4 painterEffect(vec2 distortedUv, vec2 totalDistortion) {
     float distortionStrength = length(totalDistortion);
     float stretchThreshold = 0.005;
-    float stretchIntensity = 0.8;
+    float stretchIntensity = 1.0;
     
     vec3 finalColor;
     
@@ -294,25 +294,27 @@ void main() {
     // Use distorted UVs for rim iridescence
     vec3 rimIridescence = iridescence(distortedUv, fresnelTerm, uTime * 0.2);
     mixedColor.rgb += rimIridescence * fresnelTerm * uIridescenceStrength * 0.6;
-    
-    // ===== MASTERPIECE LAYERS (ALL WITH DISTORTED UVs) =====
-    
+        
     // 1. Subsurface scattering for depth (uses distorted UV)
-    mixedColor.rgb = subsurfaceScattering(mixedColor.rgb, distortionMask, distortedUv);
+    // REMOVED FOR PERFORMANCE
+    // mixedColor.rgb = subsurfaceScattering(mixedColor.rgb, distortionMask, distortedUv);
     
     // 2. God rays for ethereal quality (uses distorted UV)
-    float rays = godRays(distortedUv, vec2(0.5), uTime);
-    mixedColor.rgb += vec3(0.9, 0.95, 1.0) * rays * 0.15;
+    // REMOVED FOR PERFORMANCE
+    // float rays = godRays(distortedUv, vec2(0.5), uTime);
+    // mixedColor.rgb += vec3(0.9, 0.95, 1.0) * rays * 0.15;
     
     // 3. Ambient occlusion - DISABLED TO DEBUG
+    // REMOVED FOR PERFORMANCE
     float ao = ambientOcclusion(distortedUv, distortionStrength);
     mixedColor.rgb *= ao;
     
     // 4. Cinematic color grading
-    mixedColor.rgb = cinematicGrade(mixedColor.rgb);
+    // REMOVED FOR PERFORMANCE
+    // mixedColor.rgb = cinematicGrade(mixedColor.rgb);
     
     // 5. Color correction and vibrance
-    mixedColor.rgb = colorCorrection(mixedColor.rgb, 1.35, 1.12, 1.05);
+    mixedColor.rgb = colorCorrection(mixedColor.rgb, 1.38, 1.18, 1.21);
     mixedColor.rgb = vibrance(mixedColor.rgb, 0.35);
     
     // 6. Subtle color temperature adjustment
@@ -323,8 +325,9 @@ void main() {
     mixedColor.rgb *= vig;
     
     // 8. Film grain for organic texture (uses distorted UV)
-    float grain = filmGrain(distortedUv, uTime);
-    mixedColor.rgb += (grain - 0.5) * 0.015;
+    // REMOVED FOR PERFORMANCE
+    // float grain = filmGrain(distortedUv, uTime);
+    // mixedColor.rgb += (grain - 0.5) * 0.015;
     
     // Final safety clamp
     mixedColor.rgb = clamp(mixedColor.rgb, 0.1, 10.0);
