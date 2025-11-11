@@ -39,19 +39,20 @@ const Projects = () => {
     const direction = useRef<number>(1);
 
     // TODO: mobile version    
+    // TODO: Portfolio project should be the first after it is done
 
     const projects = [
         {
-            id: 1,
-            title: "Portfolio",
-            icon: LiaAddressCard,
-            image: portfolio,
-            type: "Portfolio",
-            Year: "2025",
-            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion,",
-            next: 2,
+            id: 4,
+            title: "SLS",
+            icon: LiaCogSolid,
+            image: sls,
+            type: "Project",
+            Year: "2023",
+            stack: " C, Linux, CLI,",
+            next: 4,
         },
-         {
+        {
             id: 2,
             title: "Prance Company",
             icon: LiaNetworkWiredSolid,
@@ -72,16 +73,6 @@ const Projects = () => {
             next: 3,
         },
         {
-            id: 4,
-            title: "SLS",
-            icon: LiaCogSolid,
-            image: sls,
-            type: "Project",
-            Year: "2023",
-            stack: " C, Linux, CLI,",
-            next: 4,
-        },
-        {
             id: 5,
             title: "To Do App",
             icon: LiaClipboardListSolid,
@@ -90,6 +81,16 @@ const Projects = () => {
             Year: "2025",
             stack: " JavaScript, CSS, HTML, UX, UI, NPM,",
             next: 5,
+        },
+        {
+            id: 1,
+            title: "Portfolio",
+            icon: LiaAddressCard,
+            image: portfolio,
+            type: "Portfolio",
+            Year: "2025",
+            stack: " Tailwind CSS, HTML, React.JS , UX, UI, NPM, Motion, GSAP, Vite, OGL, WebGl, GLSL, JSON, Motion,",
+            next: 2,
         },
     ];
 
