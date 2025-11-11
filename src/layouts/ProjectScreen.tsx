@@ -3,7 +3,7 @@ import { useProject } from "../components/contexts/ProjectContext";
 import PranceCompany from "../components/ui/PranceCompany";
 import { AnimatePresence, motion } from "motion/react";
 import DndMonsterCodex from "./DndMonsterCodex";
-import Sls from "./sls";
+import Sls from "./Sls";
 
 interface ProjectScreenProps {
     fontsReady: boolean
