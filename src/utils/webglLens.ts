@@ -12,7 +12,7 @@ export async function createWebGLScene(container: HTMLDivElement, video: HTMLVid
     
     // Setup WebGL
     const renderer = new Renderer({ 
-        dpr: 2,
+        dpr: Math.min(window.devicePixelRatio, 1.5),
         alpha: true,
         width: rect.width,
         height: rect.height,
