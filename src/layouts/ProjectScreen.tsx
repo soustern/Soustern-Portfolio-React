@@ -3,6 +3,7 @@ import { useProject } from "../components/contexts/ProjectContext";
 import PranceCompany from "../components/ui/PranceCompany";
 import { AnimatePresence, motion } from "motion/react";
 import DndMonsterCodex from "./DndMonsterCodex";
+import Sls from "./sls";
 
 interface ProjectScreenProps {
     fontsReady: boolean
@@ -36,6 +37,7 @@ const ProjectScreen = ({fontsReady}: ProjectScreenProps) => {
                 </motion.div>
                 {currentProject === 2 && <PranceCompany fontsReady={fontsReady}/>}
                 {currentProject === 3 && <DndMonsterCodex fontsReady={fontsReady}/>}
+                {currentProject === 4 && <Sls fontsReady={fontsReady}/>}
             </motion.article>
         </AnimatePresence>
     )
