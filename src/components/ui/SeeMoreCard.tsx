@@ -35,7 +35,7 @@ const SeeMoreCard = ({ invisible = false, className }: SeeMoreCardProps): JSX.El
         },);
  
     return (
-        <article ref={seeMoreArticleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] border-[1px] border-gray-700 rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col justify-center items-center ${className}`}>
+        <article ref={seeMoreArticleRef} className={`max-w-sm md:max-w-xl xl:max-w-[600px] w-full bg-[var(--color-bg-secondary)] rounded-xl overflow-hidden shadow-black/20 ${invisible ? " pointer-events-none invisible" : ""} cursor-pointer transform hover:shadow-xl transition-shadow flex flex-col justify-center items-center ${className}`}>
             <div className="">
                 <MdOutlineOpenInNew size={20} color="#6a7282" className="absolute top-2 right-2"></MdOutlineOpenInNew>
             </div>
