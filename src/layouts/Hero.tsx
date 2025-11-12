@@ -134,8 +134,10 @@ const Hero = () => {
             ref={sectionRef} 
             id='hero' 
             className='fixed inset-0 z-10 flex flex-col items-center justify-center w-full h-full defaultPadding'>
+                {pageSize.height <= 920 && <div className="w-full h-full max-h-29 ">
 
-                <motion.div initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} transition={{ duration: 0.3, type: "spring" }} ref={containerRef} className="modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] flex pointer-events-auto mb-8 transform">
+                    </div>}
+                <motion.div initial={{y: -100, opacity: 0 }} animate={{y: 0, opacity: 1 }} transition={{ duration: 0.3, type: "spring" }} ref={containerRef} className={`modern-arch z-10 [&>canvas]:absolute [&>canvas]:left-1/2 [&>canvas]:top-1/2 [&>canvas]:transform [&>canvas]:-translate-1/2 relative container rounded-lg overflow-hidden ${pageSize.height > 920 ? "lg:w-[500px] lg:h-[500px]" : ""} w-[300px] h-[300px] flex pointer-events-auto mb-8 transform`}>
                     <video ref={videoRef} preload={shouldRender ? "auto" : "none"}  autoPlay muted playsInline loop className='object-fill' src={heroVideo}></video>
                 </motion.div>
                 <div className="space-y-4 z-10 relative">
@@ -152,14 +154,14 @@ const Hero = () => {
                             <div ref={scrollToExploreRight} className="absolute transform -translate-y-1/2 w-full h-full bg-[radial-gradient(115px_circle,#f9fafb,transparent_40%)]"></div>
                         </motion.div>
                     </div>
-                    <div id="hover-tip" className="absolute left-0 -top-75 w-full opacity-0 lg:opacity-100 flex items-center">   
+                    <div id="hover-tip" className={`absolute left-0 w-full opacity-0 lg:opacity-100 flex items-center ${pageSize.height <= 920 ? "-top-55" : "-top-75"}`}>   
                         <AnimatePresence>
-                            {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className={`absolute ${language === `En` ? `-left-26` : `-left-30`}  top-0.3 w-fit`}>
+                                {isHovered && <motion.div initial={{opacity: 0, scale: 0.9}} animate={{opacity: 1, scale: 1}} exit={{ opacity: 0,    scale: 0.9 }} transition={{ duration: 0.2 }} className={`absolute ${language === `En` ? `-left-26` : `-left-30`} top-0.3 w-fit`}>
                                 <TextStandard className="" text={strings.heroTip()} ></TextStandard>
                             </motion.div>}
                         </AnimatePresence>
-                        <div ref={hoverTip} className="w-fit rounded-lg p-4 py-1 bg-[var(--color-bg-secondary)] transform scale-[0.8]">
-                            {isHovered ? <LiaArrowRightSolid size="32" className="text-gray-300"></LiaArrowRightSolid> : <FaExclamation size="32" className="animate-pulse text-gray-300"></FaExclamation>}
+                        <div ref={hoverTip} className={`w-fit rounded-lg p-5 py-2 bg-[var(--color-bg-secondary)] border-[1px] border-gray-700  transform scale-[0.8] `}>
+                            {isHovered ? <LiaArrowRightSolid size="27" className="text-gray-300"></LiaArrowRightSolid> : <FaExclamation size="27" className="animate-pulse text-gray-300"></FaExclamation>}
                         </div>
                     </div>
                 </div>
